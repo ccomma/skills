@@ -70,7 +70,7 @@ Evidence to check: architecture is not heavier than the task.
 
 ```text
 Scenario: constrained interactive skill
-Prompt: 帮我做一个像 skill-referee 一样需要多轮选项的 skill。
+Prompt: 帮我做一个需要多轮选项和冲突仲裁的 skill。
 Expected behavior: recommend `constrained + references`; design fixed options, stop points, and lazy-loaded menu/report references.
 Must not: put all menus into SKILL.md or skip validation scenarios.
 Evidence to check: SKILL.md remains a router, references hold bulky menus.

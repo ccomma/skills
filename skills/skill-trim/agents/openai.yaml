@@ -1,0 +1,4 @@
+interface:
+  display_name: "Skill Trim"
+  short_description: "Audit and reduce skill token cost with regression checks."
+  default_prompt: "Use $skill-trim to audit an existing skill's token/context cost, establish a capability baseline, propose progressive disclosure, adaptive verbosity, batch mode, tighter triggers, reference routing, or scripts, and patch only after approval with regression validation."
