@@ -1,0 +1,4 @@
+interface:
+  display_name: "Product Plan"
+  short_description: "Short handoff first, long product docs on demand."
+  default_prompt: "Use $product-plan to set up or continue a product project with durable design memory, roadmap, phase handoffs, PRDs, technical designs, test plans, acceptance evidence, and token-efficient context loading."
