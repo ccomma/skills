@@ -7,7 +7,8 @@ These skills are designed to be small, composable, and easy to install into diff
 ## Skills
 
 - [`skill-referee`](./skills/skill-referee/SKILL.md): Referees responsibility boundaries between skills across any domain, using metadata-first discovery and controlled review depth.
-- [`skill-architect`](./skills/skill-architect/SKILL.md): Designs mature, token-efficient skills with the right interaction model, references, scripts, assets, validation, and boundaries.
+- [`skill-architect`](./skills/skill-architect/SKILL.md): Designs mature, token-efficient skills with explicit authority boundaries, output contracts, interaction intensity, references, scripts, assets, validation, and bundle structure.
+- [`skill-maintain`](./skills/skill-maintain/SKILL.md): Audits and repairs one existing skill through modular checks for portability, language consistency, output contracts, interaction intensity, bundle integrity, authority boundaries, structure, routing, and token/context cost without taking over multi-skill boundary design.
 
 ## Install
 
@@ -46,7 +47,7 @@ Install to every known target directory that already exists on this machine:
 ./scripts/install.sh --all
 ```
 
-The installer creates symlinks from the target skill directory to this repository. It does not overwrite existing non-symlink skill directories. If a target already has `skill-referee` or `skill-architect` as a real directory, back it up or remove it before installing.
+The installer creates symlinks from the target skill directory to this repository. It does not overwrite existing non-symlink skill directories. If a target already has one of these skills as a real directory, back it up or remove it before installing.
 
 ## Maintenance
 

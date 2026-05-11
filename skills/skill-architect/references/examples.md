@@ -21,6 +21,11 @@ Good shape:
 
 Failure to avoid: adding menus or scripts for a task that only needs a short rule.
 
+Breadth/depth lesson:
+
+- breadth still scans authority, output, interaction, scripts, and bundle
+- depth choice keeps almost everything light because the failure mode is narrow
+
 ## Example 2: Constrained Interactive Skill
 
 Use when users often do not know what choice matters, or wrong scope wastes time.
@@ -40,6 +45,11 @@ Good shape:
 - body reads only selected references
 
 Failure to avoid: hardcoding one domain's vocabulary into a supposedly general skill.
+
+Breadth/depth lesson:
+
+- deepen interaction and routing
+- keep scripts absent unless deterministic work appears
 
 ## Example 3: Deterministic Script-Backed Skill
 
@@ -62,7 +72,37 @@ Good shape:
 
 Failure to avoid: making the model rewrite fragile parsing logic every time.
 
-## Example 4: Asset-Backed Output Skill
+Breadth/depth lesson:
+
+- broaden to output contract and authority checks too
+- deepen only deterministic operations into scripts
+
+## Example 4: Authority-Sensitive Skill
+
+Use when the skill may edit, publish, delete, or persist.
+
+```text
+Profile: guided + deterministic
+Layout:
+- SKILL.md: trigger boundary, authority gates, verification rules
+- scripts/: deterministic preflight or validation helpers
+- references/: policy and edge-case handling
+```
+
+Good shape:
+
+- authority level is explicit
+- risky actions have stop points
+- scripts gather facts, prose makes decisions
+
+Failure to avoid: hiding execution inside soft wording.
+
+Breadth/depth lesson:
+
+- authority deserves depth
+- script depth supports validation, not policy
+
+## Example 5: Asset-Backed Output Skill
 
 Use when the output should follow a reusable structure or visual/resource template.
 
@@ -82,8 +122,13 @@ Good shape:
 
 Failure to avoid: describing a template in prose when a real template file would be more stable.
 
+Breadth/depth lesson:
 
-## Example 5: Wrong-Scope Request
+- output contract and assets deserve depth
+- interaction may stay light if the artifact shape carries most of the structure
+
+
+## Example 6: Wrong-Scope Request
 
 Use when testing that Skill Architect does not take over work it should route away.
 

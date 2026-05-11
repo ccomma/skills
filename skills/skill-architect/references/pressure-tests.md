@@ -15,6 +15,10 @@ Create at least these scenarios for non-trivial skills:
 5. **Neighbor conflict** — request could trigger two adjacent skills; routing should be clear.
 6. **Token pressure** — request should use metadata, references, scripts, or assets lazily instead of loading everything.
 7. **Language/style pressure** — if the skill is user-facing, menus and reports should follow the user's language and tone.
+8. **Authority pressure** — risky actions should have explicit boundaries and confirmation design.
+9. **Bundle pressure** — support files should stay aligned and reachable.
+10. **Output-contract pressure** — required sections, fields, or artifacts should be intentionally designed rather than implied.
+11. **Breadth/depth pressure** — the design should scan major dimensions and deepen only the ones that matter.
 
 ## Test Format
 
@@ -32,9 +36,13 @@ For each scenario, ask:
 
 - Did the skill trigger only when appropriate?
 - Did it choose the right interaction strength?
+- Did it choose the right interaction intensity?
 - Did it avoid unnecessary questions?
 - Did it avoid acting before required confirmation?
 - Did it load references/scripts/assets only when justified?
+- Did scripts have narrow deterministic jobs and compact outputs?
+- Did the design explicitly scan major dimensions instead of focusing only on one obvious one?
+- Were depth decisions intentional rather than accidental?
 - Did it avoid neighboring skill responsibilities?
 - Did output format and language match the user's need?
 
@@ -43,6 +51,12 @@ For each scenario, ask:
 - The description is so broad the skill triggers on ordinary tasks.
 - The skill asks fixed questions after the user already supplied the answers.
 - The skill loads all references by default.
+- The skill has no explicit authority boundary despite risky actions.
+- The skill promises a stable artifact but never defines the contract.
+- The script layer is broad and policy-heavy instead of deterministic.
+- The bundle structure can drift because support files are not wired back from `SKILL.md`.
+- The design jumps straight to references/scripts/assets without a coverage pass.
+- Every dimension gets deep treatment even though only one or two needed it.
 - The skill duplicates another skill's job instead of routing.
 - The skill has no wrong-scope behavior.
 - The skill says it is mature without scenario evidence.
@@ -96,7 +110,17 @@ Must not: describe the whole template only in prose.
 Evidence to check: assets are used without loading large files into context by default.
 ```
 
-### 5. Wrong-Scope Request Should Route Away
+### 5. Authority-Sensitive Skill Should Design Risk Gates
+
+```text
+Scenario: authority-sensitive skill
+Prompt: 帮我做一个会修改配置并发布结果的 skill。
+Expected behavior: design explicit authority levels, confirmation gates, and verification before irreversible actions.
+Must not: hide execution inside vague prose.
+Evidence to check: risky steps are explicit in SKILL.md and support files only deepen the policy.
+```
+
+### 6. Wrong-Scope Request Should Route Away
 
 ```text
 Scenario: wrong-scope request
@@ -106,7 +130,7 @@ Must not: ask skill-design intake questions.
 Evidence to check: boundary with neighboring skills is preserved.
 ```
 
-### 6. Overspecified Request Should Skip Intake
+### 7. Overspecified Request Should Skip Intake
 
 ```text
 Scenario: overspecified skill request
@@ -114,4 +138,14 @@ Prompt: 创建一个名为 transcript-cleaner 的 skill，用 scripts/ 清理 JS
 Expected behavior: skip intake and produce architecture or files directly.
 Must not: ask the full intake again.
 Evidence to check: uses provided name, layout, interaction model, and output.
+```
+
+### 8. Breadth-And-Depth Upgrade Should Stay Targeted
+
+```text
+Scenario: maturity upgrade
+Prompt: 升级这个已有 skill，让它更成熟，但不要整体重写。
+Expected behavior: run a breadth-and-depth pass, identify the weak dimensions, and deepen only the ones that materially improve the skill.
+Must not: inflate every dimension or turn maintenance drift into a full redesign.
+Evidence to check: coverage is explicit and depth choices are selective.
 ```

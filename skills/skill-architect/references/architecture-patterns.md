@@ -6,6 +6,16 @@ Load this when choosing structure, interaction strength, or file layout.
 
 Use the weakest structure that prevents the real failure mode.
 
+Design the full skill, not just the file tree. A mature architecture chooses:
+
+- what authority level the skill holds
+- what output contract it promises
+- how much interaction pressure it puts on the user
+- how the bundle stays aligned across files
+- when deterministic work should move into scripts
+
+Use a breadth-and-depth pass before you choose file layout. The question is not only "what files should exist?" but also "which dimensions deserve depth at all?"
+
 | Profile | Use When | Avoid When |
 | --- | --- | --- |
 | `simple` | task is narrow, safe, obvious | user choices change outcome significantly |
@@ -56,6 +66,13 @@ Use when deterministic work matters:
 - repeated filesystem edits
 
 Prefer scripts when prose would cause repeated fragile rewrites.
+
+Script design should stay narrow:
+
+- small inputs
+- compact outputs
+- deterministic checks or transforms
+- no hidden policy decisions that belong in prose
 
 ### `SKILL.md + assets/`
 
@@ -125,10 +142,16 @@ Consider using a skill-boundary/referee skill after designing a skill that touch
 
 - One primary job.
 - Specific trigger description.
+- Authority level is explicit.
+- Output contract is clear when needed.
+- Breadth coverage is explicit.
+- Depth choices are intentional.
 - Clear non-goals.
 - Lightest adequate interaction model.
+- Interaction intensity is appropriate.
 - `SKILL.md` stays concise.
 - References/scripts/assets have clear load/use conditions.
+- Bundle files stay aligned.
 - Output format exists when consistency matters.
 - Missing information has a fallback path.
 - Neighboring skills have routing boundaries.

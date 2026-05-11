@@ -7,6 +7,8 @@ description: Use when installed or available skills may overlap, conflict, trigg
 
 Referee skill boundaries across any domain with controlled questions and minimal context. Collect scope, depth, and strategy before deep-reading skill bodies.
 
+Use this when the main question is how multiple skills should divide responsibility. If the boundary is already clear and the remaining task is to redesign one skill's internal shape, split, merge, or file layout, hand off to a skill-architecture workflow — the workflow that redesigns one skill's internal structure once the multi-skill boundary picture is already clear.
+
 ## Core Rules
 
 - Use the user's latest language for all prose, option text, headings, table headers, field labels, and summaries. Keep only skill names, paths, commands, frontmatter keys, option letters, and issue type labels exact.

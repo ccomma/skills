@@ -1,4 +1,4 @@
 interface:
   display_name: "Skill Architect"
-  short_description: "Design, split, merge, and optimize mature low-token skills."
-  default_prompt: "Use $skill-architect to decide whether to create, split, merge, or upgrade a skill, and design the right interaction style, progressive disclosure, references, scripts, assets, validation, boundaries, and token behavior."
+  short_description: "Design, split, merge, and harden mature skills across structure, authority, outputs, scripts, and token cost."
+  default_prompt: "Use $skill-architect to decide whether to create, split, merge, or upgrade a skill, start with a breadth-and-depth pass, and design the right authority boundary, output contract, interaction intensity, references, scripts, assets, validation, bundle structure, and token behavior."

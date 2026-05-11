@@ -9,6 +9,9 @@ The report should be concise enough to include in the final response or a short 
 The report helps future users understand:
 
 - why the skill was designed this way
+- what authority level it was given
+- what output contract it promises
+- which dimensions were intentionally deepened or left light
 - which structure choices were made
 - how the skill should be tested
 - whether token cost is healthy
@@ -29,7 +32,12 @@ Architecture:
 - Profile:
 - Files:
 - Why this structure:
+- Authority boundary:
+- Output contract:
+- Breadth coverage:
+- Depth choices:
 Interaction model:
+- Interaction intensity:
 Validation / pressure tests:
 Token cost:
 - Default load:

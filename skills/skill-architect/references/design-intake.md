@@ -13,6 +13,7 @@ Ask these together when the request is mostly clear:
 3. Should it act directly, ask questions first, or choose based on context?
 4. Should output be flexible, structured, or template-based?
 5. Are there neighboring skills it must avoid overlapping with?
+6. Which dimension most needs depth: authority, output contract, interaction, bundle structure, scripts, or token cost?
 
 ## Full Intake
 
@@ -28,6 +29,8 @@ Use for broad, risky, reusable, or previously failed skills.
 
 - What mistakes should this skill prevent?
 - Does the task often suffer from vague scope, wrong defaults, excessive token use, unsafe actions, inconsistent format, or skill overlap?
+- Does it need a stable output contract or artifact shape?
+- Does it need deterministic checks or transformations that should become scripts?
 
 ### C. Interaction Strength
 
@@ -49,13 +52,32 @@ Ask only the relevant questions:
 - Are reusable templates, media, boilerplate, or visual resources needed? If yes, use `assets/`.
 - Does the skill need UI metadata for a skill list? If yes, use `agents/openai.yaml` when supported.
 
-### E. Neighbor Boundaries
+### E. Authority And Output
+
+Ask only if relevant:
+
+- What is the highest authority this skill should hold?
+- Which actions require confirmation or stop points?
+- Does the skill need a fixed report, fields, or artifact structure?
+- What must be validated before the output counts as complete?
+
+### F. Neighbor Boundaries
 
 Ask:
 
 - Which existing skills are adjacent?
 - What should this skill own?
 - What should it explicitly hand off to another skill?
+
+### G. Breadth And Depth
+
+Ask when the skill is broad, reusable, or being upgraded:
+
+- Which dimensions are most likely to fail if left too light?
+- Which dimensions need only a short rule in `SKILL.md`?
+- Which deserve their own `reference`?
+- Which deterministic steps should become scripts?
+- Which dimensions can be deferred explicitly for now?
 
 ## Intake Shortcuts
 
