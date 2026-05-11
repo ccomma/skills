@@ -22,6 +22,7 @@ Scan these dimensions before freezing the repair plan:
 - abstraction level
 - structure and routing clarity
 - output contract and artifact quality
+- format-file opportunity and format-file quality
 - interaction intensity and recovery behavior
 - bundle consistency across files
 - safety and authority boundaries
@@ -66,6 +67,7 @@ Maintenance breadth scan:
 - Abstraction:
 - Structure and routing:
 - Output contract:
+- Format-file opportunity and quality:
 - Interaction intensity:
 - Bundle consistency:
 - Safety and authority:

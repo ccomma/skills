@@ -19,7 +19,23 @@ Every important reference, script, or asset should have a clear load or use cond
 
 Frontmatter, title, agent metadata, and any support-file descriptions should all describe the same skill and the same trigger boundary.
 
-### 3. Treat Bundle Drift As A Design Failure
+### 3. Keep The Core Thin And Sharp
+
+If a skill depends on a small number of strong behavioral instructions, keep those instructions near the top of `SKILL.md` and move artifact schemas, long examples, and detailed writeback rules into one-hop references.
+
+Good signs for a companion reference or format file:
+
+- the content describes the shape of a repeated artifact such as an ADR, glossary entry, handoff, or report
+- the detail is important, but not needed on every invocation
+- the main skill is starting to feel explanatory instead of directive
+
+### 4. Use Companion Format Files Deliberately
+
+Format files such as `ADR-FORMAT.md` or `CONTEXT-FORMAT.md` work well when a skill repeatedly creates or updates one artifact shape. They help the main skill stay short while keeping the artifact contract precise.
+
+Do not create companion files just to fragment the bundle. Add them when they preserve a stronger core instruction surface.
+
+### 5. Treat Bundle Drift As A Design Failure
 
 If a design makes it easy for names, modes, or entrypoints to drift apart, simplify it or add deterministic checks.
 

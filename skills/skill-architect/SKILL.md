@@ -62,13 +62,14 @@ Decide:
 - bundle consistency across `SKILL.md`, references, scripts, assets, and agent metadata
 - frontmatter contract for `name` and `description`
 - what stays in `SKILL.md`
+- whether repeated artifact shapes deserve companion format files
 - what moves to `references/`, `scripts/`, or `assets/`
 - whether deterministic checks or transformations should be extracted into scripts
 - validation method
 - pressure-test scenarios
 - token-cost failure modes and adaptive verbosity or batching triggers
 
-Load [breadth-and-depth.md](references/breadth-and-depth.md) first to scan coverage and choose which dimensions stay implicit, move into `SKILL.md`, get their own `reference`, require a `script`, or justify an `asset`. Then load `references/architecture-patterns.md` when choosing structure or tradeoffs. Load [authority-and-safety.md](references/authority-and-safety.md) when the skill may act, persist, publish, delete, install, or cross a permission boundary. Load [output-contracts.md](references/output-contracts.md) when output shape, fields, or artifacts matter. Load [interaction-intensity.md](references/interaction-intensity.md) when deciding questioning depth, pacing, batching, or stop points. Load [bundle-design.md](references/bundle-design.md) when planning references, scripts, assets, and agent metadata as one bundle. Load [script-design.md](references/script-design.md) when deterministic work may justify scripts. Load `references/examples.md` when examples would clarify the structure. Load `references/pressure-tests.md` before calling a reusable skill mature.
+Load [breadth-and-depth.md](references/breadth-and-depth.md) first to scan coverage and choose which dimensions stay implicit, move into `SKILL.md`, get their own `reference`, require a `script`, or justify an `asset`. Then load `references/architecture-patterns.md` when choosing structure or tradeoffs. Load [authority-and-safety.md](references/authority-and-safety.md) when the skill may act, persist, publish, delete, install, or cross a permission boundary. Load [output-contracts.md](references/output-contracts.md) when output shape, fields, or artifacts matter. Load [interaction-intensity.md](references/interaction-intensity.md) when deciding questioning depth, pacing, batching, or stop points. Load [bundle-design.md](references/bundle-design.md) when planning references, scripts, assets, and agent metadata as one bundle. Load [format-file-design.md](references/format-file-design.md) when deciding whether a repeated artifact deserves a companion format file or when artifact quality depends on a stable mini-template. Load [script-design.md](references/script-design.md) when deterministic work may justify scripts. Load `references/examples.md` when examples would clarify the structure. Load `references/pressure-tests.md` before calling a reusable skill mature.
 
 ### 3. Write Or Propose
 
@@ -85,7 +86,10 @@ Before calling the skill mature, check:
 - breadth coverage is explicit: major dimensions were considered, not only the most obvious ones
 - depth choices are explicit: each important dimension was intentionally left light, deepened into a `reference`, extracted into a `script`, turned into an `asset`, or deferred
 - `SKILL.md` is the router/rules layer, not a dumping ground
+- the strongest behavioral instructions stay easy to find near the top of `SKILL.md`
 - references are conditional and lazy-loaded
+- companion format files are used when they keep the core skill shorter while preserving artifact precision
+- companion format files have explicit creation thresholds, quality bars, and wrong-scope guidance
 - scripts/assets are justified by repeatability, fragility, or output shape
 - scripts have narrow inputs, predictable outputs, and compact summaries
 - interaction strength matches ambiguity, risk, and token cost

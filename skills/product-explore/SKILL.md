@@ -101,19 +101,7 @@ If the user cannot answer, propose a default hypothesis and label it as an assum
 
 ### Phase 4: Product Brief
 
-Produce a Product Brief in the user's working language. The brief must include:
-
-- status
-- evidence level
-- problem statement
-- target users
-- core value proposition
-- key design decisions
-- boundaries
-- success signals
-- constraints and assumptions
-- validation questions
-- recommended next workflow
+Load `references/product-brief-format.md` before drafting the Product Brief. Produce the brief in the user's working language and keep it as a compact downstream handoff artifact, not a pseudo-PRD.
 
 ### Phase 5: Handoff And Persistence
 
@@ -152,6 +140,7 @@ Produce a Product Brief in the user's working language. The brief must include:
 
 - Load `references/lenses.md` during Phase 2 when choosing divergence lenses.
 - Load `references/discovery-methods.md` when the product risk calls for user research, JTBD, opportunity mapping, assumption testing, prioritization, or market framing.
+- Load `references/product-brief-format.md` during Phase 4 when drafting the final `Product Brief`.
 - Load `references/example-flow.md` only when you need a concrete end-to-end sample.
 
 ## Pressure Tests

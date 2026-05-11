@@ -23,6 +23,9 @@ Choose the narrowest mode that matches the problem:
 
 - `portability + language`: runtime terms, mixed language, local paths, abstraction leaks
 - `structure + routing`: bloated `SKILL.md`, misplaced content, weak routing
+- `core sharpness`: strong behavior diluted by explanatory sprawl or by missing companion format files
+- `format opportunity`: a repeated high-value artifact shape is still trapped inline and would be better as a companion format file
+- `format-file quality`: companion format files are bloated, vague, ritualized, or drifted from the parent skill
 - `output contracts`: unstable report shape, labels, fields, or artifact checks
 - `interaction intensity`: too many questions, too few checkpoints, bad batching, weak recovery
 - `bundle consistency`: drift across `SKILL.md`, frontmatter, references, scripts, metadata, or public bundle surfaces
@@ -32,7 +35,8 @@ Choose the narrowest mode that matches the problem:
 Load only the references needed for the active mode:
 
 - [language-and-portability.md](references/language-and-portability.md) for portability or language problems
-- [repair-patterns.md](references/repair-patterns.md) for structure, routing, or general repair planning
+- [repair-patterns.md](references/repair-patterns.md) for structure, routing, core sharpness, or general repair planning
+- [format-file-quality.md](references/format-file-quality.md) for auditing or repairing companion format files
 - [output-contracts.md](references/output-contracts.md) for unstable sections, fields, templates, or artifact quality expectations
 - [interaction-intensity.md](references/interaction-intensity.md) for questioning depth, pacing, batching, or recovery behavior
 - [bundle-consistency.md](references/bundle-consistency.md) for cross-file drift
@@ -92,6 +96,8 @@ Before editing, write a short baseline for:
 - safety, confirmation, evidence, and persistence rules
 - output quality plus user-facing language and interaction style
 - reachable references, scripts, and assets
+- companion format files and their quality thresholds when they exist
+- repeated inline artifact shapes that may deserve companion format files
 - explicit upstream/downstream workflow contracts
 - execution-state artifacts this skill must not mutate
 

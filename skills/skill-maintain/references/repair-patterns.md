@@ -15,6 +15,8 @@ Check the reported issue before widening scope:
 - **Bundle mismatch**: `SKILL.md`, references, scripts, assets, or agent metadata no longer describe the same behavior.
 - **Authority drift**: the skill overreaches, weakens confirmation gates, or blurs analysis versus execution.
 - **Token drift**: the default load is too large, too repetitive, or too eager for the value it protects.
+- **Diluted core**: the skill's strongest behavioral instructions are buried under explanation, while artifact schemas or detailed examples crowd the main entry surface.
+- **Missed format opportunity**: a repeated artifact shape is embedded inline in `SKILL.md` or a generic reference, but the bundle would be clearer and more stable with a companion format file.
 
 Start with a maintenance breadth-and-depth pass before deciding that only one of these dimensions matters.
 
@@ -59,6 +61,10 @@ Move to `references/`:
 - troubleshooting catalogs
 - pressure tests
 - validation templates
+
+If the skill feels more like a handbook than a tool, extract repeated artifact shapes into companion reference files and keep the core behavioral instructions near the top.
+
+Also check the inverse problem: if a repeated artifact shape appears often enough to drift, but has not yet been split into a companion format file, call that out explicitly instead of waiting for the user to ask for templates.
 
 ### 3. Replace Concrete Neighbor Names
 
@@ -117,7 +123,27 @@ When part of the repair is repetitive, mechanical, and stable, prefer a local sc
 
 Keep script output compact so the workflow consumes a summary, not a raw dump.
 
-### 11. Make Repair Depth Explicit
+### 11. Recover A Sharp Core Surface
+
+When a skill used to feel decisive and now feels mushy:
+
+- move artifact templates into dedicated format references
+- move detailed writeback rules into references with explicit load conditions
+- keep the strongest "what to do" instructions early and compact
+- preserve the hard behavioral edges while trimming explanation
+
+### 12. Surface Missed Format Opportunities
+
+When auditing a skill, ask:
+
+- Does this workflow repeatedly emit one high-value artifact shape?
+- Is that shape currently described inline instead of through a dedicated format file?
+- Would a weaker model benefit from a stable mini-template?
+- Would extracting the format make the core `SKILL.md` sharper without creating bureaucracy?
+
+If yes, recommend a companion format file as a first-class repair option.
+
+### 13. Make Repair Depth Explicit
 
 For every important dimension, decide whether it needs:
 

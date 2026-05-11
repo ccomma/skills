@@ -8,9 +8,10 @@ These skills are designed to be small, composable, and easy to install into diff
 
 - [`product-explore`](./skills/product-explore/SKILL.md): Explores a fuzzy product or feature idea, clarifies the real problem and users, and converges on a Product Brief before planning.
 - [`product-plan`](./skills/product-plan/SKILL.md): Builds and maintains durable product context, planning docs, phase handoffs, and evidence for multi-phase product work.
+- [`product-validate`](./skills/product-validate/SKILL.md): Stress-tests an existing product plan against docs, terminology, code, and decision boundaries before execution or replanning continues.
 - [`skill-referee`](./skills/skill-referee/SKILL.md): Referees responsibility boundaries between skills across any domain, using metadata-first discovery and controlled review depth.
 - [`skill-architect`](./skills/skill-architect/SKILL.md): Designs mature, token-efficient skills with explicit authority boundaries, output contracts, interaction intensity, references, scripts, assets, validation, and bundle structure.
-- [`skill-maintain`](./skills/skill-maintain/SKILL.md): Audits and repairs one existing skill through modular checks for portability, language consistency, output contracts, interaction intensity, bundle integrity, authority boundaries, structure, routing, and token/context cost without taking over multi-skill boundary design.
+- [`skill-maintain`](./skills/skill-maintain/SKILL.md): Audits and repairs one existing skill through modular checks for portability, language consistency, output contracts, interaction intensity, bundle integrity, authority boundaries, structure, routing, companion format-file opportunities, and token/context cost without taking over multi-skill boundary design.
 
 ## Install
 
@@ -59,9 +60,21 @@ Edit skills in this repository:
 skills/<skill-name>/SKILL.md
 skills/<skill-name>/references/
 skills/<skill-name>/agents/openai.yaml
+skills/<skill-name>/scripts/
 ```
 
 `agents/openai.yaml` is optional, but when present it should stay aligned with the skill name, display name, and default prompt.
+
+Many skills also use companion format files in `references/` for repeated artifact shapes such as product briefs, handoffs, acceptance evidence, or ADRs. Keep those format files short, explicit about when to use them, and aligned with the parent skill's artifact contract.
+
+Use the deterministic bundle checker when a skill is renamed, restructured, or given new references, scripts, or format files:
+
+```bash
+./skills/skill-maintain/scripts/check-skill-bundle.sh ./skills/<skill-name> --expected-name <skill-name>
+./skills/skill-maintain/scripts/check-skill-bundle.sh ./skills/<skill-name> --expected-name <skill-name> --policy internal
+```
+
+The default `external` policy is suitable for third-party or imported skills. The `internal` policy is stricter and is intended for the skills maintained in this repository.
 
 When installed through symlinks, your local agent runtime reads the same files from this repository, so public maintenance and personal usage do not drift apart.
 

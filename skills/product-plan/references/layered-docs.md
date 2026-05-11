@@ -61,30 +61,13 @@ Do not let a discovery artifact silently rename the current phase or overwrite e
 
 ## Minimal Handoff Shape
 
-A handoff should include:
-
-- load order
-- branch and commit policy, including the active phase branch
-- current phase and goal
-- in scope / out of scope
-- key artifacts
-- owned files and files to avoid
-- verification commands
-- next work
-- context budget rule
+Load `handoff-format.md` when drafting or repairing a handoff. A handoff should stay operational and compact.
 
 Keep handoffs operational. They are not second design docs.
 
 ## Phase Acceptance Shape
 
-Acceptance should include:
-
-- checklist of exit criteria
-- commands run
-- actual results
-- final artifacts
-- commit or branch evidence when available
-- remaining risks
+Load `acceptance-format.md` when drafting or repairing acceptance evidence.
 
 Do not claim phase completion without evidence.
 

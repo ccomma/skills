@@ -11,7 +11,7 @@ Build and maintain a product project's context architecture. Core pattern: short
 
 Use this for serious, multi-phase work. For a prototype or one-off task, keep it light: a README and short handoff are enough.
 
-This skill prepares product context. It does not replace implementation planning, code work, debugging, verification, or review.
+This skill prepares product context. It does not replace design validation, implementation planning, code work, debugging, verification, or review.
 
 ## When To Use
 
@@ -24,7 +24,7 @@ Use when the user asks to:
 - prepare a project so future sessions can resume with minimal prompting
 - close a phase and preserve evidence for the next phase
 
-Do not use for code execution, refactoring, debugging, verification, code review, feature brainstorming, or implementation planning. Hand off to the appropriate engineering or discovery workflow instead.
+Do not use for code execution, refactoring, debugging, verification, code review, feature brainstorming, direct plan grilling, or implementation planning. Hand off to the appropriate discovery, validation, or engineering workflow instead.
 
 ## Upstream Inputs
 
@@ -77,7 +77,7 @@ Keep each layer narrow:
 - ADR: sparse, durable, cross-phase decisions
 - `README.md`: public entrypoint, reading paths, and quickstart
 
-For detailed structure, naming, and phase-end shapes, load [references/layered-docs.md](references/layered-docs.md).
+For detailed structure, naming, and phase-end shapes, load [references/layered-docs.md](references/layered-docs.md). Load `references/handoff-format.md` when creating or repairing handoff artifacts. Load `references/acceptance-format.md` when creating or repairing acceptance artifacts.
 
 ## Shared Namespace Rules
 
@@ -154,9 +154,11 @@ Phase branches are part of the evidence trail. Do not leave them local-only unle
 
 If a historical phase predates this structure, create a compact phase package with evidence from commits, tests, and known artifacts.
 
-### 5. Hand Off To Execution
+### 5. Hand Off To Validation Or Execution
 
-After the context architecture is clean, hand off to the appropriate implementation workflow. Ensure `CURRENT_HANDOFF.md`'s load order references the project's phase execution workflow so the agent knows what concrete steps to follow (create branch → implement → refactor → test → closeout → merge). Do not turn this skill into a substitute for implementation planning, TDD, debugging, verification, or review.
+After the context architecture is clean, decide whether the plan should be challenged before execution. If terminology is still fuzzy, the owning docs disagree, the current phase boundary is uncertain, the technical design needs pressure-testing, or the code may contradict the docs, hand off first to a design validation workflow that grills the plan against the existing artifacts without mutating execution-state docs. If the plan is already coherent enough, hand off to the appropriate implementation workflow.
+
+Ensure `CURRENT_HANDOFF.md`'s load order references the project's phase execution workflow so the agent knows what concrete steps to follow (create branch -> implement -> refactor -> test -> closeout -> merge). Do not turn this skill into a substitute for design validation, implementation planning, TDD, debugging, verification, or review.
 
 `CURRENT_HANDOFF.md` is an execution-state artifact, not a discovery scratchpad. Update it only after the accepted planning layers are internally consistent.
 
