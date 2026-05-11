@@ -69,6 +69,14 @@ Evidence to check: entrypoints, references, and metadata all describe the same s
 ```
 
 ```text
+Scenario: invalid frontmatter after rename
+Prompt: This skill was renamed and now GitHub says the YAML is invalid because the description is too long, contains an unquoted colon, or mixes raw examples into frontmatter. Repair it.
+Expected behavior: shorten and stabilize the frontmatter, keep the trigger boundary clear, and re-check metadata plus public bundle surfaces after the rename.
+Must not: only patch the visible parse error while leaving stale ids, mixed-language trigger text, or missing README/index updates behind.
+Evidence to check: frontmatter parses cleanly, the description stays concise, and the renamed bundle is internally and publicly consistent.
+```
+
+```text
 Scenario: deterministic bundle audit
 Prompt: Check whether this skill bundle is internally consistent before you patch it.
 Expected behavior: run the local bundle-check script first, then use the compact results to guide repair.
@@ -82,6 +90,14 @@ Prompt: This skill clearly has a wording problem, but I also worry its output co
 Expected behavior: run a maintenance breadth scan, then choose targeted repair depth per dimension.
 Must not: either stop at the first visible symptom or rewrite every dimension blindly.
 Evidence to check: coverage is explicit and repair depth is selective.
+```
+
+```text
+Scenario: explicit skill audit without bug list
+Prompt: Review this skill and fix what needs fixing.
+Expected behavior: treat the request as authorization for a proactive maintenance audit, discover structure, bundle, output, interaction, safety, and token issues without waiting for the user to list them, then repair the safe and clearly justified ones.
+Must not: respond as if no action is needed just because the user did not pre-enumerate concrete bugs.
+Evidence to check: the report distinguishes user-reported issues from proactively discovered issues and fixes the safe findings in the same pass.
 ```
 
 ```text

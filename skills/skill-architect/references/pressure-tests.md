@@ -149,3 +149,13 @@ Expected behavior: run a breadth-and-depth pass, identify the weak dimensions, a
 Must not: inflate every dimension or turn maintenance drift into a full redesign.
 Evidence to check: coverage is explicit and depth choices are selective.
 ```
+
+### 9. New Or Renamed Skill Should Stay Publishable
+
+```text
+Scenario: renamed public skill
+Prompt: 把一个公开 skill 改个更短的名字，并补齐需要的文件。
+Expected behavior: keep frontmatter YAML valid, keep the description concise, align agent metadata, and update public bundle surfaces such as README when they exist.
+Must not: stop after renaming the folder and main file while leaving stale ids, invalid YAML, or missing index updates.
+Evidence to check: the renamed skill is internally consistent and publicly enumerable.
+```

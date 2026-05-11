@@ -11,6 +11,8 @@ Use a maintenance breadth-and-depth pass to prevent two common failures:
 
 This pass is for repair and correction work. Use an architecture workflow instead when the main task is to redesign or mature a skill rather than repair drift or failure.
 
+When the user explicitly asks to review, inspect, audit, or check a named skill, assume they want this breadth scan by default even if they did not provide a bug list. The scan should actively look for drift and not wait for the user to point at every issue first.
+
 ## Maintenance Breadth Scan
 
 Scan these dimensions before freezing the repair plan:

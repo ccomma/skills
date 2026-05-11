@@ -1,6 +1,6 @@
 ---
 name: skill-architect
-description: Use when designing, upgrading, splitting, merging, productizing, or deciding whether to create a skill, especially when the work needs the right authority boundary, output contract, interaction model, references, scripts, assets, validation, token efficiency, or clearer boundaries beyond a basic scaffold.
+description: Use when designing, upgrading, splitting, merging, productizing, or deciding whether to create a skill, especially when the work needs the right authority boundary, output contract, interaction model, references, scripts, assets, validation, token efficiency, frontmatter discipline, or clearer boundaries beyond a basic scaffold.
 ---
 
 # Skill Architect
@@ -60,6 +60,7 @@ Decide:
 - interaction intensity, pacing, and stop points
 - file layout
 - bundle consistency across `SKILL.md`, references, scripts, assets, and agent metadata
+- frontmatter contract for `name` and `description`
 - what stays in `SKILL.md`
 - what moves to `references/`, `scripts/`, or `assets/`
 - whether deterministic checks or transformations should be extracted into scripts
@@ -78,6 +79,7 @@ If the user asks for design only, output a concise architecture spec. If they as
 Before calling the skill mature, check:
 
 - trigger description says when to use, not the whole workflow
+- frontmatter is valid YAML and the description is concise, single-purpose, and free of fragile inline examples or mixed-language clutter unless explicitly required
 - authority level is explicit and risky actions have the right confirmation design
 - output contract is clear when consistency matters
 - breadth coverage is explicit: major dimensions were considered, not only the most obvious ones
@@ -90,6 +92,7 @@ Before calling the skill mature, check:
 - interaction intensity matches ambiguity, user effort, and safety
 - neighboring skills have routing boundaries
 - bundle files stay aligned: `SKILL.md`, references, scripts, assets, and agent metadata describe the same skill
+- renamed or newly added skills update public bundle surfaces that enumerate skills, such as `README.md` or other maintained indexes, when those surfaces exist
 - routing guidance is publishable and does not depend on private skill names, local paths, or a user's personal workflow names unless they are explicitly part of the public bundle being designed
 - skill content uses platform-generic terminology (e.g., "cold-start entrypoint file" not "CLAUDE.md"), with vendor-specific names only as illustrative examples
 - the skill can fail gracefully when inputs are missing
