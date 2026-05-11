@@ -13,6 +13,191 @@ These skills are designed to be small, composable, and easy to install into diff
 - [`skill-architect`](./skills/skill-architect/SKILL.md): Designs mature, token-efficient skills with explicit authority boundaries, output contracts, interaction intensity, references, scripts, assets, validation, and bundle structure.
 - [`skill-maintain`](./skills/skill-maintain/SKILL.md): Audits and repairs one existing skill through modular checks for portability, language consistency, output contracts, interaction intensity, bundle integrity, authority boundaries, structure, routing, companion format-file opportunities, and token/context cost without taking over multi-skill boundary design.
 
+## Product Workflow
+
+`product-explore -> product-plan -> product-validate -> implementation`
+
+```mermaid
+flowchart TD
+    A["Fuzzy Product Idea"] --> B["product-explore"]
+    B --> B1["Output: Product Brief"]
+
+    B1 --> C["product-plan"]
+    C --> C1["DESIGN.md"]
+    C --> C2["roadmap"]
+    C --> C3["CURRENT_HANDOFF.md"]
+    C --> C4["Current Phase HANDOFF.md"]
+    C --> C5["Current Phase PRD"]
+    C --> C6["Current Phase Technical Design"]
+    C --> C7["Current Phase Test Plan"]
+
+    C5 --> D["IMPLEMENTATION_PLAN.md"]
+    C6 --> D
+    C7 --> D
+
+    D --> E["product-validate"]
+    E --> E1["Check Terminology, Boundaries, and Contradictions"]
+    E --> E2["Write Back to DESIGN / PRD / Technical / ADR When Needed"]
+
+    E --> F["Implementation"]
+    F --> G["Verification / Testing"]
+    G --> H["ACCEPTANCE.md"]
+    H --> I["Update Phase HANDOFF"]
+    I --> J["Update CURRENT_HANDOFF.md"]
+
+    J --> K{"Another Phase?"}
+    K -->|Yes| C
+    K -->|No| L["Project Complete"]
+```
+
+These three product-oriented skills should connect through artifact contracts, not through vague intuition:
+
+- `product-explore`
+  - Use when the idea is still fuzzy.
+  - Output: `Product Brief`.
+  - Does not directly mutate execution-state documents such as `CURRENT_HANDOFF.md`.
+- `product-plan`
+  - Use when the direction is clear enough to become durable planning context.
+  - Output: the planning stack for serious multi-phase work, centered on `DESIGN.md`, roadmap, current handoff, phase handoffs, PRDs, technical designs, test plans, `IMPLEMENTATION_PLAN.md`, and `ACCEPTANCE.md`.
+  - Treats `Product Brief` as upstream input, not as current execution state.
+- `product-validate`
+  - Use after planning and before implementation, or before a major replan.
+  - Challenges the plan against existing docs, code, terminology, and decision boundaries.
+  - Can propose document repairs and ADR-worthy decisions, but does not directly take over current-phase execution state.
+
+The most common path is:
+
+1. Explore the product idea until it becomes a usable `Product Brief`
+2. Turn that brief into durable planning documents
+3. Use `product-validate` to challenge terminology, code, and decision boundaries
+4. Hand off to implementation only after the plan is coherent enough
+
+### Document Layers
+
+`product-plan` uses a layered document model. The key distinction is not "one folder per phase" versus "one folder per document type", but **which layer owns which kind of truth**.
+
+- `DESIGN.md`
+  - Holds durable product judgment and long-lived design direction.
+  - Best kept at the repository root so it remains visibly distinct from phase and reference docs.
+- `docs/roadmap/PROJECT_DEVELOPMENT_PLAN.md`
+  - Holds phase sequence, exit conditions, and prerequisites.
+- `docs/context/CURRENT_HANDOFF.md`
+  - Holds current execution state: active phase, active branch, next work, and verification commands.
+- `docs/phases/phase-XX-<slug>/HANDOFF.md`
+  - Holds operational handoff information for one phase.
+- `docs/prd/`, `docs/technical/`, `docs/testing/`
+  - Hold phase requirements, architecture contracts, and test strategy.
+- `docs/phases/phase-XX-<slug>/IMPLEMENTATION_PLAN.md`
+  - Holds execution slicing and delivery order for the current phase. It is not a second technical design.
+- `docs/phases/phase-XX-<slug>/ACCEPTANCE.md`
+  - Holds phase-close evidence: commands, results, artifacts, commits, and residual risk.
+- `docs/adr/`
+  - Holds cross-phase decisions worth preserving long term.
+
+The usual planning-document build order is:
+
+1. `DESIGN.md`
+2. roadmap
+3. Runtime entrypoint such as `AGENTS.md` or `CLAUDE.md`
+4. `docs/context/CURRENT_HANDOFF.md`
+5. Current phase `HANDOFF.md`
+6. Current phase PRD, technical design, and test plan
+7. Current phase `IMPLEMENTATION_PLAN.md`
+8. Current phase `ACCEPTANCE.md`
+
+Future phases should usually stay coarse in the roadmap until they are close enough to implement. Unless there is a strong reason, do not fully write every future phase PRD, technical design, and implementation plan up front.
+
+```mermaid
+flowchart TD
+    A["PRD"] --> A1["Defines What to Build"]
+    A --> A2["Defines Who It Is For"]
+    A --> A3["Defines Boundaries and Success Criteria"]
+
+    B["Technical Design"] --> B1["Defines How the System Is Designed"]
+    B --> B2["Defines Modules / Interfaces / Data Structures"]
+    B --> B3["Defines Technical Constraints and Trade-offs"]
+
+    A --> C["IMPLEMENTATION_PLAN"]
+    B --> C
+    C --> C1["Breaks Design into Executable Steps"]
+    C --> C2["Orders the Work"]
+    C --> C3["Defines How Each Step Is Verified"]
+
+    C --> D["Implementation and Testing"]
+    D --> E["ACCEPTANCE"]
+
+    E --> E1["Records Whether Exit Criteria Were Met"]
+    E --> E2["Records Which Commands Actually Ran"]
+    E --> E3["Records Results / Artifacts / Residual Risk"]
+
+    A -.answers.-> X["Why Build It"]
+    B -.answers.-> Y["How to Design It"]
+    C -.answers.-> Z["How to Deliver It"]
+    E -.answers.-> W["Was It Actually Completed"]
+```
+
+## Skill Workflow
+
+`skill-referee -> skill-architect -> skill-maintain`
+
+```mermaid
+flowchart TD
+    A["Unclear Skill Overlap or Routing"] --> B["skill-referee"]
+    B --> B1["Clarified Boundaries"]
+    B --> B2["Routing Guidance"]
+
+    B1 --> C["skill-architect"]
+    B2 --> C
+    C --> C1["Create a New Skill"]
+    C --> C2["Split or Merge a Skill"]
+    C --> C3["Reshape Structure, References, Scripts, or Format Files"]
+
+    C1 --> D["Implemented Skill Bundle"]
+    C2 --> D
+    C3 --> D
+
+    D --> E["skill-maintain"]
+    E --> E1["Audit One Existing Skill"]
+    E --> E2["Repair Drift, Boundaries, or Token Cost"]
+    E --> E3["Check Bundle and Format-File Quality"]
+
+    E --> F{"More Boundary Conflicts?"}
+    F -->|Yes| B
+    F -->|No| G["Stable Skill Bundle"]
+```
+
+These three skill-management skills solve different layers of the same problem:
+
+- `skill-referee`
+  - Use when multiple skills may overlap, conflict, trigger too broadly, or need clearer routing.
+  - Output: clearer boundaries, routing guidance, and conflict classification.
+  - Best used before redesigning one specific skill when the real uncertainty is still between skills.
+- `skill-architect`
+  - Use when the boundary is already clear and the remaining question is how one skill should be shaped.
+  - Output: a stronger skill design or implementation plan covering authority boundaries, output contracts, interaction model, references, scripts, assets, validation, and bundle structure.
+  - This is the right place to decide whether a repeated artifact deserves a companion format file.
+- `skill-maintain`
+  - Use when one existing skill already exists and needs an audit or repair.
+  - Output: focused repairs for portability, structure, routing, output contracts, safety, bundle consistency, format-file opportunities, format-file quality, or token cost.
+  - This is not the right tool for deciding whether multiple skills should be split, merged, or rerouted from scratch.
+
+The most common skill-management paths are:
+
+1. If multiple skills feel blurry or redundant, use `skill-referee` first.
+2. Once the boundary is clear, use `skill-architect` to design or redesign the right shape.
+3. After the skill exists, use `skill-maintain` to audit and repair it over time.
+
+### Companion Format Files
+
+Many mature skills use companion format files in `references/` for repeated high-value artifact shapes such as product briefs, handoffs, acceptance evidence, or ADRs.
+
+The rule of thumb is:
+
+- use `skill-architect` to decide whether a format file should exist
+- use `skill-maintain` to check whether a format file is missing, bloated, vague, ritualized, or drifted from the parent skill
+
+High-quality format files should stay short, define when to use them, define when not to use them, distinguish required structure from optional detail, and stay aligned with the parent skill's artifact contract.
+
 ## Install
 
 Clone this repository:

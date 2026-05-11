@@ -4,9 +4,9 @@
 
 Use progressive disclosure:
 
-- Always load: `README.md`, `docs/context/CURRENT_HANDOFF.md`.
+- Always load: runtime entrypoint file, then `docs/context/CURRENT_HANDOFF.md`.
 - Usually load: current phase `HANDOFF.md` and relevant code/tests.
-- Sometimes load: current phase PRD, technical design, test plan, or implementation plan.
+- Sometimes load: `README.md` for repo/public orientation, plus current phase PRD, technical design, test plan, or implementation plan.
 - Rarely load: full `DESIGN.md`, full roadmap, historical phase docs, ADRs.
 
 This reference is about product-context documents. It is not a code refactoring guide, implementation-plan format for code execution, TDD workflow, debugging method, verification workflow, or code review guide.
@@ -39,11 +39,11 @@ docs/adr/ADR-0001-<decision>.md
    - Available skills and their invocation triggers
 4. Create `docs/context/CURRENT_HANDOFF.md` as the default future-session entrypoint.
 5. Create the first phase `HANDOFF.md`.
-6. Create or switch to the phase branch before implementation starts.
+6. Create or switch to the phase branch before implementation starts. Use the same phase identifier across branch and docs, for example `phase-01-core-search`.
 7. Create the first phase PRD, technical design, and test plan when the phase is ready for implementation.
-8. Create `IMPLEMENTATION_PLAN.md` only after the phase PRD, technical design, and test plan exist.
+8. Create `IMPLEMENTATION_PLAN.md` only after the phase PRD, technical design, and test plan exist. This file owns execution slicing and task order; it should not restate architectural rationale that already belongs in the technical design.
 9. Create `ACCEPTANCE.md`.
-10. Hand off to planning or execution skills.
+10. Hand off to validation or execution skills.
 
 If the cold-start entrypoint file exists but only says "read CURRENT_HANDOFF.md" without referencing the development flow, repair it before proceeding. A minimal entrypoint file without process enforcement is the most common cause of documentation rot across phases.
 
@@ -58,6 +58,13 @@ When a new discovery artifact appears after work has already started:
 5. Update `CURRENT_HANDOFF.md` only after the planning layers agree.
 
 Do not let a discovery artifact silently rename the current phase or overwrite execution state.
+
+Default judgment rules:
+
+- Completed phases are evidence records and should not be silently rewritten.
+- The current phase can be updated only while its scope is still materially fluid.
+- Future phases can be replanned normally.
+- If a current-phase change would break the current phase goal, prefer creating a new phase instead.
 
 ## Minimal Handoff Shape
 
@@ -79,7 +86,7 @@ Before ending a phase:
 - Update phase `ACCEPTANCE.md` with evidence.
 - Update phase `HANDOFF.md` with final state and next handoff.
 - Update `docs/context/CURRENT_HANDOFF.md` for the next phase or task.
-- Before starting the next phase, create or switch to a new phase branch and record it in both handoffs.
+- Before starting the next phase, create or switch to a new phase branch and record it in both handoffs. Reuse the same `phase-XX-<slug>` identifier in docs and git branch naming.
 - Update `README.md` incrementally to reflect the new phase: add new commands, update project status, refresh quickstart if needed.
 - Update roadmap only if scope, exit status, or next prerequisites changed.
 - Update `DESIGN.md` only if durable product judgment changed.

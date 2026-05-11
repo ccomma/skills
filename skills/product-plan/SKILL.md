@@ -7,9 +7,13 @@ description: "Use when starting or continuing serious product work that needs du
 
 ## Overview
 
-Build and maintain a product project's context architecture. Core pattern: short handoff first, long docs on demand, clear artifact ownership, phase evidence preserved at closeout.
+Build and maintain a product project's context architecture. Core pattern: short handoff first, long docs on demand, clear artifact ownership, and preserved phase evidence at closeout.
 
 Use this for serious, multi-phase work. For a prototype or one-off task, keep it light: a README and short handoff are enough.
+
+This skill prepares durable planning context for the common path: initial design -> current-phase planning -> validation or implementation handoff -> implementation -> phase closeout.
+
+Keep secondary concerns such as token economy, resumability, shared namespace conflicts, and midstream replanning subordinate to that main path.
 
 This skill prepares product context. It does not replace design validation, implementation planning, code work, debugging, verification, or review.
 
@@ -20,9 +24,6 @@ Use when the user asks to:
 - start a serious product or product-like engineering project
 - create or repair `DESIGN.md`, roadmap, phase PRDs, technical designs, test plans, handoffs, acceptance docs, or ADRs
 - define or repair ownership rules for shared project documents and directories
-- reduce token cost while preserving project quality
-- prepare a project so future sessions can resume with minimal prompting
-- close a phase and preserve evidence for the next phase
 
 Do not use for code execution, refactoring, debugging, verification, code review, feature brainstorming, direct plan grilling, or implementation planning. Hand off to the appropriate discovery, validation, or engineering workflow instead.
 
@@ -39,11 +40,12 @@ Planning modes:
 
 Default loading order for an existing project:
 
-1. `README.md` for public project orientation.
+1. Runtime entrypoint file such as `AGENTS.md`, `CLAUDE.md`, or an equivalent cold-start file.
 2. `docs/context/CURRENT_HANDOFF.md` for current phase, branch, next work, avoid list, and verification commands.
 3. Current phase `docs/phases/<phase>/HANDOFF.md`.
 4. Current task code and tests.
-5. Load PRD, technical design, test plan, roadmap, or `DESIGN.md` only when the shorter context cannot answer the question.
+5. `README.md` only when repo-level orientation or public-facing project guidance is needed.
+6. Load PRD, technical design, test plan, roadmap, or `DESIGN.md` only when the shorter context cannot answer the question.
 
 Default document order for a new project:
 
@@ -65,6 +67,8 @@ Default update order for a midstream replan:
 
 If the cold-start entrypoint file exists but only says "read CURRENT_HANDOFF.md" without referencing the phase execution workflow, repair it.
 
+`IMPLEMENTATION_PLAN.md` is an execution-slicing document. It should translate accepted requirements, design, and test strategy into an ordered implementation path. It is not a second technical design.
+
 ## Document Ownership
 
 Keep each layer narrow:
@@ -78,22 +82,6 @@ Keep each layer narrow:
 - `README.md`: public entrypoint, reading paths, and quickstart
 
 For detailed structure, naming, and phase-end shapes, load [references/layered-docs.md](references/layered-docs.md). Load `references/handoff-format.md` when creating or repairing handoff artifacts. Load `references/acceptance-format.md` when creating or repairing acceptance artifacts.
-
-## Shared Namespace Rules
-
-`docs/` is a shared namespace, not this skill's private workspace.
-
-Before creating or editing documents:
-
-1. Inventory existing top-level docs and `docs/` subdirectories.
-2. Classify each artifact by purpose, not by which skill created it.
-3. Preserve the owner of any existing artifact when its purpose is clear.
-4. Reference instead of copy.
-5. Create a new artifact only when no existing artifact already owns that responsibility.
-
-Ownership means responsibility for the source of truth, not exclusive permission to read.
-
-Prefer predictable subdirectories only when they match the project's existing layout. Handoffs may link to owned artifacts but should not paste their full content. Acceptance docs may cite commands, results, commits, and risks but should not become product rationale or architecture design.
 
 ## Workflow
 
@@ -132,14 +120,21 @@ Verify that the cold-start chain is complete: entrypoint file -> `CURRENT_HANDOF
 
 Move content to the layer that owns it. Prefer coherent rewrites over scattered addenda.
 
-Per phase, create or repair layers in this order:
+For the common path, create or repair layers in this order:
 
-1. PRD
-2. Technical Design
-3. Test Plan
-4. `IMPLEMENTATION_PLAN.md`
+1. `DESIGN.md`
+2. roadmap
+3. runtime entrypoint file
+4. `docs/context/CURRENT_HANDOFF.md`
+5. current phase `HANDOFF.md`
+6. current phase PRD
+7. current phase technical design
+8. current phase test plan
+9. current phase `IMPLEMENTATION_PLAN.md`
 
-Do not create `IMPLEMENTATION_PLAN.md` before the PRD and technical design exist.
+Treat `handoff-format.md` and `acceptance-format.md` as first-class companion formats when shaping handoff or acceptance artifacts.
+
+Do not create `IMPLEMENTATION_PLAN.md` before the PRD, technical design, and test plan exist.
 
 ### 4. Preserve Evidence
 
@@ -162,10 +157,40 @@ Ensure `CURRENT_HANDOFF.md`'s load order references the project's phase executio
 
 `CURRENT_HANDOFF.md` is an execution-state artifact, not a discovery scratchpad. Update it only after the accepted planning layers are internally consistent.
 
+## Branch Cases
+
+### Midstream Replan
+
+Use this branch only when a new direction appears after work has already started.
+
+- Completed phases are evidence records by default; do not silently rewrite them.
+- The current phase may be updated only while its scope is still materially fluid.
+- Future phases remain editable.
+- If a current-phase change would break the current phase goal, prefer opening a new phase instead of mutating the existing one beyond recognition.
+
+### Shared Namespace Rules
+
+`docs/` is a shared namespace, not this skill's private workspace.
+
+Before creating or editing documents:
+
+1. Inventory existing top-level docs and `docs/` subdirectories.
+2. Classify each artifact by purpose, not by which skill created it.
+3. Preserve the owner of any existing artifact when its purpose is clear.
+4. Reference instead of copy.
+5. Create a new artifact only when no existing artifact already owns that responsibility.
+
+Ownership means responsibility for the source of truth, not exclusive permission to read.
+
+Prefer predictable subdirectories only when they match the project's existing layout. Handoffs may link to owned artifacts but should not paste their full content. Acceptance docs may cite commands, results, commits, and risks but should not become product rationale or architecture design.
+
+This branch matters most in existing projects, shared doc trees, or multi-writer environments. It is not the focus of the usual single-project happy path.
+
 ## Quality Checks
 
 - A cold-start entrypoint file exists, points first to `CURRENT_HANDOFF.md`, and references the phase execution workflow.
 - Every completed phase has `HANDOFF.md`, `IMPLEMENTATION_PLAN.md`, and `ACCEPTANCE.md`.
+- Phase branches follow a predictable `phase-XX-<slug>` naming pattern and the active one is recorded in `CURRENT_HANDOFF.md`.
 - Completed phase branches are pushed to remote (not local-only).
 - Acceptance files contain real commands, results, artifacts, commits, and risks.
 - Handoffs are short and operational.
