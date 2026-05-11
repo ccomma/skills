@@ -1,6 +1,6 @@
 # Skill Architect Format File Design
 
-Load this when deciding whether a skill should create companion format files such as `ADR-FORMAT.md`, `CONTEXT-FORMAT.md`, report templates, handoff formats, or other artifact-shape guides.
+Load this when deciding whether a skill should create companion format files such as decision-record formats, domain-language formats, report templates, handoff formats, or other artifact-shape guides.
 
 ## When A Format File Is Worth Creating
 

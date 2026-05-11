@@ -18,6 +18,8 @@ When the user explicitly asks to review, inspect, audit, or check a named skill,
 Scan these dimensions before freezing the repair plan:
 
 - trigger boundary and wrong-scope routing
+- workflow clarity: dominant happy path, branch-case load, and entrypoint-role separation
+- trigger-contract layering and reference-routing clarity
 - portability and language behavior
 - abstraction level
 - structure and routing clarity
@@ -63,6 +65,8 @@ Render in the user's language when reporting.
 ```text
 Maintenance breadth scan:
 - Trigger boundary:
+- Workflow clarity:
+- Trigger layering and reference routing:
 - Portability and language:
 - Abstraction:
 - Structure and routing:

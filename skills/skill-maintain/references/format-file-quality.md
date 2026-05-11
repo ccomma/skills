@@ -1,6 +1,6 @@
 # Skill Maintain Format File Quality
 
-Load this when auditing or repairing a companion format file such as `ADR-FORMAT.md`, `CONTEXT-FORMAT.md`, handoff formats, report templates, or other artifact-shape references.
+Load this when auditing or repairing a companion format file such as a decision-record format, a domain-language format, a handoff format, a report template, or another artifact-shape reference.
 
 ## Audit Questions
 

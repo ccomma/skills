@@ -37,7 +37,7 @@ Interaction profiles:
 
 ### 1. Choose Intake Mode
 
-If the user already gave a clear skill goal, proceed directly. If important design information is missing, ask a concise intake from `references/design-intake.md`.
+If the user already gave a clear skill goal, proceed directly. If important design information is missing, ask a concise intake from [design-intake.md](references/design-intake.md).
 
 Use:
 
@@ -52,6 +52,7 @@ Start with a breadth-and-depth pass before locking the structure.
 Decide:
 
 - primary job and trigger boundary
+- whether the skill is a workflow skill with one dominant happy path
 - authority and safety boundary
 - output contract and artifact expectations
 - neighboring skills and non-goals
@@ -69,7 +70,9 @@ Decide:
 - pressure-test scenarios
 - token-cost failure modes and adaptive verbosity or batching triggers
 
-Load [breadth-and-depth.md](references/breadth-and-depth.md) first to scan coverage and choose which dimensions stay implicit, move into `SKILL.md`, get their own `reference`, require a `script`, or justify an `asset`. Then load `references/architecture-patterns.md` when choosing structure or tradeoffs. Load [authority-and-safety.md](references/authority-and-safety.md) when the skill may act, persist, publish, delete, install, or cross a permission boundary. Load [output-contracts.md](references/output-contracts.md) when output shape, fields, or artifacts matter. Load [interaction-intensity.md](references/interaction-intensity.md) when deciding questioning depth, pacing, batching, or stop points. Load [bundle-design.md](references/bundle-design.md) when planning references, scripts, assets, and agent metadata as one bundle. Load [format-file-design.md](references/format-file-design.md) when deciding whether a repeated artifact deserves a companion format file or when artifact quality depends on a stable mini-template. Load [script-design.md](references/script-design.md) when deterministic work may justify scripts. Load `references/examples.md` when examples would clarify the structure. Load `references/pressure-tests.md` before calling a reusable skill mature.
+For workflow skills, make the main path explicit before adding branch cases. The frontmatter description owns the shortest trigger contract. A `When To Use` section, when present, should expand trigger situations, wrong-scope boundaries, and neighboring routes without absorbing workflow goals, token goals, resumability goals, or branch-case policy. Distinguish public orientation, runtime entrypoint, current execution state, and durable long-form context when the skill owns multiple document or loading layers.
+
+For any non-trivial design or major upgrade, load [breadth-and-depth.md](references/breadth-and-depth.md) first to scan coverage and choose which dimensions stay implicit, move into `SKILL.md`, get their own `reference`, require a `script`, or justify an `asset`. Then load [architecture-patterns.md](references/architecture-patterns.md) when choosing structure or tradeoffs. Load [authority-and-safety.md](references/authority-and-safety.md) when the skill may act, persist, publish, delete, install, or cross a permission boundary. Load [output-contracts.md](references/output-contracts.md) when output shape, fields, or artifacts matter. Load [interaction-intensity.md](references/interaction-intensity.md) when deciding questioning depth, pacing, batching, or stop points. Load [bundle-design.md](references/bundle-design.md) when planning references, scripts, assets, and agent metadata as one bundle. Load [format-file-design.md](references/format-file-design.md) when deciding whether a repeated artifact deserves a companion format file or when artifact quality depends on a stable mini-template. Load [script-design.md](references/script-design.md) when deterministic work may justify scripts. Load [examples.md](references/examples.md) when examples would clarify the structure. Load [pressure-tests.md](references/pressure-tests.md) before calling a reusable skill mature.
 
 ### 3. Write Or Propose
 
@@ -79,7 +82,8 @@ If the user asks for design only, output a concise architecture spec. If they as
 
 Before calling the skill mature, check:
 
-- trigger description says when to use, not the whole workflow
+- frontmatter description keeps the shortest trigger contract and does not try to summarize the whole workflow
+- workflow skills present the dominant happy path before edge cases, governance branches, or rare repair paths
 - frontmatter is valid YAML and the description is concise, single-purpose, and free of fragile inline examples or mixed-language clutter unless explicitly required
 - authority level is explicit and risky actions have the right confirmation design
 - output contract is clear when consistency matters
@@ -90,6 +94,8 @@ Before calling the skill mature, check:
 - references are conditional and lazy-loaded
 - companion format files are used when they keep the core skill shorter while preserving artifact precision
 - companion format files have explicit creation thresholds, quality bars, and wrong-scope guidance
+- usage sections expand trigger situations and wrong-scope boundaries without swallowing workflow goals, quality goals, or branch-case policy
+- entrypoint roles stay distinct when the skill touches multiple loading layers, such as public orientation, runtime entrypoint, current execution state, and durable long-form context
 - scripts/assets are justified by repeatability, fragility, or output shape
 - scripts have narrow inputs, predictable outputs, and compact summaries
 - interaction strength matches ambiguity, risk, and token cost
@@ -123,4 +129,4 @@ For design-only work:
 [Localized label for risks]:
 ```
 
-For implementation work, create or update files directly and include a concise design report. Load `references/design-report.md` when writing the report.
+For implementation work, create or update files directly and include a concise design report. Load [design-report.md](references/design-report.md) when writing the report.

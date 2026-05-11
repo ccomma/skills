@@ -10,6 +10,8 @@ Check the reported issue before widening scope:
 - **Language inconsistency**: templates, labels, or examples hardcode a human language that should instead follow the user's session language.
 - **Abstraction leak**: neighboring responsibilities are described through concrete private skill names instead of capability categories.
 - **Structure drift**: `SKILL.md` carries content that belongs in `references/`, scripts, or assets; or references have no clear load condition.
+- **Workflow-clarity drift**: the dominant happy path is hard to see, branch cases appear too early, a usage-expansion section absorbs goals instead of trigger guidance, or entrypoint roles are blurred together.
+- **Reference-routing drift**: support files are linked inconsistently, load conditions are hard to spot, or the wording in generic references is more concrete than the skill's public abstraction level should allow.
 - **Output-contract drift**: required sections, labels, fields, evidence expectations, or artifact checks are no longer stable.
 - **Interaction-intensity drift**: the skill asks too much, too little, batches poorly, or fails to expand again when risk rises.
 - **Bundle mismatch**: `SKILL.md`, references, scripts, assets, or agent metadata no longer describe the same behavior.
@@ -66,6 +68,18 @@ If the skill feels more like a handbook than a tool, extract repeated artifact s
 
 Also check the inverse problem: if a repeated artifact shape appears often enough to drift, but has not yet been split into a companion format file, call that out explicitly instead of waiting for the user to ask for templates.
 
+### 2a. Recover Workflow Clarity
+
+For workflow skills:
+
+- keep the dominant happy path early and easy to scan
+- move rare branch cases, governance rules, and repair paths behind the main path
+- keep usage-expansion sections limited to trigger situations, wrong-scope boundaries, and neighboring routes
+- move quality goals, token goals, resumability goals, and branch-case policy into rules, workflow, or references
+- separate public orientation, runtime entrypoint, current execution state, and durable long-form context when the skill touches multiple loading layers
+
+If the skill feels like a governance handbook before it feels like a route through work, treat that as a real repair target.
+
 ### 3. Replace Concrete Neighbor Names
 
 Prefer capability categories such as:
@@ -80,6 +94,25 @@ Only keep a concrete skill name when it is part of the target skill's public bun
 ### 4. Normalize User-Facing Language
 
 If the skill defines labels, headers, or compact templates, express them as patterns or placeholders unless the target skill intentionally fixes one language for a public artifact. The runtime should speak in the user's session language.
+
+### 4a. Preserve Trigger-Contract Layering
+
+Keep these layers distinct:
+
+- frontmatter description for the shortest trigger contract
+- usage sections for expanded trigger situations and wrong-scope boundaries
+- workflow sections for process, quality goals, and branch-case policy
+
+If one layer starts swallowing the job of another, repair the layering instead of just trimming words.
+
+### 4b. Repair Reference Routing And Abstraction
+
+When a skill points to support files:
+
+- use a consistent link style for the same kind of support file
+- keep important references one hop from `SKILL.md`
+- describe generic references through artifact categories, not through overly specific local examples
+- keep concrete filenames or domain-specific examples only when they materially clarify the public contract
 
 ### 5. Trim Without Losing Judgment
 

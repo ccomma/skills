@@ -234,6 +234,62 @@ check_references_reachable() {
   return 0
 }
 
+check_reference_link_style() {
+  [[ -f "$skill_file" ]] || return 0
+
+  local linked bare linked_list bare_list
+  linked_list="$(rg -o '\[[^]]+\]\((references/[^)]+)\)' "$skill_file" 2>/dev/null | sed -E 's/.*\((references\/[^)]+)\)/\1/' | sort -u || true)"
+  bare_list="$(rg -o '`references/[^`]+`' "$skill_file" 2>/dev/null | tr -d '`' | sort -u || true)"
+
+  [[ -n "$linked_list" ]] || return 0
+  [[ -n "$bare_list" ]] || return 0
+
+  add_warning "semantic-drift" "SKILL.md mixes Markdown links and bare-path formatting for references; prefer one consistent reference-link style"
+  return 0
+}
+
+check_usage_section_goal_language() {
+  [[ -f "$skill_file" ]] || return 0
+
+  local section_text
+  section_text="$(awk '
+    BEGIN { in_section = 0 }
+    /^##[[:space:]]+(When To Use|Usage|Use Cases|Trigger Cases|Trigger Situations|When This Loads)\b/ {
+      in_section = 1
+      next
+    }
+    /^##[[:space:]]+/ {
+      if (in_section) exit
+    }
+    in_section { print }
+  ' "$skill_file")"
+
+  [[ -n "$section_text" ]] || return 0
+
+  if printf '%s' "$section_text" | rg -qi '\b(reduce token|token cost|resum|future session|preserve evidence|quality bar|branch-case|policy|governance)\b'; then
+    add_warning "semantic-drift" "Usage-expansion section may be mixing workflow goals or policy language into trigger guidance"
+  fi
+  return 0
+}
+
+check_meta_reference_example_abstraction() {
+  [[ -d "$references_dir" ]] || return 0
+
+  case "$skill_name" in
+    skill-architect|skill-maintain)
+      local ref_file rel_path
+      while IFS= read -r ref_file; do
+        [[ -n "$ref_file" ]] || continue
+        rel_path="${ref_file#$skill_dir/}"
+        if rg -q '`[A-Z0-9_-]+-FORMAT\.md`' "$ref_file" 2>/dev/null; then
+          add_warning "semantic-drift" "Generic meta-skill reference may use overly concrete format-file examples: $rel_path"
+        fi
+      done < <(find "$references_dir" -maxdepth 1 -type f | sort)
+      ;;
+  esac
+  return 0
+}
+
 check_scripts_reachable() {
   local scripts_dir="$skill_dir/scripts"
   [[ -d "$scripts_dir" ]] || return 0
@@ -381,6 +437,9 @@ check_hidden_junk
 check_agent_metadata
 [[ -f "$skill_file" ]] && check_local_links
 check_references_reachable
+check_reference_link_style
+check_usage_section_goal_language
+check_meta_reference_example_abstraction
 check_scripts_reachable
 check_companion_format_files
 check_forbidden_names

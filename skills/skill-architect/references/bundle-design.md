@@ -25,13 +25,13 @@ If a skill depends on a small number of strong behavioral instructions, keep tho
 
 Good signs for a companion reference or format file:
 
-- the content describes the shape of a repeated artifact such as an ADR, glossary entry, handoff, or report
+- the content describes the shape of a repeated artifact such as a decision record, domain-language entry, handoff, or report
 - the detail is important, but not needed on every invocation
 - the main skill is starting to feel explanatory instead of directive
 
 ### 4. Use Companion Format Files Deliberately
 
-Format files such as `ADR-FORMAT.md` or `CONTEXT-FORMAT.md` work well when a skill repeatedly creates or updates one artifact shape. They help the main skill stay short while keeping the artifact contract precise.
+Artifact-specific format files work well when a skill repeatedly creates or updates one artifact shape. They help the main skill stay short while keeping the artifact contract precise.
 
 Do not create companion files just to fragment the bundle. Add them when they preserve a stronger core instruction surface.
 

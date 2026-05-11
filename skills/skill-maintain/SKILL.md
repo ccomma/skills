@@ -17,39 +17,16 @@ Route away when:
 - the main problem is overlap, conflict, stale duplication, or routing ambiguity between multiple skills -> skill-boundary workflow
 - the request is general prompt compression, code optimization, runtime performance, or arbitrary chat summarization
 
-## Repair Modes
-
-Choose the narrowest mode that matches the problem:
-
-- `portability + language`: runtime terms, mixed language, local paths, abstraction leaks
-- `structure + routing`: bloated `SKILL.md`, misplaced content, weak routing
-- `core sharpness`: strong behavior diluted by explanatory sprawl or by missing companion format files
-- `format opportunity`: a repeated high-value artifact shape is still trapped inline and would be better as a companion format file
-- `format-file quality`: companion format files are bloated, vague, ritualized, or drifted from the parent skill
-- `output contracts`: unstable report shape, labels, fields, or artifact checks
-- `interaction intensity`: too many questions, too few checkpoints, bad batching, weak recovery
-- `bundle consistency`: drift across `SKILL.md`, frontmatter, references, scripts, metadata, or public bundle surfaces
-- `safety + authority`: overreach, missing confirmations, weak permission boundaries
-- `token optimization`: heavy default load, repeated narration, weak progressive disclosure
-
-Load only the references needed for the active mode:
-
-- [language-and-portability.md](references/language-and-portability.md) for portability or language problems
-- [repair-patterns.md](references/repair-patterns.md) for structure, routing, core sharpness, or general repair planning
-- [format-file-quality.md](references/format-file-quality.md) for auditing or repairing companion format files
-- [output-contracts.md](references/output-contracts.md) for unstable sections, fields, templates, or artifact quality expectations
-- [interaction-intensity.md](references/interaction-intensity.md) for questioning depth, pacing, batching, or recovery behavior
-- [bundle-consistency.md](references/bundle-consistency.md) for cross-file drift
-- [safety-and-authority.md](references/safety-and-authority.md) for overreach or confirmation problems
-- [token-optimization.md](references/token-optimization.md) when token/context cost is the primary failure mode
-
 ## Core Rules
 
 - Repair the smallest surface that fixes the problem.
 - When the user asks to audit, review, inspect, or check a specific skill, default to a proactive maintenance audit across all major maintenance dimensions before narrowing the patch.
 - Keep guidance publishable, environment-neutral, and aligned with the user's language.
 - Prefer capability categories and workflow contracts over hardcoded runtime terms, local paths, or downstream skill names.
+- Keep trigger-contract layering clear: frontmatter description for shortest trigger, usage sections for expanded trigger and wrong-scope guidance, workflow sections for process.
 - When a skill is one step in a broader workflow, check whether it clearly defines what artifact it owns, what state it must not mutate, and what downstream capability should consume its output.
+- When a skill is itself a workflow, check whether the dominant happy path is easy to see before branch cases, whether usage-expansion sections stay about trigger and wrong-scope guidance, and whether entrypoint roles remain distinct.
+- Keep reference routing legible: important support files should be linked consistently and described at the right abstraction level.
 - Prefer deterministic scripts for repeated bundle checks, metadata extraction, link validation, and compact reporting when those steps do not require judgment.
 - When a script exists for a deterministic check, use it instead of redoing the same inspection through prose alone.
 - Treat every edit as a behavior change until validated against a capability baseline.
@@ -95,6 +72,8 @@ Before editing, write a short baseline for:
 - valid trigger cases and wrong-scope cases
 - safety, confirmation, evidence, and persistence rules
 - output quality plus user-facing language and interaction style
+- workflow readability: main path, branch cases, and entrypoint-role separation
+- trigger-contract layering and reference-routing clarity
 - reachable references, scripts, and assets
 - companion format files and their quality thresholds when they exist
 - repeated inline artifact shapes that may deserve companion format files
@@ -134,11 +113,40 @@ Validate that:
 - frontmatter, metadata, support files, and public bundle surfaces stay aligned
 - breadth coverage and repair depth are explicit
 - routing, workflow boundaries, language, output checks, and interaction pacing still match the intended contract
+- workflow skills still keep the main path easy to scan, keep branch cases subordinate, and keep entrypoint roles distinct
 - the default load is smaller or more focused when token cost was part of the problem
 - authority levels, confirmation gates, execution-state boundaries, and safety/evidence/persistence rules still hold
 - all planned regression tests were run, simulated, or explicitly marked not runnable with a reason
 
 Do not call a repair complete based on one dimension alone. Report residual quality risk if any baseline behavior could not be verified.
+
+## Repair Modes
+
+Choose the narrowest mode that matches the problem:
+
+- `portability + language`: runtime terms, mixed language, local paths, abstraction leaks, or examples that are too concrete for a public reference
+- `structure + routing`: bloated `SKILL.md`, misplaced content, weak routing
+- `workflow clarity`: the main path is diluted, branch cases are too prominent, usage-expansion sections absorb goals instead of trigger guidance, or entrypoint roles are blurred
+- `core sharpness`: strong behavior diluted by explanatory sprawl or by missing companion format files
+- `format opportunity`: a repeated high-value artifact shape is still trapped inline and would be better as a companion format file
+- `format-file quality`: companion format files are bloated, vague, ritualized, or drifted from the parent skill
+- `output contracts`: unstable report shape, labels, fields, or artifact checks
+- `interaction intensity`: too many questions, too few checkpoints, bad batching, weak recovery
+- `bundle consistency`: drift across `SKILL.md`, frontmatter, references, scripts, metadata, or public bundle surfaces
+- `reference routing`: support files are loaded unclearly, linked inconsistently, or described at the wrong level of abstraction
+- `safety + authority`: overreach, missing confirmations, weak permission boundaries
+- `token optimization`: heavy default load, repeated narration, weak progressive disclosure
+
+Load only the references needed for the active mode:
+
+- [language-and-portability.md](references/language-and-portability.md) for portability or language problems
+- [repair-patterns.md](references/repair-patterns.md) for workflow clarity, structure, routing, reference routing, core sharpness, or general repair planning
+- [format-file-quality.md](references/format-file-quality.md) for auditing or repairing companion format files
+- [output-contracts.md](references/output-contracts.md) for unstable sections, fields, templates, or artifact quality expectations
+- [interaction-intensity.md](references/interaction-intensity.md) for questioning depth, pacing, batching, or recovery behavior
+- [bundle-consistency.md](references/bundle-consistency.md) for cross-file drift
+- [safety-and-authority.md](references/safety-and-authority.md) for overreach or confirmation problems
+- [token-optimization.md](references/token-optimization.md) when token/context cost is the primary failure mode
 
 ## Output
 
