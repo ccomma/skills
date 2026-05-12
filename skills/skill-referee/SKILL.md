@@ -96,7 +96,7 @@ You may ask depth and strategy in the same message. Stop after asking unless the
 After scope, depth, and strategy are confirmed:
 
 - Read only selected skill bodies or relevant sections.
-- Prefer search for boundary terms such as `description`, `When To Use`, `Do not use`, `Workflow`, `Process`, `input`, `output`, `asset`, `create`, `edit`, `review`, `validate`, `publish`, `persist`, `delete`, and shared artifact names found during metadata triage.
+- Prefer search for boundary terms such as `description`, usage sections, `Do not use`, `Workflow`, `Process`, `input`, `output`, `asset`, `create`, `edit`, `review`, `validate`, `publish`, `persist`, `delete`, and shared artifact names found during metadata triage.
 - Classify findings as: `hard conflict`, `trigger overlap`, `artifact convention mismatch`, `responsibility blur`, `sequence dependency`, `duplicate/stale copy`, or `benign adjacency`.
 - Prefer routing rules and small trigger edits before recommending merges or rewrites.
 

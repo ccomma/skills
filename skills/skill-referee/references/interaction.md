@@ -62,7 +62,7 @@ Use once scope is known.
 Recommend one strategy or combination before asking. Then offer:
 
 - `A. routing` — default recommendation; decide which situation should use which skill and which to avoid.
-- `B. trigger` — inspect descriptions and When To Use rules for overly broad or simultaneous triggering.
+- `B. trigger` — inspect frontmatter trigger contracts, usage-expansion sections, and adjacent workflow wording for overly broad or simultaneous triggering.
 - `C. convention` — inspect shared assets, files, directories, workspace conventions, task sources, decision records, or agent instruction files.
 - `D. sequence` — inspect lifecycle ordering, such as intake -> plan -> create -> review -> validate -> publish.
 - `E. merge-split` — decide whether skills should merge, split, rename, or be rewritten.

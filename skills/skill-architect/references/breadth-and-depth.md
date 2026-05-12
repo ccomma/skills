@@ -104,5 +104,5 @@ Expected behavior: run a breadth scan, identify weak dimensions, and propose tar
 
 ```text
 Prompt: Design a reusable workflow skill for long-lived project planning. The workflow has one common path and several rare branch cases.
-Expected behavior: keep the dominant happy path early and easy to scan, move branch cases behind it, keep `When To Use` limited to trigger conditions, and separate entrypoint roles instead of collapsing README, runtime entrypoint, and execution-state docs into one layer.
+Expected behavior: keep the dominant happy path early and easy to scan, move branch cases behind it, keep usage-expansion sections limited to trigger and wrong-scope guidance, and separate entrypoint roles instead of collapsing README, runtime entrypoint, and execution-state docs into one layer.
 ```
