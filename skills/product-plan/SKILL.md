@@ -152,7 +152,7 @@ Before creating or modifying any file, produce a visible inventory:
 2. Map each artifact to its document layer (DESIGN.md, PRD, Technical Design, ADR, Phase package, etc.)
 3. Identify gaps: which required layers are missing? Which phases lack packages? Is `docs/README.md` missing? Is `docs/process/DEVELOPMENT_FLOW.md` missing? Are reusable templates absent even though the project clearly has repeated phase artifacts?
 4. Identify quality posture: which existing layers are already strong enough to preserve? Which ones are weak, mixed, or drifted? Which helper directories are harmless versus structurally misleading?
-5. Present the gap analysis to the user before proceeding to Repair
+5. Make the gap analysis visible before proceeding to Repair. Stop there only in `review mode` or before `heavy` / clearly high-risk repair. In `light` and `medium` repair paths, continue into repair after presenting the analysis unless the user asked to stop at review.
 
 This prevents duplicate docs and missing layers.
 

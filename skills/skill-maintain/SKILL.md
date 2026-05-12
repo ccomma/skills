@@ -30,7 +30,7 @@ Route away when:
 - When a reported issue may actually belong to a higher governance layer, stop and route instead of smuggling meta-governance redesign into one-skill maintenance.
 - When a concrete issue in this skill may also reveal an upstream reusable failure mode, mark it as an `upstream-check candidate`.
 - This workflow must remain independently usable even when no compatible higher-layer governance review workflow is available in the current environment.
-- If a compatible higher-layer governance review workflow is available and the upstream-check candidate matters, recommend or route there. If not, finish the local audit and repair guidance anyway instead of stalling.
+- If a compatible higher-layer governance review workflow is available and the upstream-check candidate matters, recommend or route there so the candidate can receive a fuller governance-status judgment. If not, finish the local audit and repair guidance anyway instead of stalling.
 - Keep reference routing legible: important support files should be linked consistently and described at the right abstraction level.
 - Prefer deterministic scripts for repeated bundle checks, metadata extraction, link validation, and compact reporting when those steps do not require judgment.
 - When a script exists for a deterministic check, use it instead of redoing the same inspection through prose alone.

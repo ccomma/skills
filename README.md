@@ -9,7 +9,7 @@ These skills are designed to be small, composable, and easy to install into diff
 - [`product-explore`](./skills/product-explore/SKILL.md): Explores a fuzzy product or feature idea, clarifies the real problem and users, and converges on a Product Brief before planning.
 - [`product-plan`](./skills/product-plan/SKILL.md): Builds and maintains durable product context, planning docs, phase handoffs, and evidence for multi-phase product work.
 - [`product-validate`](./skills/product-validate/SKILL.md): Stress-tests an existing product plan against docs, terminology, code, and decision boundaries before execution or replanning continues.
-- [`skill-governance-escalation`](./skills/skill-governance-escalation/SKILL.md): Explicitly auto-audits a concrete issue first, then escalates only the findings that suggest reusable upstream causes.
+- [`skill-governance-escalation`](./skills/skill-governance-escalation/SKILL.md): Explicitly auto-audits a concrete issue first, classifies it as local-only, provisional candidate, or promote-now, and escalates only the findings that suggest reusable upstream causes.
 - [`skill-referee`](./skills/skill-referee/SKILL.md): Referees responsibility boundaries between skills across any domain, using metadata-first discovery and controlled review depth.
 - [`skill-architect`](./skills/skill-architect/SKILL.md): Designs mature, token-efficient skills with explicit authority boundaries, output contracts, interaction intensity, references, scripts, assets, validation, and bundle structure.
 - [`skill-maintain`](./skills/skill-maintain/SKILL.md): Audits and repairs one existing skill through modular checks for portability, language consistency, output contracts, interaction intensity, bundle integrity, authority boundaries, structure, routing, companion format-file opportunities, and token/context cost without taking over multi-skill boundary design.
@@ -161,8 +161,8 @@ These governance skills solve different layers of the same problem:
 
 - `skill-governance-escalation`
   - Use when a concrete issue should trigger an explicit governance review.
-  - Output: findings, layer classification, abstract failure mode, escalation judgment, immediate local fix locus, durable upstream fix locus, and routing guidance.
-  - It auto-audits first, then escalates only the findings that warrant reusable upstream repair.
+  - Output: findings, layer classification, upstream status, abstract failure mode, escalation judgment, immediate local fix locus, durable upstream fix locus, governance-note action, and routing guidance.
+  - It auto-audits first, then escalates only the findings that warrant reusable upstream repair, and it can emit durable governance candidates without polluting project repos or skill bundles.
 
 - `skill-referee`
   - Use when multiple skills may overlap, conflict, trigger too broadly, or need clearer routing.

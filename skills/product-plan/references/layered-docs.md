@@ -42,7 +42,6 @@ docs/templates/
    - `docs/context/CURRENT_HANDOFF.md` as the first-read document
    - The development flow document that defines the mandatory phase sequence (PRD → tech design → test plan → implementation → closeout)
    - Key project constraints
-   - Available skills and their invocation triggers
 4. Create `docs/README.md` once the `docs/` tree is non-trivial or likely to gain helper directories.
 5. Create `docs/process/DEVELOPMENT_FLOW.md` as a formal layer, not an ad hoc note.
 6. Create `docs/context/CURRENT_HANDOFF.md` as the default future-session entrypoint.
@@ -112,6 +111,5 @@ Before ending a phase:
 - Technical design repeats product positioning.
 - Tests pass but acceptance evidence is not recorded.
 - Historical phases lack phase packages, forcing future agents to reread commits or long docs.
-- Skill text accumulates old process notes instead of being rewritten into a single coherent system.
 - The project has helper directories under `docs/` but no formal `docs/README.md` explains their role.
 - `DEVELOPMENT_FLOW.md` exists informally in one project and not another, so phase execution discipline drifts across repos.

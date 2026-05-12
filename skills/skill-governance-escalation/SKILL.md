@@ -1,6 +1,6 @@
 ---
 name: skill-governance-escalation
-description: Use when a concrete issue should trigger an auto-audit first and then an upward-check for reusable causes if needed, so you can separate immediate local repair from any durable upstream fix.
+description: Use when a concrete issue should trigger an auto-audit first and then an upward-check for reusable causes if needed, so you can separate immediate local repair from any durable upstream fix and persist reusable governance candidates when warranted.
 ---
 
 # Skill Governance Escalation
@@ -44,6 +44,8 @@ Do not use this when:
 - Allow the answer to be "the upstream cause is outside the current skill stack" when the evidence points to runtime, agent, or model behavior.
 - When the issue is text-heavy and deterministic signal extraction is useful, run `scripts/scan-governance-signals.py` first to gather candidate evidence. Do not let the script replace judgment.
 - Keep findings separate from escalation judgments. A local-only finding is still a useful output.
+- Classify the post-audit governance status explicitly as `local-only`, `provisional candidate`, or `promote now`.
+- Persist only reusable governance candidates. Do not create durable note noise for local-only findings.
 - Default to a governance report, not to direct multi-layer rewrites.
 - Hand off to downstream workflows once the fix locus is clear.
 
@@ -82,7 +84,37 @@ Produce a compact findings list first. Each finding should be marked as one of:
 
 Do not escalate anything yet.
 
-### 3. Escalate If Needed
+### 3. Judge The Upstream Status
+
+Before escalating, decide the overall governance status for the issue:
+
+- `local-only`
+- `provisional candidate`
+- `promote now`
+
+Use [references/escalation-tests.md](references/escalation-tests.md) before deciding that an issue should move beyond local repair.
+
+Use `local-only` when:
+
+- the current evidence supports only a local fix
+- recurrence is unproven or too weakly abstracted
+- no durable higher-layer rule is justified yet
+
+Use `provisional candidate` when:
+
+- the evidence already suggests a reusable failure mode
+- the local fix still matters now
+- the higher-layer fix should be remembered and revisited even if it is not promoted immediately
+
+Use `promote now` when:
+
+- the current evidence is already sufficient to justify an upstream repair
+- the durable rule can be stated abstractly and portably
+- delaying promotion would mostly create repeated cleanup work
+
+Load [references/persistence-policy.md](references/persistence-policy.md) before deciding whether a governance note should be emitted or written.
+
+### 4. Escalate If Needed
 
 Only escalate findings that look reusable, misowned, or suspiciously higher-layer. Leave pure local findings at the local layer.
 
@@ -98,7 +130,7 @@ For each escalated finding, decide whether the durable fix primarily belongs to:
 
 Use [references/routing-matrix.md](references/routing-matrix.md) when the likely next workflow is not obvious.
 
-### 4. Abstract The Failure Mode
+### 5. Abstract The Failure Mode
 
 For each escalated finding, turn the concrete symptoms into the narrowest reusable failure mode that still explains the evidence.
 
@@ -119,7 +151,7 @@ Bad outputs at this step look like:
 - a rule tailored to one private setup
 - a sweeping meta-rule based on one accident
 
-### 5. Decide The Final Split Between Local Repair And Upstream Repair
+### 6. Decide The Final Split Between Local Repair And Upstream Repair
 
 Ask:
 
@@ -129,25 +161,30 @@ Ask:
 - would escalation bloat a more general workflow with a narrow symptom?
 - is the higher-layer cause still inside the skill stack, or has the analysis crossed into runtime/platform behavior?
 
-Use [references/escalation-tests.md](references/escalation-tests.md) before concluding that a meta-layer change is justified.
+### 7. Produce The Governance Report
 
-### 6. Produce The Governance Report
-
-Load [references/output-contract.md](references/output-contract.md) and [references/report-format.md](references/report-format.md).
+Load [references/output-contract.md](references/output-contract.md), [references/report-format.md](references/report-format.md), and [references/governance-note-format.md](references/governance-note-format.md).
 
 The report must state:
 
 - the observed issue
 - layer classification
 - the findings list
+- upstream status
 - abstract failure mode
 - whether escalation is justified
 - the immediate local fix locus, if one is justified
 - the durable upstream fix locus, if one is justified
+- promotion trigger when the issue is a `provisional candidate`
+- governance note action
 - the recommended downstream workflow
 - which higher layers should not be changed, and why
 
-### 7. Hand Off
+In review-only work, emit a governance note block for `provisional candidate` and `promote now` so the result can be persisted later even when the current pass does not write files.
+
+In implementation or repair work, write or update the governance candidate ledger only when the issue is `provisional candidate` or `promote now`.
+
+### 8. Hand Off
 
 Once the fix locus is clear:
 
@@ -168,10 +205,13 @@ For review-only work:
 [Localized label for evidence]:
 [Localized label for findings]:
 [Localized label for layer classification]:
+[Localized label for upstream status]:
 [Localized label for abstract failure mode]:
 [Localized label for escalation judgment]:
 [Localized label for immediate local fix locus]:
 [Localized label for durable upstream fix locus]:
+[Localized label for promotion trigger]:
+[Localized label for governance note action]:
 [Localized label for recommended next workflow]:
 [Localized label for layers not to change]:
 [Localized label for rationale]:

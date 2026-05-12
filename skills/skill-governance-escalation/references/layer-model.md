@@ -2,6 +2,14 @@
 
 Use this after the auto-audit has produced findings and you need to decide where any escalated finding really belongs, including cases where the real upstream cause may sit outside the current skill stack.
 
+This reference classifies the durable fix layer. It does not replace the separate `upstream status` judgment:
+
+- `local-only`
+- `provisional candidate`
+- `promote now`
+
+Use the status to decide whether durable governance memory should exist. Use this layer model to decide who should own the durable fix when one is warranted.
+
 ## Layers
 
 ### 1. Artifact Instance
