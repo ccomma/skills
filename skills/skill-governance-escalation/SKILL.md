@@ -40,6 +40,7 @@ Do not use this when:
 - Treat routing, ownership, and publishability as governance signals, not as isolated wording bugs.
 - Distinguish "local patch now" from "durable upstream repair later" when both are needed.
 - Allow the answer to be "the upstream cause is outside the current skill stack" when the evidence points to runtime, agent, or model behavior.
+- When the issue is text-heavy and deterministic signal extraction is useful, run `scripts/scan-governance-signals.py` first to gather candidate evidence. Do not let the script replace judgment.
 - Default to a governance report, not to direct multi-layer rewrites.
 - Hand off to downstream workflows once the fix locus is clear.
 
@@ -67,6 +68,8 @@ Start with the concrete evidence:
 - whether a local fix is still needed even if an upstream cause exists
 
 Load [references/layer-model.md](references/layer-model.md) before classifying the layer.
+
+If the issue lives in skills, templates, docs, or other text artifacts, use `scripts/scan-governance-signals.py` to collect candidate signals such as headings-only templates, mixed-language headings, or local-context leakage before classifying the layer. Prefer scanning the most relevant current files first; use `--exclude` patterns when historical directories would only add noise.
 
 ### 3. Classify The Owning Layer
 
