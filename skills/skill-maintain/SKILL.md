@@ -15,6 +15,7 @@ Route away when:
 
 - the main question is whether a skill should exist, be created, split, or merged from scratch -> skill-design workflow
 - the main problem is overlap, conflict, stale duplication, or routing ambiguity between multiple skills -> skill-boundary workflow
+- the reported issue may have an upstream reusable cause and it is still unclear whether the real fix belongs in the local artifact, this skill, a neighboring skill boundary, or a higher governance layer -> governance-escalation workflow
 - the request is general prompt compression, code optimization, runtime performance, or arbitrary chat summarization
 
 ## Core Rules
@@ -26,6 +27,8 @@ Route away when:
 - Keep trigger-contract layering clear: frontmatter description for shortest trigger, usage sections for expanded trigger and wrong-scope guidance, workflow sections for process.
 - When a skill is one step in a broader workflow, check whether it clearly defines what artifact it owns, what state it must not mutate, and what downstream capability should consume its output.
 - When a skill is itself a workflow, check whether the dominant happy path is easy to see before branch cases, whether usage-expansion sections stay about trigger and wrong-scope guidance, and whether entrypoint roles remain distinct.
+- When a reported issue may actually belong to a higher governance layer, stop and route instead of smuggling meta-governance redesign into one-skill maintenance.
+- When a concrete issue in this skill may also reveal an upstream reusable failure mode, do a short upward check. If the durable fix locus is still unclear, route to governance-escalation instead of guessing.
 - Keep reference routing legible: important support files should be linked consistently and described at the right abstraction level.
 - Prefer deterministic scripts for repeated bundle checks, metadata extraction, link validation, and compact reporting when those steps do not require judgment.
 - When a script exists for a deterministic check, use it instead of redoing the same inspection through prose alone.
@@ -124,7 +127,7 @@ Do not call a repair complete based on one dimension alone. Report residual qual
 
 Choose the narrowest mode that matches the problem:
 
-- `portability + language`: runtime terms, mixed language, local paths, abstraction leaks, or examples that are too concrete for a public reference
+- `portability + language`: runtime terms, mixed language, local paths, ownership leakage, abstraction leaks, or examples that are too concrete for a public reference
 - `structure + routing`: bloated `SKILL.md`, misplaced content, weak routing
 - `workflow clarity`: the main path is diluted, branch cases are too prominent, usage-expansion sections absorb goals instead of trigger guidance, or entrypoint roles are blurred
 - `core sharpness`: strong behavior diluted by explanatory sprawl or by missing companion format files

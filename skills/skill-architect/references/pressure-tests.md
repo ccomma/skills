@@ -45,6 +45,11 @@ For each scenario, ask:
 - Were depth decisions intentional rather than accidental?
 - Did it avoid neighboring skill responsibilities?
 - Did output format and language match the user's need?
+- Did it choose a language strategy explicitly when the skill emits user-facing artifacts or templates?
+- Would a project-visible template remain understandable to a human or weaker model without hidden context?
+- Did it avoid depending on non-owned local context in public guidance?
+- Did it avoid promoting an optional helper layer into a default standard layer without strong justification?
+- If the skill owns a core document artifact, did it protect both purity and decision depth?
 
 ## Red Flags
 
@@ -60,6 +65,9 @@ For each scenario, ask:
 - The skill duplicates another skill's job instead of routing.
 - The skill has no wrong-scope behavior.
 - The skill says it is mature without scenario evidence.
+- The design relies on headings-only templates for project-visible artifacts.
+- The design silently mixes public-facing and internal-working language expectations.
+- The design creates a new standard layer when a helper-layer classification would be enough.
 
 ## Optional Subagent Validation
 

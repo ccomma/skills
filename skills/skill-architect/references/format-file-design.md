@@ -26,6 +26,8 @@ Every format file should make these points easy to answer:
 - when it should not be created
 - where the resolved content should live in the owning document stack
 
+For project-visible templates, include enough short guidance that a human or weaker model can use the file without opening the parent reference first. A headings-only skeleton is usually too weak unless the artifact is intentionally ultra-light.
+
 The goal is not a comprehensive form. The goal is the smallest artifact shape that still protects quality.
 
 ## Quality Bar
@@ -38,6 +40,7 @@ Use this checklist before calling a format file mature:
 - **Owning-layer fit**: matches the document layer that should actually hold the content
 - **Weak-model resilience**: a weaker model following the file should still produce something decent
 - **Portable wording**: no local repo assumptions unless the public bundle truly depends on them
+- **Self-describing enough**: project-visible templates give short cues, not bare headings only
 
 ## Anti-Patterns
 

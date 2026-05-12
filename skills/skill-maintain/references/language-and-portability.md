@@ -1,11 +1,12 @@
 # Skill Maintain Language And Portability
 
-Load this when the target skill has hardcoded runtime terms, mixed human languages, local paths, private workflow names, or non-portable examples.
+Load this when the target skill has hardcoded runtime terms, mixed human languages, local paths, private workflow names, non-project-owned references, or other portability leaks.
 
 ## What To Check
 
 - vendor-specific filenames presented as universal rules
 - local filesystem paths or personal workflow names treated as public requirements
+- non-project-owned tools, workflows, or references treated as if the target artifact owns them
 - concrete neighboring skill names where capability categories would be clearer
 - mixed-language labels, headers, or templates
 - examples that assume one runtime, one repository, or one user's setup
@@ -39,9 +40,18 @@ Replace:
 - local paths
 - private repo aliases
 - personal workflow nicknames
+- non-project-owned references that the target artifact cannot actually guarantee
 - environment-specific neighboring skill references
 
 with portable capability descriptions unless the user explicitly supplied the concrete term.
+
+### 4. Preserve Language Strategy
+
+When a skill emits user-facing artifacts:
+
+- keep internal or runtime-visible labels consistent with the user's session language unless the artifact intentionally fixes another language
+- avoid mixing public-entry language strategy with internal working-doc language by accident
+- repair hardcoded mixed-language templates when the owning workflow expects one coherent default
 
 ## Regression Prompts
 
@@ -58,4 +68,9 @@ Pass if: routing uses capability categories without losing practical clarity.
 ```text
 Prompt: This skill tells other skills to follow the user's language, but its own output template is hardcoded in English. Repair it.
 Pass if: the output contract keeps stable sections while making visible labels session-language aware.
+```
+
+```text
+Prompt: This skill keeps naming tools or workflows that the target project does not own.
+Pass if: the repair rewrites them into portable capability descriptions or the artifact's own real responsibilities.
 ```

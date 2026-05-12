@@ -11,7 +11,8 @@ Check the format file directly:
 3. Does it say what is required versus optional?
 4. Does it say when the artifact should not be created?
 5. Does it fit the owning document layer instead of creating parallel truth?
-6. Could a weaker model follow it and still produce a decent artifact?
+6. Does a project-visible template include enough short guidance that a human or weaker model can fill it without guessing?
+7. Could a weaker model follow it and still produce a decent artifact?
 
 ## Common Failure Modes
 
@@ -20,6 +21,7 @@ Check the format file directly:
 - **Parallel-truth template**: encourages writing into a side document that should not own the decision
 - **Example takeover**: examples are more specific than the rule, so the example becomes the real contract
 - **Weak-model fragility**: a weaker model following the file would produce fluff, boilerplate, or overlong output
+- **Heading-only fragility**: the template names sections but never says what belongs in them
 - **Drift from parent skill**: the format file no longer matches the owning skill's artifact contract
 
 ## Repair Moves
@@ -29,6 +31,7 @@ Use the smallest repair that works:
 - reduce the template to the smallest high-value structure
 - add explicit "when not to use this" guidance
 - add required versus optional distinctions
+- add one-line section guidance when a project-visible template is too skeletal
 - add owning-layer mapping
 - replace long examples with one smaller, higher-signal example or no example
 - move generic workflow explanation back out of the format file if it belongs in `SKILL.md`

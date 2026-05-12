@@ -9,6 +9,7 @@ Check the reported issue before widening scope:
 - **Portability leak**: vendor-specific filenames, private paths, personal workflow names, or local tool assumptions appear as if they were universal rules.
 - **Language inconsistency**: templates, labels, or examples hardcode a human language that should instead follow the user's session language.
 - **Abstraction leak**: neighboring responsibilities are described through concrete private skill names instead of capability categories.
+- **Ownership leak**: the artifact implies ownership over local context, external workflows, or helper layers it does not actually own.
 - **Structure drift**: `SKILL.md` carries content that belongs in `references/`, scripts, or assets; or references have no clear load condition.
 - **Workflow-clarity drift**: the dominant happy path is hard to see, branch cases appear too early, a usage-expansion section absorbs goals instead of trigger guidance, or entrypoint roles are blurred together.
 - **Reference-routing drift**: support files are linked inconsistently, load conditions are hard to spot, or the wording in generic references is more concrete than the skill's public abstraction level should allow.
@@ -19,6 +20,8 @@ Check the reported issue before widening scope:
 - **Token drift**: the default load is too large, too repetitive, or too eager for the value it protects.
 - **Diluted core**: the skill's strongest behavioral instructions are buried under explanation, while artifact schemas or detailed examples crowd the main entry surface.
 - **Missed format opportunity**: a repeated artifact shape is embedded inline in `SKILL.md` or a generic reference, but the bundle would be clearer and more stable with a companion format file.
+- **Thin-but-correct core**: a core artifact keeps the right boundary but lacks enough judgment or depth to carry its real role.
+- **Helper-layer misplacement**: a helper artifact quietly becomes source of truth for a core layer without being promoted or referenced correctly.
 
 Start with a maintenance breadth-and-depth pass before deciding that only one of these dimensions matters.
 
@@ -94,6 +97,8 @@ Only keep a concrete skill name when it is part of the target skill's public bun
 ### 4. Normalize User-Facing Language
 
 If the skill defines labels, headers, or compact templates, express them as patterns or placeholders unless the target skill intentionally fixes one language for a public artifact. The runtime should speak in the user's session language.
+
+If the skill emits both public-entry artifacts and internal working artifacts, keep the language strategy explicit rather than letting mixed examples decide it implicitly.
 
 ### 4a. Preserve Trigger-Contract Layering
 
