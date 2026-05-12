@@ -55,7 +55,7 @@ Use this workflow when a concrete issue should trigger an auto-audit and then, o
 
 Examples:
 
-- a project-document problem may actually come from `product-plan`
+- a project-document problem may actually come from an upstream planning workflow
 - a concrete skill symptom may actually come from a higher design or maintenance contract
 - repeated drift across multiple repos may reflect a missing governance rule
 - a user-visible behavior problem may actually come from runtime, agent, or model behavior rather than the current skill text

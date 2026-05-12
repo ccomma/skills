@@ -175,13 +175,13 @@ These governance skills solve different layers of the same problem:
 - `skill-maintain`
   - Use when one existing skill already exists and needs an audit or repair.
   - Output: focused repairs for portability, structure, routing, output contracts, safety, bundle consistency, format-file opportunities, format-file quality, or token cost.
-  - It stays independently usable even if `skill-governance-escalation` is unavailable in the current environment.
+  - It stays independently usable even if no higher-layer governance review workflow is available in the current environment.
   - This is not the right tool for deciding whether multiple skills should be split, merged, or rerouted from scratch.
 
 The most common skill-management paths are:
 
 1. If one existing skill already needs an audit or repair, use `skill-maintain`.
-2. If that audit reveals a suspected reusable upstream cause, optionally escalate with `skill-governance-escalation`.
+2. If that audit reveals a suspected reusable upstream cause, optionally escalate with a higher-layer governance review workflow.
 3. If the real problem is boundary confusion between skills, use `skill-referee`.
 4. Once one skill's boundary is clear, use `skill-architect` to design or redesign the right shape.
 
