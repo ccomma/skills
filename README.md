@@ -9,6 +9,7 @@ These skills are designed to be small, composable, and easy to install into diff
 - [`product-explore`](./skills/product-explore/SKILL.md): Explores a fuzzy product or feature idea, clarifies the real problem and users, and converges on a Product Brief before planning.
 - [`product-plan`](./skills/product-plan/SKILL.md): Builds and maintains durable product context, planning docs, phase handoffs, and evidence for multi-phase product work.
 - [`product-validate`](./skills/product-validate/SKILL.md): Stress-tests an existing product plan against docs, terminology, code, and decision boundaries before execution or replanning continues.
+- [`skill-governance-escalation`](./skills/skill-governance-escalation/SKILL.md): Runs an upward-check from a concrete issue before or alongside local repair, so local drift, reusable-skill failures, multi-skill boundary conflicts, higher governance gaps, and runtime constraints do not get mixed together.
 - [`skill-referee`](./skills/skill-referee/SKILL.md): Referees responsibility boundaries between skills across any domain, using metadata-first discovery and controlled review depth.
 - [`skill-architect`](./skills/skill-architect/SKILL.md): Designs mature, token-efficient skills with explicit authority boundaries, output contracts, interaction intensity, references, scripts, assets, validation, and bundle structure.
 - [`skill-maintain`](./skills/skill-maintain/SKILL.md): Audits and repairs one existing skill through modular checks for portability, language consistency, output contracts, interaction intensity, bundle integrity, authority boundaries, structure, routing, companion format-file opportunities, and token/context cost without taking over multi-skill boundary design.
@@ -138,35 +139,38 @@ flowchart TD
 
 ## Skill Workflow
 
-`skill-referee -> skill-architect -> skill-maintain`
+`skill-governance-escalation -> skill-referee / skill-architect / skill-maintain / project workflow / runtime constraint note`
 
 ```mermaid
 flowchart TD
-    A["Unclear Skill Overlap or Routing"] --> B["skill-referee"]
-    B --> B1["Clarified Boundaries"]
-    B --> B2["Routing Guidance"]
+    A["Concrete Issue With Unclear Fix Layer"] --> B["skill-governance-escalation"]
+    B --> B1["Artifact / Reusable Skill / Governance / Runtime Judgment"]
+    B --> B2["Recommended Next Workflow"]
 
-    B1 --> C["skill-architect"]
-    B2 --> C
-    C --> C1["Create a New Skill"]
-    C --> C2["Split or Merge a Skill"]
-    C --> C3["Reshape Structure, References, Scripts, or Format Files"]
+    B2 --> C["skill-referee"]
+    B2 --> D["skill-architect"]
+    B2 --> E["skill-maintain"]
 
-    C1 --> D["Implemented Skill Bundle"]
-    C2 --> D
-    C3 --> D
+    C --> C1["Clarified Multi-Skill Boundary"]
+    C1 --> D
 
-    D --> E["skill-maintain"]
+    D --> D1["Create / Split / Merge / Reshape One Skill"]
+    D1 --> E
+
     E --> E1["Audit One Existing Skill"]
-    E --> E2["Repair Drift, Boundaries, or Token Cost"]
-    E --> E3["Check Bundle and Format-File Quality"]
+    E --> E2["Repair Drift, Contracts, or Bundle Quality"]
 
-    E --> F{"More Boundary Conflicts?"}
+    E --> F{"Need Higher-Layer Recheck?"}
     F -->|Yes| B
     F -->|No| G["Stable Skill Bundle"]
 ```
 
-These three skill-management skills solve different layers of the same problem:
+These governance skills solve different layers of the same problem:
+
+- `skill-governance-escalation`
+  - Use when a concrete issue should trigger an upward-check for reusable causes before or alongside local repair.
+  - Output: layer classification, abstract failure mode, escalation judgment, immediate local fix locus, durable upstream fix locus, and routing guidance.
+  - Best used before editing when the real uncertainty is not only "how do I patch this now?" but also "what layer should prevent this from recurring?"
 
 - `skill-referee`
   - Use when multiple skills may overlap, conflict, trigger too broadly, or need clearer routing.
@@ -183,9 +187,10 @@ These three skill-management skills solve different layers of the same problem:
 
 The most common skill-management paths are:
 
-1. If multiple skills feel blurry or redundant, use `skill-referee` first.
-2. Once the boundary is clear, use `skill-architect` to design or redesign the right shape.
-3. After the skill exists, use `skill-maintain` to audit and repair it over time.
+1. If a concrete issue may need more than a local patch, use `skill-governance-escalation` first.
+2. If the real problem is boundary confusion between skills, use `skill-referee`.
+3. Once one skill's boundary is clear, use `skill-architect` to design or redesign the right shape.
+4. After the skill exists, use `skill-maintain` to audit and repair it over time.
 
 ### Companion Format Files
 

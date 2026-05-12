@@ -1,0 +1,4 @@
+interface:
+  display_name: "Skill Governance Escalation"
+  short_description: "Run an upward-check from a concrete issue before or alongside local repair."
+  default_prompt: "Use $skill-governance-escalation when a concrete issue should trigger an upward-check for reusable causes. Start from the observed evidence, determine what needs patching locally, classify whether the durable upstream fix belongs in an artifact instance, one reusable skill, a multi-skill boundary, a higher governance layer, or a runtime/platform constraint, abstract only the narrowest reusable failure mode that the evidence supports, and route the next implementation step accordingly."
