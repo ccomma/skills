@@ -9,7 +9,7 @@ These skills are designed to be small, composable, and easy to install into diff
 - [`product-explore`](./skills/product-explore/SKILL.md): Explores a fuzzy product or feature idea, clarifies the real problem and users, and converges on a Product Brief before planning.
 - [`product-plan`](./skills/product-plan/SKILL.md): Builds and maintains durable product context, planning docs, phase handoffs, and evidence for multi-phase product work.
 - [`product-validate`](./skills/product-validate/SKILL.md): Stress-tests an existing product plan against docs, terminology, code, and decision boundaries before execution or replanning continues.
-- [`skill-governance-escalation`](./skills/skill-governance-escalation/SKILL.md): Runs an upward-check from a concrete issue before or alongside local repair, so local drift, reusable-skill failures, multi-skill boundary conflicts, higher governance gaps, and runtime constraints do not get mixed together.
+- [`skill-governance-escalation`](./skills/skill-governance-escalation/SKILL.md): Explicitly auto-audits a concrete issue first, then escalates only the findings that suggest reusable upstream causes.
 - [`skill-referee`](./skills/skill-referee/SKILL.md): Referees responsibility boundaries between skills across any domain, using metadata-first discovery and controlled review depth.
 - [`skill-architect`](./skills/skill-architect/SKILL.md): Designs mature, token-efficient skills with explicit authority boundaries, output contracts, interaction intensity, references, scripts, assets, validation, and bundle structure.
 - [`skill-maintain`](./skills/skill-maintain/SKILL.md): Audits and repairs one existing skill through modular checks for portability, language consistency, output contracts, interaction intensity, bundle integrity, authority boundaries, structure, routing, companion format-file opportunities, and token/context cost without taking over multi-skill boundary design.
@@ -139,38 +139,30 @@ flowchart TD
 
 ## Skill Workflow
 
-`skill-governance-escalation -> skill-referee / skill-architect / skill-maintain / project workflow / runtime constraint note`
+`skill-maintain` handles independent single-skill audit and repair. `skill-governance-escalation` handles auto-audit plus optional upward recursion when a concrete issue may have a reusable upstream cause.
 
 ```mermaid
 flowchart TD
-    A["Concrete Issue With Unclear Fix Layer"] --> B["skill-governance-escalation"]
-    B --> B1["Artifact / Reusable Skill / Governance / Runtime Judgment"]
-    B --> B2["Recommended Next Workflow"]
+    A["One Existing Skill Needs Audit Or Repair"] --> B["skill-maintain"]
+    B --> B1["Independent Single-Skill Findings"]
+    B --> B2{"Upstream-Check Candidate?"}
+    B2 -->|No| C["Local Repair Or Audit Report"]
+    B2 -->|Yes, And Governance Review Is Useful| D["skill-governance-escalation"]
 
-    B2 --> C["skill-referee"]
-    B2 --> D["skill-architect"]
-    B2 --> E["skill-maintain"]
+    E["Concrete Issue With Unclear Durable Fix Layer"] --> D
+    D --> D1["Auto-Audit Findings First"]
+    D --> D2["Escalate Only Reusable Candidates"]
+    D --> D3["Immediate Local Fix Locus + Durable Upstream Fix Locus"]
 
-    C --> C1["Clarified Multi-Skill Boundary"]
-    C1 --> D
-
-    D --> D1["Create / Split / Merge / Reshape One Skill"]
-    D1 --> E
-
-    E --> E1["Audit One Existing Skill"]
-    E --> E2["Repair Drift, Contracts, or Bundle Quality"]
-
-    E --> F{"Need Higher-Layer Recheck?"}
-    F -->|Yes| B
-    F -->|No| G["Stable Skill Bundle"]
+    D3 --> F["skill-referee / skill-architect / skill-maintain / project workflow / runtime constraint note"]
 ```
 
 These governance skills solve different layers of the same problem:
 
 - `skill-governance-escalation`
-  - Use when a concrete issue should trigger an upward-check for reusable causes before or alongside local repair.
-  - Output: layer classification, abstract failure mode, escalation judgment, immediate local fix locus, durable upstream fix locus, and routing guidance.
-  - Best used before editing when the real uncertainty is not only "how do I patch this now?" but also "what layer should prevent this from recurring?"
+  - Use when a concrete issue should trigger an explicit governance review.
+  - Output: findings, layer classification, abstract failure mode, escalation judgment, immediate local fix locus, durable upstream fix locus, and routing guidance.
+  - It auto-audits first, then escalates only the findings that warrant reusable upstream repair.
 
 - `skill-referee`
   - Use when multiple skills may overlap, conflict, trigger too broadly, or need clearer routing.
@@ -183,14 +175,15 @@ These governance skills solve different layers of the same problem:
 - `skill-maintain`
   - Use when one existing skill already exists and needs an audit or repair.
   - Output: focused repairs for portability, structure, routing, output contracts, safety, bundle consistency, format-file opportunities, format-file quality, or token cost.
+  - It stays independently usable even if `skill-governance-escalation` is unavailable in the current environment.
   - This is not the right tool for deciding whether multiple skills should be split, merged, or rerouted from scratch.
 
 The most common skill-management paths are:
 
-1. If a concrete issue may need more than a local patch, use `skill-governance-escalation` first.
-2. If the real problem is boundary confusion between skills, use `skill-referee`.
-3. Once one skill's boundary is clear, use `skill-architect` to design or redesign the right shape.
-4. After the skill exists, use `skill-maintain` to audit and repair it over time.
+1. If one existing skill already needs an audit or repair, use `skill-maintain`.
+2. If that audit reveals a suspected reusable upstream cause, optionally escalate with `skill-governance-escalation`.
+3. If the real problem is boundary confusion between skills, use `skill-referee`.
+4. Once one skill's boundary is clear, use `skill-architect` to design or redesign the right shape.
 
 ### Companion Format Files
 

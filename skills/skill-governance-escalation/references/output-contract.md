@@ -8,20 +8,22 @@ The report must include:
 
 1. observed issue
 2. evidence
-3. layer classification
-4. abstract failure mode
-5. escalation judgment
-6. immediate local fix locus, if one is justified
-7. durable upstream fix locus, if one is justified
-8. recommended next workflow
-9. layers not to change
-10. rationale
+3. findings
+4. layer classification
+5. abstract failure mode
+6. escalation judgment
+7. immediate local fix locus, if one is justified
+8. durable upstream fix locus, if one is justified
+9. recommended next workflow
+10. layers not to change
+11. rationale
 
 ## Quality Bar
 
 A good report:
 
 - starts from concrete evidence
+- makes the findings list explicit before escalation
 - names one primary owning layer
 - explains abstraction without overfitting
 - distinguishes immediate local cleanup from durable upstream repair when both matter

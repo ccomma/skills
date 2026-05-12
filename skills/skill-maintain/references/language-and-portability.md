@@ -4,6 +4,8 @@ Load this when the target skill has hardcoded runtime terms, mixed human languag
 
 ## What To Check
 
+These checks stay inside single-skill maintenance by default. If they also suggest a reusable upstream failure mode, mark them as `upstream-check candidates` rather than forcing a full governance judgment here.
+
 - vendor-specific filenames presented as universal rules
 - local filesystem paths or personal workflow names treated as public requirements
 - non-project-owned tools, workflows, or references treated as if the target artifact owns them

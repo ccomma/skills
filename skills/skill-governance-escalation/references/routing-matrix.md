@@ -9,6 +9,7 @@ Use this when the higher-level diagnosis is clear but the next implementation wo
 - one existing skill is the clear owner of the fix
 - the issue is internal to that skill's structure, routing, portability, language, output contract, or bundle
 - no multi-skill boundary dispute remains
+- the remaining work is single-skill audit or repair, whether or not a governance pass also happened earlier
 
 ### Route To A Skill-Design Workflow When
 

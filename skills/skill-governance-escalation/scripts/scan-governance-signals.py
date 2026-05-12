@@ -3,6 +3,9 @@
 
 This script does not decide ownership or routing by itself. It only surfaces
 candidate signals that are worth human or workflow-level judgment.
+
+It is the mechanically reliable layer of the governance-audit taxonomy, not the
+whole taxonomy and not the escalation decision itself.
 """
 
 from __future__ import annotations

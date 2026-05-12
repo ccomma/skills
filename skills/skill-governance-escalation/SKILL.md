@@ -1,16 +1,17 @@
 ---
 name: skill-governance-escalation
-description: Use when a concrete issue should trigger an upward-check for reusable causes before or alongside local repair, and you need to decide whether the durable fix belongs in a project artifact, one reusable skill, a multi-skill boundary, a higher governance layer, or outside the skill stack entirely.
+description: Use when a concrete issue should trigger an auto-audit first and then an upward-check for reusable causes if needed, so you can separate immediate local repair from any durable upstream fix.
 ---
 
 # Skill Governance Escalation
 
-Diagnose governance problems across layers without over-generalizing. Use this when a concrete issue may need to be fixed above the place where it first appears, or when a local problem should trigger an upstream-check for reusable causes as well.
+Audit governance-relevant AI changes and diagnose cross-layer causes without over-generalizing. Use this when a concrete issue may need both a local patch and a reusable upstream check, or when you need to prove that no such escalation is warranted.
 
 ## Boundaries
 
 Use this when a concrete problem may have more than one plausible repair layer and you want to determine:
 
+- what findings the current change actually produces
 - what should be patched locally right now
 - whether an upstream reusable fix is also warranted
 - which layer should own that durable fix
@@ -33,7 +34,8 @@ Do not use this when:
 ## Core Rules
 
 - Start from the concrete issue, not from a desired abstraction.
-- Do not wait for the user to pre-diagnose the higher layer before doing the upward-check.
+- When this workflow is invoked, default to an auto-audit first. Do not wait for the user to pre-diagnose findings.
+- This workflow is explicitly invoked. It does not imply silent background hooks or automatic execution after every change.
 - Abstract only as far as the evidence supports.
 - Prefer the lowest layer that can permanently fix the problem.
 - Distinguish one-off project drift from repeatable workflow failure.
@@ -41,6 +43,7 @@ Do not use this when:
 - Distinguish "local patch now" from "durable upstream repair later" when both are needed.
 - Allow the answer to be "the upstream cause is outside the current skill stack" when the evidence points to runtime, agent, or model behavior.
 - When the issue is text-heavy and deterministic signal extraction is useful, run `scripts/scan-governance-signals.py` first to gather candidate evidence. Do not let the script replace judgment.
+- Keep findings separate from escalation judgments. A local-only finding is still a useful output.
 - Default to a governance report, not to direct multi-layer rewrites.
 - Hand off to downstream workflows once the fix locus is clear.
 
@@ -48,7 +51,7 @@ Do not use this when:
 
 ### 1. Confirm The Trigger
 
-Use this workflow when a concrete issue should trigger an upstream-check, especially if it recurs, feels misowned, may reflect a reusable governance gap, or may be getting blamed on the wrong layer.
+Use this workflow when a concrete issue should trigger an auto-audit and then, only if needed, an upstream-check. This is especially useful if the issue recurs, feels misowned, may reflect a reusable governance gap, or may be getting blamed on the wrong layer.
 
 Examples:
 
@@ -57,7 +60,7 @@ Examples:
 - repeated drift across multiple repos may reflect a missing governance rule
 - a user-visible behavior problem may actually come from runtime, agent, or model behavior rather than the current skill text
 
-### 2. Map The Observed Issue
+### 2. Run The Auto-Audit
 
 Start with the concrete evidence:
 
@@ -67,13 +70,25 @@ Start with the concrete evidence:
 - whether the same problem has appeared before
 - whether a local fix is still needed even if an upstream cause exists
 
-Load [references/layer-model.md](references/layer-model.md) before classifying the layer.
+Load [references/audit-signals.md](references/audit-signals.md) before naming findings.
 
 If the issue lives in skills, templates, docs, or other text artifacts, use `scripts/scan-governance-signals.py` to collect candidate signals such as headings-only templates, mixed-language headings, or local-context leakage before classifying the layer. Prefer scanning the most relevant current files first; use `--exclude` patterns when historical directories would only add noise.
 
-### 3. Classify The Owning Layer
+Produce a compact findings list first. Each finding should be marked as one of:
 
-Decide whether the issue primarily belongs to:
+- `local-only finding`
+- `upstream-check candidate`
+- `runtime/platform candidate`
+
+Do not escalate anything yet.
+
+### 3. Escalate If Needed
+
+Only escalate findings that look reusable, misowned, or suspiciously higher-layer. Leave pure local findings at the local layer.
+
+Load [references/layer-model.md](references/layer-model.md) before classifying the layer.
+
+For each escalated finding, decide whether the durable fix primarily belongs to:
 
 - artifact instance
 - reusable workflow or skill
@@ -85,7 +100,7 @@ Use [references/routing-matrix.md](references/routing-matrix.md) when the likely
 
 ### 4. Abstract The Failure Mode
 
-Turn concrete symptoms into the narrowest reusable failure mode that still explains the evidence.
+For each escalated finding, turn the concrete symptoms into the narrowest reusable failure mode that still explains the evidence.
 
 Load [references/abstraction-rules.md](references/abstraction-rules.md) before naming the failure mode.
 
@@ -104,7 +119,7 @@ Bad outputs at this step look like:
 - a rule tailored to one private setup
 - a sweeping meta-rule based on one accident
 
-### 5. Decide Whether To Escalate
+### 5. Decide The Final Split Between Local Repair And Upstream Repair
 
 Ask:
 
@@ -124,6 +139,7 @@ The report must state:
 
 - the observed issue
 - layer classification
+- the findings list
 - abstract failure mode
 - whether escalation is justified
 - the immediate local fix locus, if one is justified
@@ -150,6 +166,7 @@ For review-only work:
 ```text
 [Localized label for observed issue]:
 [Localized label for evidence]:
+[Localized label for findings]:
 [Localized label for layer classification]:
 [Localized label for abstract failure mode]:
 [Localized label for escalation judgment]:

@@ -7,6 +7,7 @@ Use this when writing the final report for a governance-escalation pass.
 ```text
 [Localized label for observed issue]:
 [Localized label for evidence]:
+[Localized label for findings]:
 [Localized label for layer classification]:
 [Localized label for abstract failure mode]:
 [Localized label for escalation judgment]:
@@ -20,6 +21,7 @@ Use this when writing the final report for a governance-escalation pass.
 ## Writing Guidance
 
 - Keep the report compact and decision-oriented.
+- Put findings before escalation judgment so local-only issues do not disappear.
 - Name one primary layer even if secondary context exists.
 - If escalation is not justified, say so clearly.
 - If both a local patch and an upstream repair are warranted, name both and keep their scopes distinct.

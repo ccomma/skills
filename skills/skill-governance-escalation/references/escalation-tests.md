@@ -32,6 +32,15 @@ Expected judgment: keep the repair at artifact or project-workflow level unless 
 Must not: jump straight to a meta-skill rule.
 ```
 
+### 1a. Auto-Audit Finds Local Drift
+
+```text
+Scenario: one changed file has deterministic quality issues but no strong reusable pattern yet
+Prompt: 先审这次改动，再判断要不要上收到更高层。
+Expected judgment: produce findings first, keep local-only findings local, and escalate only what evidence supports.
+Must not: treat every finding as an escalation candidate by default.
+```
+
 ### 2. Repeated Workflow Failure
 
 ```text
@@ -48,6 +57,15 @@ Scenario: one local artifact is wrong, but the pattern also points to a reusable
 Prompt: 先把当前 skill 的输出修好，但这个问题以后应该也会反复出现。
 Expected judgment: name both the immediate local fix and the durable upstream fix; do not collapse them into one vague owner.
 Must not: force a false choice between local repair and upstream repair when both are justified.
+```
+
+### 3a. Auto-Audit Finds Local Issue Plus Upstream Candidate
+
+```text
+Scenario: the audit finds a local wording defect and also reveals a reusable governance pattern
+Prompt: 这次改动里有一个本地问题，但我怀疑它背后还有上游原因。
+Expected judgment: keep the local fix actionable, mark the upstream-check candidate explicitly, and name both loci only if the evidence supports it.
+Must not: let the upstream analysis erase the local repair plan.
 ```
 
 ### 4. Multi-Skill Ownership Conflict

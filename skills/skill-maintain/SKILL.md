@@ -15,7 +15,7 @@ Route away when:
 
 - the main question is whether a skill should exist, be created, split, or merged from scratch -> skill-design workflow
 - the main problem is overlap, conflict, stale duplication, or routing ambiguity between multiple skills -> skill-boundary workflow
-- the reported issue may have an upstream reusable cause and it is still unclear whether the real fix belongs in the local artifact, this skill, a neighboring skill boundary, or a higher governance layer -> governance-escalation workflow
+- the main value now is not single-skill repair but a cross-layer governance judgment about where the durable fix belongs -> governance-escalation workflow
 - the request is general prompt compression, code optimization, runtime performance, or arbitrary chat summarization
 
 ## Core Rules
@@ -28,7 +28,9 @@ Route away when:
 - When a skill is one step in a broader workflow, check whether it clearly defines what artifact it owns, what state it must not mutate, and what downstream capability should consume its output.
 - When a skill is itself a workflow, check whether the dominant happy path is easy to see before branch cases, whether usage-expansion sections stay about trigger and wrong-scope guidance, and whether entrypoint roles remain distinct.
 - When a reported issue may actually belong to a higher governance layer, stop and route instead of smuggling meta-governance redesign into one-skill maintenance.
-- When a concrete issue in this skill may also reveal an upstream reusable failure mode, do a short upward check. If the durable fix locus is still unclear, route to governance-escalation instead of guessing.
+- When a concrete issue in this skill may also reveal an upstream reusable failure mode, mark it as an `upstream-check candidate`.
+- `skill-maintain` must remain independently usable even when `skill-governance-escalation` is unavailable in the current environment.
+- If `skill-governance-escalation` is available and the upstream-check candidate matters, recommend or route there. If it is unavailable, finish the local audit and repair guidance anyway instead of stalling.
 - Keep reference routing legible: important support files should be linked consistently and described at the right abstraction level.
 - Prefer deterministic scripts for repeated bundle checks, metadata extraction, link validation, and compact reporting when those steps do not require judgment.
 - When a script exists for a deterministic check, use it instead of redoing the same inspection through prose alone.
@@ -99,6 +101,7 @@ For explicit audit/review requests, the repair plan should separate:
 
 - issues explicitly reported by the user
 - issues proactively discovered by the maintenance audit
+- issues that are only `upstream-check candidates`
 
 Do not ignore proactively discovered issues just because the user did not name them first. Fix the safe, clearly justified ones in the same pass, and call out any higher-risk findings before changing them.
 
@@ -170,6 +173,7 @@ For review-only work:
 - [Localized bundle label]:
 - [Localized safety label]:
 - [Localized token label]:
+[Localized label for suspected upstream governance candidates]:
 [Localized breadth coverage label]:
 [Localized repair depth label]:
 [Localized recommended changes label]:

@@ -4,6 +4,13 @@ Load this when auditing or repairing a skill beyond a trivial wording fix.
 
 ## Failure Modes
 
+For each finding, decide whether it is:
+
+- a **single-skill finding** that should stay inside `skill-maintain`
+- an **escalation candidate** that may deserve a later governance pass
+
+Do not assume every escalation candidate requires immediate recursion. Local repair may still be enough for the current task.
+
 Check the reported issue before widening scope:
 
 - **Portability leak**: vendor-specific filenames, private paths, personal workflow names, or local tool assumptions appear as if they were universal rules.
@@ -24,6 +31,12 @@ Check the reported issue before widening scope:
 - **Helper-layer misplacement**: a helper artifact quietly becomes source of truth for a core layer without being promoted or referenced correctly.
 
 Start with a maintenance breadth-and-depth pass before deciding that only one of these dimensions matters.
+
+Typical escalation candidates include:
+
+- repeated findings that keep showing up across skills or repos
+- findings whose durable fix appears to belong in a higher governance rule
+- findings where local repair is clear but reusable prevention still feels unresolved
 
 ## Capability Preservation
 

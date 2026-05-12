@@ -1,6 +1,6 @@
 # Governance Layer Model
 
-Use this when deciding where a recurring quality problem really belongs, including cases where the real upstream cause may sit outside the current skill stack.
+Use this after the auto-audit has produced findings and you need to decide where any escalated finding really belongs, including cases where the real upstream cause may sit outside the current skill stack.
 
 ## Layers
 
