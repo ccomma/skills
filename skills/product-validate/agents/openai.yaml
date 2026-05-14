@@ -1,4 +1,4 @@
 interface:
   display_name: "Product Validate"
-  short_description: "Grill an existing product plan against docs, terminology, code, and decisions."
-  default_prompt: "Use $product-validate to challenge an existing product plan against DESIGN.md, roadmap, PRDs, technical designs, handoffs, ADRs, and code before execution or replanning continues."
+  short_description: "Grill an existing phase plan or documented roadmap direction against docs, terminology, code, and decisions."
+  default_prompt: "Use $product-validate to challenge an existing phase plan or documented roadmap direction against DESIGN.md, roadmap, PRDs, technical designs, handoffs, ADRs, and code before execution or replanning continues."

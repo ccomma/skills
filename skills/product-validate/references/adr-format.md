@@ -2,6 +2,14 @@
 
 Use this only when a decision is durable, surprising, and the result of a real trade-off.
 
+Apply the gate strictly:
+
+1. hard to reverse
+2. surprising without context
+3. the result of a real trade-off
+
+If any one of the three is missing, prefer the owning plan artifact instead of creating an ADR.
+
 ADRs should stay small. A single short paragraph is often enough.
 
 ## Template

@@ -18,6 +18,10 @@ For each weak term:
 3. name the avoided aliases when they create real confusion
 4. give one concrete scenario that shows why the distinction matters
 
+When a project already has a vocabulary-bearing artifact such as `CONTEXT.md`, a glossary section, or durable terminology in `DESIGN.md`, compare against that language immediately instead of silently accepting the user's latest wording.
+
+If the plan keeps working only because a fuzzy term has not been pinned down yet, do not move on. Resolve the term before deeper design branches build on it.
+
 ## Where To Write Back
 
 - cross-phase product vocabulary -> `DESIGN.md`
