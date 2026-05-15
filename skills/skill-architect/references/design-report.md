@@ -1,8 +1,10 @@
 # Skill Architect Design Report
 
-Load this when finishing a new or substantially upgraded skill.
+Load this when finishing a new or substantially upgraded skill and you need a closeout explanation after the design work is already done.
 
 The report should be concise enough to include in the final response or a short handoff note. It should explain the design without becoming a second SKILL.md.
+
+This is not the pre-create handoff contract. If the next consumer is a downstream creator or initializer, use `kernel-build-brief.md` instead.
 
 ## Purpose
 

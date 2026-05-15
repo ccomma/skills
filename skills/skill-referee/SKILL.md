@@ -7,7 +7,7 @@ description: Use when installed or available skills may overlap, conflict, trigg
 
 Referee skill boundaries across any domain with controlled questions and minimal context. Collect scope, depth, and strategy before deep-reading skill bodies.
 
-Use this when the main question is how multiple skills should divide responsibility. If the boundary is already clear and the remaining task is to lock one skill's kernel and then redesign its internal shape, split, merge, or file layout, hand off to a skill-architecture workflow — the workflow that locks one skill's core before designing its internal structure once the multi-skill boundary picture is already clear.
+Use this when the main question is how multiple skills should divide responsibility. If the boundary is already clear and the remaining task is to lock one skill's kernel, produce its creator-facing build brief, and then redesign its internal shape, split, merge, or file layout, hand off to a skill-architecture workflow — the workflow that freezes one skill's core and build surface before downstream creation once the multi-skill boundary picture is already clear.
 
 If the real uncertainty is not between multiple skills but between artifact-level drift, one workflow skill, and a higher governance layer, route to a governance-escalation workflow instead of widening this skill.
 

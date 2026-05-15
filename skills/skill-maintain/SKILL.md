@@ -26,6 +26,7 @@ Audit and repair one existing skill without changing its role by accident.
    - first move or dominant path is hard to find
    - the strongest thing is hard to state even after reading the file
    - the `not-this-skill-if...` boundary is missing, vague, or buried
+   - the skill looks structurally complete but never made its creator-facing kernel or build brief explicit
    - the dominant path appears too late
    - the skill depends on a literal heading name instead of making the dominant path obvious
    - wrong-scope guidance names example domains instead of the real workflow object boundary
@@ -103,6 +104,8 @@ Use this for one existing skill at a time.
 Do not use this when the main task is designing a different skill, routing across multiple skills, or executing the underlying workflow itself rather than repairing this skill.
 
 If the real task is changing the target skill's role, redefining its kernel, or turning a repair into a redesign, route to a skill-architecture workflow.
+
+If the repair reveals that the original skill never had a real creator-facing kernel/shape brief, classify that first as kernel/architecture drift and decide explicitly whether it still fits maintenance or needs architecture handoff.
 
 </scope>
 

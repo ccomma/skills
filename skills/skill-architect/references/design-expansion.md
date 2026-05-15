@@ -1,6 +1,6 @@
 # Skill Architect Design Expansion
 
-Load this when the skill kernel is already explicit, but you still need to expand it across the important product dimensions before freezing the design.
+Load this when the skill kernel is already explicit, the build brief exists, but one or more brief fields still need engineering judgment before the design is frozen.
 
 If you are not even sure whether design expansion is the next right move, load `reference-routing.md` first.
 
@@ -8,14 +8,16 @@ If the question is already clearly narrower than design expansion, jump directly
 
 Do not use this file to discover the kernel. If the kernel sentence, trigger boundary, first move, strongest thing, or wrong-scope sentence is still fuzzy, go back to `kernel-extraction.md`.
 
+Do not use this file as a substitute for the build brief. If the brief has not been rendered yet, go to `kernel-build-brief.md` first.
+
 ## Expansion Pass
 
-Design expansion means: scan the important dimensions after the kernel exists so you avoid two failures:
+Design expansion means: scan the important dimensions after the kernel exists so you can finish the creator-facing build brief without overbuilding the skill:
 
 - **narrow design**: the skill looks tidy but misses real product dimensions
 - **undirected depth**: the skill deepens several dimensions without a real failure mode
 
-The kernel stays the fixed center. Expansion only decides what additional structure is needed to teach it, protect it, or verify it.
+The kernel stays the fixed center. Expansion only decides what additional structure is needed to teach it, protect it, or verify it, and which of those decisions need to be frozen in the build brief before a creator initializes files.
 
 Start from these fixed kernel inputs:
 
@@ -24,6 +26,14 @@ Start from these fixed kernel inputs:
 - `first move`
 - `strongest thing`
 - `not-this-skill-if...`
+
+Keep these brief outputs in view while you scan:
+
+- `minimal shape`
+- `component decisions`
+- `do-not-add`
+- `validation starter`
+- `creator handoff`
 
 Then scan these dimensions before freezing the design:
 
@@ -57,7 +67,7 @@ For each dimension, also answer:
 - does this verify the kernel
 - or does it only make the design feel more complete
 
-If the answer is only "more complete", default to leaving that dimension light.
+If the answer is only "more complete", default to leaving that dimension light or out of the build brief.
 
 If more than two important dimensions are left as "unspecified", the design is usually still under-architected.
 If the strongest thing is still hard to state after the scan, the design is under-kernelled, not under-expanded.
@@ -82,7 +92,7 @@ Do not deepen a dimension just because it exists. Deepen only when it protects a
 
 ## After Expansion
 
-Once the dimensions are expanded, pick one next owner:
+Once the dimensions are expanded, first update the build brief, then pick one next owner only if a narrower design question remains:
 
 - `component-paths.md` for where one piece of guidance belongs
 - `reference-design.md` for whether references should exist, merge, split, or sharpen
@@ -134,7 +144,7 @@ Depth choices:
 
 ```text
 Prompt: Design a reusable skill for high-risk workflow setup, but keep it lightweight.
-Expected behavior: confirm the kernel first, then expand the full dimension set, then deepen only authority, output contract, validation, and script opportunities instead of inflating every category.
+Expected behavior: confirm the kernel first, keep the build brief in view, then deepen only authority, output contract, validation, and script opportunities instead of inflating every category.
 ```
 
 ```text

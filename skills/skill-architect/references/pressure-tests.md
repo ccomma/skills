@@ -30,7 +30,8 @@ Create at least these scenarios for non-trivial skills:
 18. **Systematization pressure** — related judgments should collapse into a stable system of routes, layers, or rules instead of remaining as scattered local patches.
 19. **Kernel-clarity pressure** — the design should state the kernel sentence, first move, strongest thing, and wrong-scope sentence before structural expansion.
 20. **Kernel-protection pressure** — later structure choices should be able to explain whether they protect the kernel or only improve explanation comfort.
-21. **Public-positioning pressure** — frontmatter, first-screen language, metadata, and supporting docs should all describe the same kernel-first identity.
+21. **Public-positioning pressure** — frontmatter, first-screen language, metadata, and supporting docs should all describe the same build-brief-first identity.
+22. **Creator-bridge pressure** — the design should freeze what a downstream creator should initialize and what it should not invent.
 
 ## Test Format
 
@@ -69,7 +70,8 @@ For each scenario, ask:
 - Did the design explicitly scan major dimensions instead of focusing only on one obvious one?
 - Were depth decisions intentional rather than accidental?
 - Did it avoid neighboring skill responsibilities?
-- Did frontmatter, first-screen language, metadata, and public docs all describe the same kernel-first identity?
+- Did frontmatter, first-screen language, metadata, and public docs all describe the same build-brief-first identity?
+- Would a downstream creator know what to initialize, what not to add, and which decisions are already frozen?
 - Did output format and language match the user's need?
 - Did it choose a language strategy explicitly when the skill emits user-facing artifacts or templates?
 - Would a project-visible template remain understandable to a human or weaker model without hidden context?
@@ -89,6 +91,7 @@ For each scenario, ask:
 - The design looks complete, but the kernel sentence or strongest thing is still fuzzy.
 - The design jumps straight to structural expansion before kernel extraction.
 - The design jumps straight to references/scripts/assets without a design-expansion pass.
+- The design says "creator can finish the rest" without freezing a build brief first.
 - Every dimension gets deep treatment even though only one or two needed it.
 - The skill duplicates another skill's job instead of routing.
 - The skill has no wrong-scope behavior.
@@ -239,9 +242,9 @@ Evidence to check: the renamed skill is internally consistent and publicly enume
 ```text
 Scenario: fuzzy skill idea
 Prompt: Use $skill-architect. 帮我做一个让复杂工作流更稳的 skill。
-Expected behavior: ask only enough intake to lock the kernel sentence, trigger boundary, first move, strongest thing, and wrong-scope sentence before proposing sections or companion files.
+Expected behavior: ask only enough intake to lock the kernel sentence, trigger boundary, first move, strongest thing, and wrong-scope sentence, then render a build brief before proposing sections or companion files.
 Must not: jump directly to references, scripts, or bundle shape.
-Evidence to check: the first architecture output is the kernel, not the structure.
+Evidence to check: the first architecture output is the kernel and build brief, not the structure.
 ```
 
 ### 12. Clear Skill Idea Should Lock Kernel Fast
@@ -249,9 +252,9 @@ Evidence to check: the first architecture output is the kernel, not the structur
 ```text
 Scenario: already clear skill idea
 Prompt: Use $skill-architect. 创建一个名为 prompt-router 的 skill；它只负责把模糊请求快速分流到正确工作流，第一步先判定 owner，不需要复杂交互。
-Expected behavior: skip long intake, state the kernel quickly, then move into the lightest necessary structure decisions.
+Expected behavior: skip long intake, state the kernel quickly, then render the build brief and only then move into the lightest necessary structure decisions.
 Must not: run a full interview after the kernel is already obvious.
-Evidence to check: the kernel is explicit before any structural expansion, and intake stays short.
+Evidence to check: the kernel and handoff brief are explicit before any structural expansion, and intake stays short.
 ```
 
 ### 13. Complete Structure But No Strongest Thing Must Fail
@@ -269,9 +272,9 @@ Evidence to check: the next move is kernel repair, not more bundle growth.
 ```text
 Scenario: generic skill creation request
 Prompt: Use $skill-architect. 帮我初始化一个 skill folder，补齐 starter files 和基础结构。
-Expected behavior: keep generic scaffolding out of this skill's core promise and either redirect that part or restate that this workflow starts after the boundary is clear and the kernel must be locked.
+Expected behavior: keep generic scaffolding out of this skill's core promise, produce the build brief first, and state that folder/file initialization belongs to a downstream creator.
 Must not: redefine skill-architect as a generic bundle initializer.
-Evidence to check: the answer still frames kernel-first design as the primary job.
+Evidence to check: the answer still frames build-brief-first design as the primary job.
 ```
 
 ### 15. Skill Maturity Request Should Start From The Kernel
@@ -289,7 +292,7 @@ Evidence to check: the first move is kernel-first even for a vague maturity requ
 ```text
 Scenario: maintenance comparison
 Prompt: Use $skill-architect. 这个已有 skill 结构完整，但 strongest thing 说不清。现在该怎么做？
-Expected behavior: distinguish between kernel drift inside an existing role and true role redefinition; do not silently swallow a maintenance-first case as if all such requests belonged here.
+Expected behavior: distinguish between kernel drift inside an existing role, creator-brief drift, and true role redefinition; do not silently swallow a maintenance-first case as if all such requests belonged here.
 Must not: ignore the handoff boundary with skill-maintain.
 Evidence to check: the answer explains when repair stays in maintenance and when it becomes redesign.
 ```
@@ -299,12 +302,22 @@ Evidence to check: the answer explains when repair stays in maintenance and when
 ```text
 Scenario: public entry-surface audit
 Prompt: Read the frontmatter description, first-screen intro, agent metadata, and README sentence for this skill. Do they all describe the same job?
-Expected behavior: confirm a shared kernel-first identity or flag the drift explicitly.
-Must not: accept one surface describing generic bundle design while another describes kernel locking.
+Expected behavior: confirm a shared build-brief-first identity or flag the drift explicitly.
+Must not: accept one surface describing generic bundle design while another describes creator-facing brief production.
 Evidence to check: all entry surfaces describe the same first responsibility.
 ```
 
-### 18. Lean Skill Should Not Read Like A Memo
+### 18. Creator Handoff Must Be Frozen Before Initialization
+
+```text
+Scenario: creator bridge
+Prompt: Use $skill-architect. 先把这个 skill 的核心和最小建造面定下来，后面我会交给 creator 去初始化。
+Expected behavior: produce a build brief that freezes minimal shape, component decisions, do-not-add rules, validation starter, and creator handoff before asking a downstream creator to continue.
+Must not: say "creator can decide the rest" or reopen the kernel during handoff.
+Evidence to check: the handoff tells the creator what to initialize and what not to invent.
+```
+
+### 19. Lean Skill Should Not Read Like A Memo
 
 ```text
 Scenario: anti-bloat redesign
@@ -314,7 +327,7 @@ Must not: preserve redundant sections just because they look standard.
 Evidence to check: the resulting design is shorter, sharper, and still behaviorally complete.
 ```
 
-### 19. Section Ownership Must Be Explicit
+### 20. Section Ownership Must Be Explicit
 
 ```text
 Scenario: section collision
@@ -324,7 +337,7 @@ Must not: keep the same instruction repeated across two sections with cosmetic w
 Evidence to check: a reader can explain each section's unique job in one sentence.
 ```
 
-### 20. Component Must Survive Delete, Merge, And Cost Challenges
+### 21. Component Must Survive Delete, Merge, And Cost Challenges
 
 ```text
 Scenario: unnecessary component
@@ -334,7 +347,7 @@ Must not: keep a component only because its topic sounds like a sensible categor
 Evidence to check: the answer names a concrete burden, a concrete merge collision, and a concrete cost justification for each surviving component.
 ```
 
-### 21. Skill Write Must Define Minimal Real Testing
+### 22. Skill Write Must Define Minimal Real Testing
 
 ```text
 Scenario: post-write validation
@@ -344,7 +357,7 @@ Must not: stop at static checks alone or prescribe an oversized smoke suite by d
 Evidence to check: verification is real, scoped, and explicit about skipped live tests.
 ```
 
-### 22. Principle Must Have Closure
+### 23. Principle Must Have Closure
 
 ```text
 Scenario: slogan audit
@@ -354,7 +367,7 @@ Must not: praise the wording quality without checking enforcement paths.
 Evidence to check: unsupported principles are explicitly named instead of being left as "nice guidance".
 ```
 
-### 23. Reference Must Earn Its Place
+### 24. Reference Must Earn Its Place
 
 ```text
 Scenario: reference audit

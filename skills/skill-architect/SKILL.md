@@ -1,13 +1,13 @@
 ---
 name: skill-architect
-description: "Use when one skill's boundary is already clear and you need to lock its smallest strong kernel: what it exists to do, when it should trigger, what it should do first, what it is strongest at, and when it is the wrong skill, before deciding expansion or bundle structure."
+description: "Use when one skill's boundary is already clear and you need to lock its kernel, turn it into a creator-facing build brief, and only then decide the lightest structure, validation starter, and downstream handoff."
 ---
 
 # Skill Architect
 
-Lock one skill's kernel before structural design.
+Lock one skill's kernel and turn it into a creator-facing build brief before structural design.
 
-Use this when the boundary is already clear and the remaining question is: what does this skill exist to do, when should it trigger, what should it do first, what is it strongest at, and when is it the wrong skill.
+Use this when the boundary is already clear and the remaining question is: what does this skill exist to do, when should it trigger, what should it do first, what is it strongest at, what is the wrong-scope boundary, and what is the lightest build brief a downstream creator should follow.
 
 Do not use this as the generic skill-creation workflow.
 
@@ -25,12 +25,25 @@ Do not use this to repair one existing skill whose role should stay stable.
    - if the request is too fuzzy to fill those five lines honestly, load `references/design-intake.md` only long enough to gather the missing inputs, then return to `references/kernel-extraction.md`
    - do not start from sections, references, scripts, or bundle shape while the kernel is still implicit
 
-2. Expand only after the kernel is explicit:
-   - use `references/design-expansion.md` only after the kernel is stable enough to teach back clearly
+2. Produce the build brief before bundle discussion:
+   - once the kernel is explicit, load `references/kernel-build-brief.md` and render the creator-facing build brief
+   - the build brief is the default explicit output of this workflow
+   - include:
+     - the five kernel lines
+     - `minimal shape`
+     - `component decisions`
+     - `do-not-add`
+     - `validation starter`
+     - `creator handoff`
+   - if any brief field still needs real design judgment, use `references/design-expansion.md` only to complete the brief, not to skip it
+
+3. Deepen only after the build brief exists:
+   - use `references/design-expansion.md` only after the kernel is stable enough to teach back clearly and the build brief still has unresolved engineering choices
    - expansion may deepen dimensions, but it does not get to discover the kernel for you
    - if expansion reveals that the strongest thing is still unclear, stop and return to `references/kernel-extraction.md`
+   - if the user asks for folder creation, starter files, or generic scaffolding, still finish the build brief first and mark initialization as downstream creator work
 
-3. Choose the lightest top-level shape:
+4. Choose the lightest top-level shape:
    - start with the fewest sections that still teach the behavior
    - keep the shortest trigger in frontmatter
    - near the top of `SKILL.md`, default to one hot-path block that carries the strongest instruction and dominant path
@@ -43,7 +56,7 @@ Do not use this to repair one existing skill whose role should stay stable.
      - hard invariant
      - conditional support routing
 
-4. Cut what does not earn its place:
+5. Cut what does not earn its place:
    - collapse repeated decisions instead of listing them three ways:
      - if two sections or sibling bullets are teaching the same judgment, merge them
      - if a section can disappear without blurring trigger, first move, strongest thing, boundary, or output, cut it
@@ -55,9 +68,10 @@ Do not use this to repair one existing skill whose role should stay stable.
      - if this component vanished, would the loss be kernel clarity, kernel stability, kernel verification, or only explanation comfort
      - if the loss is only explanation comfort, default to cutting the component instead of adding it
 
-5. Pressure-test the first read:
+6. Pressure-test the first read:
    - does it read like a skill or like a memo
-   - can the design state the kernel sentence, strongest thing, and wrong-scope sentence without falling back to structural prose
+   - can the design state the kernel sentence, strongest thing, wrong-scope sentence, and minimal shape without falling back to structural prose
+   - does the build brief tell a downstream creator what to initialize and what not to invent
    - can a weaker model tell what to do from the first screen
    - is the dominant path visible early
    - is any core behavior buried by explanation
@@ -71,9 +85,10 @@ Do not use this to repair one existing skill whose role should stay stable.
      - if a weaker model opened it first by mistake, could it redirect cleanly
      - what cost does this component add in tokens, reads, maintenance, or drift risk
 
-6. Write and validate:
+7. Write and validate:
    - keep public wording portable and publishable
    - name any local or runtime-specific term that still needs a portable replacement
+   - if no downstream creator is being edited in this phase, state that the build brief is the handoff contract for the next creator layer rather than pretending initialization is complete
    - validate from cheapest proof upward:
      - run deterministic bundle checks first
      - if the smoke harness or runner changed, run its deterministic self-check before broader live smoke
@@ -112,6 +127,7 @@ If the real problem is repairing one existing skill without changing its core ro
 - Do not start by copying a familiar section template.
 - Do not start from section names, references, scripts, or bundle shape before the kernel is explicit.
 - The minimum architecture output is not "a draft bundle". It is a teachable kernel: kernel sentence, trigger boundary, first move, strongest thing, and wrong-scope sentence.
+- The default explicit deliverable is not "starter files". It is a creator-facing build brief: kernel, minimal shape, component decisions, do-not-add rules, validation starter, and creator handoff.
 - Optimize for clear section jobs and a visible dominant path, not heading conventions.
 - Collapse sibling bullets when they are really expressing one governing decision with different conditions or examples.
 - Apply the same collapse rule to references and other bundle components, not only to `SKILL.md`.
@@ -130,6 +146,7 @@ If the real problem is repairing one existing skill without changing its core ro
 - Keep generic governance text abstract: brand names, local runtime names, and machine-specific examples belong in adapter detail only, not in the governing rule itself.
 - Prefer snippet-first smoke context when a changed excerpt can prove the behavior; do not spend live tokens on full-file reads unless the narrower context is insufficient.
 - A slimmer skill is better only if it stays equally teachable.
+- Do not let a downstream creator redefine the kernel, add default bundle parts, or invent validation obligations that the build brief did not earn.
 
 </invariants>
 
@@ -137,7 +154,8 @@ If the real problem is repairing one existing skill without changing its core ro
 For kernel-first design:
 - load `references/kernel-extraction.md` first when the skill kernel is not yet explicit
 - load `references/design-intake.md` only when the request is too underspecified to complete kernel extraction honestly
-- load `references/design-expansion.md` only after the kernel is explicit and the design still needs multidimensional expansion before the structure is frozen
+- load `references/kernel-build-brief.md` immediately after the kernel is explicit so the creator-facing brief exists before broader structure work
+- load `references/design-expansion.md` only after the kernel is explicit and the build brief still needs multidimensional expansion before the structure is frozen
 
 For structure decisions:
 - load `references/component-paths.md` when deciding where one piece of guidance belongs

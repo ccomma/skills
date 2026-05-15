@@ -11,6 +11,7 @@ Use one or two prompts, not the full pressure suite.
 Use this file when the change is mainly about:
 
 - kernel extraction or kernel-first routing
+- build-brief-first handoff behavior
 - public positioning or explicit entry-surface wording
 - component placement
 - reference existence or split/merge
@@ -25,22 +26,22 @@ If the real question is which runtime layer or runtime adapter to use, load `run
 
 ```text
 Prompt 1: Use $skill-architect. 帮我做一个让模糊需求更容易收敛的 skill。
-Pass if: the answer produces the kernel sentence, trigger boundary, first move, strongest thing, and wrong-scope sentence before proposing sections, references, or scripts.
+Pass if: the answer produces the kernel sentence, trigger boundary, first move, strongest thing, and wrong-scope sentence, then moves into a creator-facing build brief before proposing sections, references, or scripts.
 ```
 
 ```text
 Prompt 2: Use $skill-architect. 创建一个名为 prompt-router 的 skill；它只负责把模糊请求快速分流到正确工作流，第一步先判定 owner，不需要复杂交互。
-Pass if: the answer locks the kernel quickly instead of running long intake or opening with bundle structure.
+Pass if: the answer locks the kernel quickly, then gives the minimal shape, component decisions, validation starter, and creator handoff instead of running long intake or opening with bundle structure.
 ```
 
 ```text
 Prompt 3: Use $skill-architect. 帮我把这个已有 skill 做成熟。
-Pass if: the answer starts from one strong thing, trigger boundary, and first move instead of listing bundle upgrades first.
+Pass if: the answer starts from one strong thing, trigger boundary, and first move, then distinguishes whether the next move is an architect retrofit brief or a maintenance repair instead of listing bundle upgrades first.
 ```
 
 ```text
 Prompt 4: Use $skill-architect. 帮我初始化一个新的 skill folder 并补齐 starter files。
-Pass if: the answer does not present generic initialization as this skill's core job and instead keeps the focus on kernel-first design or routes generic scaffolding elsewhere.
+Pass if: the answer does not present generic initialization as this skill's core job and instead returns a build brief plus downstream creator handoff.
 ```
 
 ```text
@@ -83,7 +84,7 @@ Pass if: the answer names whether this file is still the right owner and, if not
 - Disable unrelated rules, memory, plugins, or other ambient context when the runtime allows it.
 - Keep the prompt short and single-purpose.
 - Ask for one judgment and a brief answer, not a broad review.
-- Prefer prompts 1-4 when the change is specifically about external positioning or kernel-first entry behavior.
+- Prefer prompts 1-4 when the change is specifically about external positioning, build-brief-first behavior, or kernel-first entry behavior.
 - For component-placement prompts, load `component-paths.md` first and stop there if one owner component is already clear.
 - Prefer prompts 5-6 for reference-only edits.
 - Add prompt 7 when the opening contract changed.
