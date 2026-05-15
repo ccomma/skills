@@ -28,6 +28,7 @@ For `skill-architect` specifically:
 - keep adapter guidance and wrapper templates in `initializer-adapters.md`
 - keep `design-report.md` as closeout explanation, not pre-create handoff
 - keep `scripts/check-build-brief.py` as a repo-local validator, not as the protocol owner
+- keep `scripts/bootstrap-build-brief.py` as a repo-local consumption proof helper, not as a generic creator
 
 ### 2. Contract First, Wording Second
 
@@ -53,6 +54,8 @@ If output consistency matters, make the contract easy to validate:
 
 For `skill-architect`, repo-local deterministic validation should run `scripts/check-build-brief.py` when a standalone brief artifact exists.
 
+When the question is whether a validated brief can actually be consumed inside this repo, run `scripts/bootstrap-build-brief.py` as a proof helper after validation. It may refuse with `repo-local ambiguous` even when the protocol itself is valid.
+
 ## Skill-Architect Default Contract
 
 Unless the user is explicitly asking for retrospective explanation, `skill-architect` should default to a build brief with stable field names:
@@ -75,6 +78,8 @@ The field labels stay in English; the explanatory content may follow the user's 
 The brief is the pre-create contract.
 
 The repo-local validator checks whether one brief instance matches protocol `v1` deterministic requirements. It does not redefine protocol semantics or replace pressure tests.
+
+The repo-local bootstrap helper checks whether one validated brief is deterministic enough to initialize a minimal local file surface. It does not replace downstream initializer design, and it does not turn `skill-architect` into a creator.
 
 `design-report.md` is the closeout contract for explaining why a finished design was shaped this way.
 

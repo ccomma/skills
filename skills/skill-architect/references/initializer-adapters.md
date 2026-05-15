@@ -118,6 +118,15 @@ Default actions:
 - use repo-local deterministic checks such as bundle validators only as adapter-local execution detail
 - keep those repo conventions out of the protocol definition itself
 
+Repo-local execution mapping rules:
+
+- `SKILL.md only` is executable without extra naming input and creates only `SKILL.md`
+- `SKILL.md + one reference` is repo-locally executable only if `Initializer handoff` names one explicit `references/...` create path
+- `SKILL.md + one script` is repo-locally executable only if `Initializer handoff` names one explicit `scripts/...` create path
+- if the brief is protocol-valid but still does not name a deterministic repo-local path for the one extra file, classify it as `repo-local ambiguous`
+- `repo-local ambiguous` is not protocol invalid; it only means this repo-local proof helper must refuse instead of guessing
+- Phase 6 proof support does not handle multi-reference, multi-script, mixed reference-plus-script, assets, format files, or metadata generation
+
 Wrapper template:
 
 ```text
@@ -152,6 +161,7 @@ Expected output:
 - Adapters may ask at most one narrow implementation question when a non-protocol environment parameter is missing.
 - Adapters must reject missing or conflicting core protocol fields instead of inventing them.
 - Adapters may map `Initializer handoff` into concrete steps, but they may not broaden `Minimal shape` or weaken `Do-not-add`.
+- Repo-local proof helpers may refuse a brief as `repo-local ambiguous` even when the brief is protocol-valid, if file naming or placement is still not deterministic enough for local bootstrap.
 
 ## Prompt Wrapper Pattern
 

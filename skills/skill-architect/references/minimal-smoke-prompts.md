@@ -14,6 +14,7 @@ Use this file when the change is mainly about:
 - build-brief-first handoff behavior
 - protocol or adapter wording
 - repo-local brief validation
+- repo-local consumption proof
 - public positioning or explicit entry-surface wording
 - component placement
 - reference existence or split/merge
@@ -57,32 +58,37 @@ Pass if: the answer rejects downstream consumption and makes the validator-style
 ```
 
 ```text
-Prompt 7: This bundle repeats one report template in SKILL.md, a reference, and a format file. Decide where it really belongs.
+Prompt 7: This valid brief says `SKILL.md + one reference`, but its `Initializer handoff` only says `- create SKILL.md`. Should the repo-local proof helper execute it?
+Pass if: the answer rejects execution as `repo-local ambiguous` instead of calling the brief protocol-invalid or guessing a reference filename.
+```
+
+```text
+Prompt 8: This bundle repeats one report template in SKILL.md, a reference, and a format file. Decide where it really belongs.
 Pass if: one owner component is named and the redundant copies are cut.
 ```
 
 ```text
-Prompt 8: These two references both explain when to load examples. Decide whether they should merge or split more sharply.
+Prompt 9: These two references both explain when to load examples. Decide whether they should merge or split more sharply.
 Pass if: each surviving reference owns one clear load question.
 ```
 
 ```text
-Prompt 9: This reference starts with background explanation, and I still do not know when to load it. Decide the design fix.
+Prompt 10: This reference starts with background explanation, and I still do not know when to load it. Decide the design fix.
 Pass if: the answer rewrites the opening toward load condition plus single job instead of polishing deep prose first.
 ```
 
 ```text
-Prompt 10: The main hot path is sharp, but I want to move one bulky checklist out of SKILL.md. Decide whether it belongs in a reference, format file, script, or nowhere.
+Prompt 11: The main hot path is sharp, but I want to move one bulky checklist out of SKILL.md. Decide whether it belongs in a reference, format file, script, or nowhere.
 Pass if: the answer names the right component and protects first-read behavior.
 ```
 
 ```text
-Prompt 11: I know skill-architect is the right workflow, but I cannot tell whether the next question is about overall shape, component placement, or reference split/merge. Decide the next reference only.
+Prompt 12: I know skill-architect is the right workflow, but I cannot tell whether the next question is about overall shape, component placement, or reference split/merge. Decide the next reference only.
 Pass if: the answer routes to one next reference instead of scanning the whole directory.
 ```
 
 ```text
-Prompt 12: I opened `bundle-design.md` first, but now I think the real question may actually be owner component or reference split/merge. Decide whether to stay here or jump to a different reference.
+Prompt 13: I opened `bundle-design.md` first, but now I think the real question may actually be owner component or reference split/merge. Decide whether to stay here or jump to a different reference.
 Pass if: the answer names whether this file is still the right owner and, if not, gives one next hop.
 ```
 
@@ -96,13 +102,13 @@ Pass if: the answer names whether this file is still the right owner and, if not
 - Disable unrelated rules, memory, plugins, or other ambient context when the runtime allows it.
 - Keep the prompt short and single-purpose.
 - Ask for one judgment and a brief answer, not a broad review.
-- Prefer prompts 1-6 when the change is specifically about external positioning, protocol wording, validator behavior, initializer-neutral handoff, or kernel-first entry behavior.
+- Prefer prompts 1-7 when the change is specifically about external positioning, protocol wording, validator behavior, repo-local proof behavior, initializer-neutral handoff, or kernel-first entry behavior.
 - For component-placement prompts, load `component-paths.md` first and stop there if one owner component is already clear.
-- Prefer prompts 7-8 for reference-only edits.
-- Add prompt 9 when the opening contract changed.
-- Add prompt 10 when a component moved across layers.
-- Add prompt 11 when routing recall itself is under question.
-- Add prompt 12 when a narrower reference may have been opened too early or by mistake.
+- Prefer prompts 8-9 for reference-only edits.
+- Add prompt 10 when the opening contract changed.
+- Add prompt 11 when a component moved across layers.
+- Add prompt 12 when routing recall itself is under question.
+- Add prompt 13 when a narrower reference may have been opened too early or by mistake.
 - Do not widen into broader architecture references unless the owner component is still ambiguous after the first owner judgment.
 - If the first live smoke passes clearly, stop.
 - If the first live smoke exposes one in-scope issue, repair it and rerun only the narrowest prompt that covers that issue.

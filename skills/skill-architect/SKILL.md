@@ -94,6 +94,7 @@ Do not use this to repair one existing skill whose role should stay stable.
    - validate from cheapest proof upward:
      - run deterministic bundle checks first
      - if a standalone build brief artifact exists, run `scripts/check-build-brief.py` before broader smoke so protocol `v1` drift is caught deterministically
+     - if the question is repo-local consumption proof, run `scripts/bootstrap-build-brief.py` only after the brief is validator-clean
      - if the smoke harness or runner changed, run its deterministic self-check before broader live smoke
      - then run the smallest live smoke that still touches the changed behavior, usually `references/minimal-smoke-prompts.md`
      - escalate to `references/pressure-tests.md` only when the change touched trigger boundary, authority, cadence, or broader routing, or when the narrow smoke stays ambiguous
@@ -144,6 +145,7 @@ If the real problem is repairing one existing skill without changing its core ro
 - Every durable principle must close through at least one enforcement path: explicit path step, hard invariant, deterministic check, pressure test, or smoke test. If it closes through none, cut it or operationalize it.
 - A skill write is not complete until deterministic checks and at least one real smoke test both ran, or runtime unavailability was stated explicitly.
 - If a standalone build brief artifact exists, deterministic validation should include `scripts/check-build-brief.py` before live smoke claims count.
+- If repo-local consumption proof is in scope, `scripts/bootstrap-build-brief.py` may execute only after validator success, and it may still refuse as `repo-local ambiguous` rather than guessing file paths.
 - If a smoke runner changed, its deterministic self-check must pass before the broader smoke result counts.
 - A skill write is not complete while live smoke still shows an in-scope issue that has not yet been repaired, rerun, deferred with reason, or escalated out of this workflow.
 - If a skill's power depends on cadence, first-turn pressure, or stop conditions, make that explicit.
@@ -153,6 +155,7 @@ If the real problem is repairing one existing skill without changing its core ro
 - A slimmer skill is better only if it stays equally teachable.
 - Do not let a downstream initializer redefine the kernel, add default bundle parts, or invent validation obligations that the build brief did not earn.
 - Keep the protocol stable and semi-structured: stable English field labels, stable ordering, and no hidden dependence on one agent's private defaults.
+- Keep repo-local proof helpers subordinate to the protocol: they may prove consumption or refuse execution, but they may not redefine the brief, widen the surface, or act like generic skill creators.
 
 </invariants>
 
