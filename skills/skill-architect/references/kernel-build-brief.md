@@ -1,8 +1,8 @@
 # Skill Architect Kernel Build Brief
 
-Load this when the kernel is already explicit and you need the creator-facing build brief before you widen into bundle design, file creation, or generic scaffolding.
+Load this when the kernel is already explicit, the protocol is frozen, and you need the build brief instance before you widen into bundle design, file creation, or generic scaffolding.
 
-This file has one job: turn the kernel into the smallest creator-facing build brief that a downstream initializer can follow without redefining the skill.
+This file has one job: turn the kernel into the smallest build brief instance that a downstream initializer can follow without redefining the skill.
 
 Do not use this file to discover the kernel. If the kernel sentence, trigger boundary, first move, strongest thing, or wrong-scope sentence is still fuzzy, go back to `kernel-extraction.md`.
 
@@ -24,7 +24,7 @@ Do-not-add:
 Validation starter:
 - Deterministic checks:
 - Smoke prompts:
-Creator handoff:
+Initializer handoff:
 - Initialize:
 - Do not invent:
 ```
@@ -61,7 +61,7 @@ If the answer is only "it explains things more comfortably", cut it from the bri
 
 ### 4. Do-Not-Add Protects Against Overbuilding
 
-Name the common components a downstream creator might add by habit but should not add yet.
+Name the common components a downstream initializer might add by habit but should not add yet.
 
 Good examples:
 
@@ -78,9 +78,9 @@ Give only the smallest proving set:
 
 Do not turn this into a full maturity suite unless the request is explicitly about robustness.
 
-### 6. Creator Handoff Must Be Operational
+### 6. Initializer Handoff Must Be Operational
 
-State what a downstream creator should initialize and what it should not invent.
+State what a downstream initializer should initialize and what it should not invent.
 
 The handoff should make these boundaries recoverable:
 
@@ -94,14 +94,16 @@ The handoff should make these boundaries recoverable:
 - the brief repeats the kernel but never names the minimal shape
 - the brief names components but not what they protect
 - the brief acts like a generic starter-pack checklist
-- the brief omits `do-not-add`, so a downstream creator can overbuild by habit
-- the brief tells the creator to "finish the design" instead of handing off a frozen enough build surface
+- the brief omits `do-not-add`, so a downstream initializer can overbuild by habit
+- the brief tells the initializer to "finish the design" instead of handing off a frozen enough build surface
+- the brief silently assumes one named creator, runtime, or directory layout
 - the brief silently lets the creator redefine the kernel or strongest thing
 
 ## Next Hop
 
-- if the brief is complete, hand initialization to a downstream creator and stop pretending `skill-architect` is the scaffolder
+- if the brief is complete, hand initialization to a downstream initializer and stop pretending `skill-architect` is the scaffolder
 - if one brief field still needs real design judgment, load `design-expansion.md` only to complete that field
+- if the next question is how one downstream mode should consume the same brief, load `initializer-adapters.md`
 - if the next question is already narrower than expansion, jump straight to the relevant owner reference
 
 ## Pressure Prompts
@@ -112,6 +114,6 @@ Expected behavior: produce the build brief, keep the shape minimal, and avoid dr
 ```
 
 ```text
-Prompt: The kernel is clear, but I still do not know what a downstream creator should initialize and what it should not invent.
-Expected behavior: complete the creator handoff fields before widening into extra structure.
+Prompt: The kernel is clear, but I still do not know what a downstream initializer should initialize and what it should not invent.
+Expected behavior: complete the initializer handoff fields before widening into extra structure.
 ```

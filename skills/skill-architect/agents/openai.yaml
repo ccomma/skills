@@ -1,4 +1,4 @@
 interface:
   display_name: "Skill Architect"
-  short_description: "Lock a skill's kernel and turn it into a creator-facing build brief."
-  default_prompt: "Use $skill-architect when one skill's boundary is already clear and you need a creator-facing build brief first: produce the kernel sentence, trigger boundary, first move, strongest thing, wrong-scope sentence, minimal shape, component decisions, do-not-add rules, validation starter, and creator handoff before deeper structure design."
+  short_description: "Lock a skill's kernel and turn it into an initializer-neutral build brief."
+  default_prompt: "Use $skill-architect when one skill's boundary is already clear and you need an initializer-neutral build brief first: produce the kernel sentence, trigger boundary, first move, strongest thing, wrong-scope sentence, minimal shape, component decisions, do-not-add rules, validation starter, and initializer handoff before deeper structure design."

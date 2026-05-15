@@ -12,14 +12,16 @@ Use this order instead of guessing:
 
 1. If the request is underspecified, load `design-intake.md`.
 2. Then return to `kernel-extraction.md` and make the kernel explicit.
-3. Then load `kernel-build-brief.md` so the creator-facing brief exists before broader structure work.
-4. If the brief still has unresolved engineering choices, load `design-expansion.md`.
-5. If the question is already narrow, jump directly to one owner reference:
+3. Then load `build-brief-protocol.md` so the protocol contract is frozen.
+4. Then load `kernel-build-brief.md` so the build brief exists before broader structure work.
+5. If the brief still has unresolved engineering choices, load `design-expansion.md`.
+6. If the next question is how one downstream mode should consume the brief, load `initializer-adapters.md`.
+7. If the question is already narrow, jump directly to one owner reference:
    - `component-paths.md` for owner component
    - `reference-design.md` for reference split/merge/sharpen
    - `bundle-design.md` for overall component combination
    - `runtime-smoke-harness.md` for live validation cost or runtime-noise strategy
-6. Only then load narrower topical references for the dimensions that were explicitly marked for depth.
+8. Only then load narrower topical references for the dimensions that were explicitly marked for depth.
 
 ## Important Rule
 
@@ -27,7 +29,7 @@ Do not force a design-expansion pass when the narrower question is already obvio
 
 Do not let routing take over the job of defining the skill's core. If the strongest thing is still unclear, route back to `kernel-extraction.md`.
 
-Do not let routing skip the build brief. If a downstream creator still would not know what to initialize, route to `kernel-build-brief.md`.
+Do not let routing skip the build brief. If a downstream initializer still would not know what to initialize, route to `kernel-build-brief.md`.
 
 Do force a routing pass when you are guessing between multiple next references.
 

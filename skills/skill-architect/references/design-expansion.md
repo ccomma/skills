@@ -1,6 +1,6 @@
 # Skill Architect Design Expansion
 
-Load this when the skill kernel is already explicit, the build brief exists, but one or more brief fields still need engineering judgment before the design is frozen.
+Load this when the skill kernel is already explicit, the build brief protocol is frozen, the build brief exists, and one or more brief fields still need engineering judgment before the design is frozen.
 
 If you are not even sure whether design expansion is the next right move, load `reference-routing.md` first.
 
@@ -8,16 +8,16 @@ If the question is already clearly narrower than design expansion, jump directly
 
 Do not use this file to discover the kernel. If the kernel sentence, trigger boundary, first move, strongest thing, or wrong-scope sentence is still fuzzy, go back to `kernel-extraction.md`.
 
-Do not use this file as a substitute for the build brief. If the brief has not been rendered yet, go to `kernel-build-brief.md` first.
+Do not use this file as a substitute for the protocol or the build brief. If the protocol is not yet locked, go to `build-brief-protocol.md` first. If the brief has not been rendered yet, go to `kernel-build-brief.md` next.
 
 ## Expansion Pass
 
-Design expansion means: scan the important dimensions after the kernel exists so you can finish the creator-facing build brief without overbuilding the skill:
+Design expansion means: scan the important dimensions after the kernel exists so you can finish the initializer-neutral build brief without overbuilding the skill:
 
 - **narrow design**: the skill looks tidy but misses real product dimensions
 - **undirected depth**: the skill deepens several dimensions without a real failure mode
 
-The kernel stays the fixed center. Expansion only decides what additional structure is needed to teach it, protect it, or verify it, and which of those decisions need to be frozen in the build brief before a creator initializes files.
+The kernel stays the fixed center. Expansion only decides what additional structure is needed to teach it, protect it, or verify it, and which of those decisions need to be frozen in the build brief before any initializer consumes it.
 
 Start from these fixed kernel inputs:
 
@@ -33,7 +33,7 @@ Keep these brief outputs in view while you scan:
 - `component decisions`
 - `do-not-add`
 - `validation starter`
-- `creator handoff`
+- `initializer handoff`
 
 Then scan these dimensions before freezing the design:
 

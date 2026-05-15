@@ -2,7 +2,7 @@
 
 Load this when the skill's value depends on stable output shape, fields, labels, sections, or artifact quality.
 
-For `skill-architect`, the default output contract is a creator-facing build brief unless the task is explicitly asking for a closeout report instead.
+For `skill-architect`, the default output contract is a build brief protocol instance unless the task is explicitly asking for a closeout report instead.
 
 ## Design Questions
 
@@ -23,7 +23,9 @@ For `skill-architect`, the default output contract is a creator-facing build bri
 For `skill-architect` specifically:
 
 - keep the rule that a build brief is mandatory in `SKILL.md`
+- keep the protocol definition in `build-brief-protocol.md`
 - keep the detailed brief template in `kernel-build-brief.md`
+- keep adapter guidance in `initializer-adapters.md`
 - keep `design-report.md` as closeout explanation, not pre-create handoff
 
 ### 2. Contract First, Wording Second
@@ -61,7 +63,11 @@ Unless the user is explicitly asking for retrospective explanation, `skill-archi
 - `Component decisions`
 - `Do-not-add`
 - `Validation starter`
-- `Creator handoff`
+- `Initializer handoff`
+
+The protocol version lives in `build-brief-protocol.md`, not in every brief instance by default.
+
+The field labels stay in English; the explanatory content may follow the user's language.
 
 The brief is the pre-create contract.
 

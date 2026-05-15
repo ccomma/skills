@@ -11,7 +11,7 @@ These skills are designed to be small, composable, and easy to install into diff
 - [`product-validate`](./skills/product-validate/SKILL.md): Stress-tests an existing product plan against docs, terminology, code, and decision boundaries before execution or replanning continues.
 - [`skill-governance-escalation`](./skills/skill-governance-escalation/SKILL.md): Explicitly auto-audits a concrete issue first, classifies it as local-only, provisional candidate, or promote-now, and escalates only the findings that suggest reusable upstream causes.
 - [`skill-referee`](./skills/skill-referee/SKILL.md): Referees responsibility boundaries between skills across any domain, using metadata-first discovery and controlled review depth.
-- [`skill-architect`](./skills/skill-architect/SKILL.md): Locks one skill's kernel first, turns it into a creator-facing build brief, and only then designs the lightest structure that teaches and protects it so you do not ship a skill that looks complete but has no core.
+- [`skill-architect`](./skills/skill-architect/SKILL.md): Locks one skill's kernel first, turns it into an initializer-neutral build brief protocol, and only then designs the lightest structure that teaches and protects it so you do not ship a skill that looks complete but has no core.
 - [`skill-maintain`](./skills/skill-maintain/SKILL.md): Audits and repairs one existing skill through modular checks for portability, language consistency, kernel drift, output contracts, interaction intensity, bundle integrity, authority boundaries, structure, routing, companion format-file opportunities, and token/context cost without taking over multi-skill boundary design.
 
 ## Product Workflow
@@ -162,7 +162,7 @@ These governance skills solve different layers of the same problem:
 - native `skill-creator` or equivalent initializer
   - Use when the main job is to create or scaffold a skill bundle quickly.
   - Output: a created skill folder or a generic starting bundle.
-  - It should consume a frozen enough kernel/shape brief when one already exists; it does not replace kernel-first design for a reusable skill.
+  - It may consume a frozen enough build brief when one already exists; it does not define the protocol and it does not replace kernel-first design for a reusable skill.
 
 - `skill-governance-escalation`
   - Use when a concrete issue should trigger an explicit governance review.
@@ -174,28 +174,28 @@ These governance skills solve different layers of the same problem:
   - Output: clearer boundaries, routing guidance, and conflict classification.
   - Best used before redesigning one specific skill when the real uncertainty is still between skills.
 - `skill-architect`
-  - Use when the boundary is already clear and the remaining question is how to lock one skill's kernel, turn it into a creator-facing build brief, and only then deepen structure.
-  - Output: the kernel sentence, trigger boundary, first move, strongest thing, wrong-scope sentence, minimal shape, component decisions, do-not-add rules, validation starter, and creator handoff.
-  - This is the pre-create enhancer: the right place to freeze what a downstream creator should initialize and what it should not invent.
+  - Use when the boundary is already clear and the remaining question is how to lock one skill's kernel, turn it into an initializer-neutral build brief protocol instance, and only then deepen structure.
+  - Output: the kernel sentence, trigger boundary, first move, strongest thing, wrong-scope sentence, minimal shape, component decisions, do-not-add rules, validation starter, and initializer handoff.
+  - This is the pre-create enhancer: the right place to freeze what a downstream initializer should initialize and what it should not invent.
 - `skill-maintain`
   - Use when one existing skill already exists and needs an audit or repair.
   - Output: focused repairs for portability, structure, routing, kernel drift, output contracts, safety, bundle consistency, format-file opportunities, format-file quality, or token cost.
   - It stays independently usable even if no higher-layer governance review workflow is available in the current environment.
-  - This is not the right tool for deciding whether multiple skills should be split, merged, or rerouted from scratch, or for redefining one skill's role or creator-facing kernel/shape brief from scratch.
+  - This is not the right tool for deciding whether multiple skills should be split, merged, or rerouted from scratch, or for redefining one skill's role or build brief protocol from scratch.
 
 The most common skill-management paths are:
 
 1. If one existing skill already needs an audit or repair, use `skill-maintain`.
 2. If that audit reveals a suspected reusable upstream cause, optionally escalate with a higher-layer governance review workflow.
-3. If the main job is generic initialization or quick scaffolding, start with a native `skill-creator` or equivalent initializer.
+3. If the main job is generic initialization or quick scaffolding, start with a native creator or other initializer workflow.
 4. If the real problem is boundary confusion between skills, use `skill-referee`.
 5. Once one skill's boundary is clear, use `skill-architect` to lock the kernel first, produce the build brief, and freeze the minimal shape.
-6. Hand that brief to a native `skill-creator` or equivalent initializer to create the folder/files without reopening the kernel.
+6. Hand that brief to a native creator, manual bootstrap flow, or repo-local initializer without reopening the kernel.
 7. If the created skill later drifts, use `skill-maintain` to repair it without silently redefining the brief.
 
 This phase does not try to make generic prompts such as "help me make a skill" route to `skill-architect` by default. If those prompts still hit a generic skill creator first, that is expected rather than a defect in this bundle.
 
-Follow-up note: a later upstream phase can teach a system-level `skill-creator` to consume the build brief directly. That later phase should not let the creator redefine the kernel or invent extra bundle parts on its own.
+Follow-up note: if repeated evidence later shows that one initializer class cannot safely consume the brief, treat that as an upstream integration candidate or governance candidate rather than silently turning this repo into a fork of that initializer.
 
 ### Companion Format Files
 

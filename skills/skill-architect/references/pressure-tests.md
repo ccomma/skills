@@ -31,7 +31,8 @@ Create at least these scenarios for non-trivial skills:
 19. **Kernel-clarity pressure** — the design should state the kernel sentence, first move, strongest thing, and wrong-scope sentence before structural expansion.
 20. **Kernel-protection pressure** — later structure choices should be able to explain whether they protect the kernel or only improve explanation comfort.
 21. **Public-positioning pressure** — frontmatter, first-screen language, metadata, and supporting docs should all describe the same build-brief-first identity.
-22. **Creator-bridge pressure** — the design should freeze what a downstream creator should initialize and what it should not invent.
+22. **Initializer-adapter pressure** — the design should freeze what a downstream initializer should initialize and what it should not invent.
+23. **Protocol-validity pressure** — the brief should stay valid without depending on one creator, one runtime, or one directory layout.
 
 ## Test Format
 
@@ -71,7 +72,8 @@ For each scenario, ask:
 - Were depth decisions intentional rather than accidental?
 - Did it avoid neighboring skill responsibilities?
 - Did frontmatter, first-screen language, metadata, and public docs all describe the same build-brief-first identity?
-- Would a downstream creator know what to initialize, what not to add, and which decisions are already frozen?
+- Would a downstream initializer know what to initialize, what not to add, and which decisions are already frozen?
+- Would the same brief still make sense if the next consumer were manual bootstrap instead of a native creator?
 - Did output format and language match the user's need?
 - Did it choose a language strategy explicitly when the skill emits user-facing artifacts or templates?
 - Would a project-visible template remain understandable to a human or weaker model without hidden context?
@@ -91,7 +93,8 @@ For each scenario, ask:
 - The design looks complete, but the kernel sentence or strongest thing is still fuzzy.
 - The design jumps straight to structural expansion before kernel extraction.
 - The design jumps straight to references/scripts/assets without a design-expansion pass.
-- The design says "creator can finish the rest" without freezing a build brief first.
+- The design says "initializer can finish the rest" without freezing a build brief first.
+- The design turns one creator example into a protocol requirement.
 - Every dimension gets deep treatment even though only one or two needed it.
 - The skill duplicates another skill's job instead of routing.
 - The skill has no wrong-scope behavior.
@@ -272,7 +275,7 @@ Evidence to check: the next move is kernel repair, not more bundle growth.
 ```text
 Scenario: generic skill creation request
 Prompt: Use $skill-architect. 帮我初始化一个 skill folder，补齐 starter files 和基础结构。
-Expected behavior: keep generic scaffolding out of this skill's core promise, produce the build brief first, and state that folder/file initialization belongs to a downstream creator.
+Expected behavior: keep generic scaffolding out of this skill's core promise, produce the build brief first, and state that folder/file initialization belongs to a downstream initializer.
 Must not: redefine skill-architect as a generic bundle initializer.
 Evidence to check: the answer still frames build-brief-first design as the primary job.
 ```
@@ -292,7 +295,7 @@ Evidence to check: the first move is kernel-first even for a vague maturity requ
 ```text
 Scenario: maintenance comparison
 Prompt: Use $skill-architect. 这个已有 skill 结构完整，但 strongest thing 说不清。现在该怎么做？
-Expected behavior: distinguish between kernel drift inside an existing role, creator-brief drift, and true role redefinition; do not silently swallow a maintenance-first case as if all such requests belonged here.
+Expected behavior: distinguish between kernel drift inside an existing role, build-brief drift, and true role redefinition; do not silently swallow a maintenance-first case as if all such requests belonged here.
 Must not: ignore the handoff boundary with skill-maintain.
 Evidence to check: the answer explains when repair stays in maintenance and when it becomes redesign.
 ```
@@ -303,21 +306,61 @@ Evidence to check: the answer explains when repair stays in maintenance and when
 Scenario: public entry-surface audit
 Prompt: Read the frontmatter description, first-screen intro, agent metadata, and README sentence for this skill. Do they all describe the same job?
 Expected behavior: confirm a shared build-brief-first identity or flag the drift explicitly.
-Must not: accept one surface describing generic bundle design while another describes creator-facing brief production.
+Must not: accept one surface describing generic bundle design while another describes one named creator as the protocol itself.
 Evidence to check: all entry surfaces describe the same first responsibility.
 ```
 
-### 18. Creator Handoff Must Be Frozen Before Initialization
+### 18. Initializer Handoff Must Be Frozen Before Initialization
 
 ```text
-Scenario: creator bridge
-Prompt: Use $skill-architect. 先把这个 skill 的核心和最小建造面定下来，后面我会交给 creator 去初始化。
-Expected behavior: produce a build brief that freezes minimal shape, component decisions, do-not-add rules, validation starter, and creator handoff before asking a downstream creator to continue.
+Scenario: initializer bridge
+Prompt: Use $skill-architect. 先把这个 skill 的核心和最小建造面定下来，后面我会交给别的 agent 或手工流程去初始化。
+Expected behavior: produce a build brief that freezes minimal shape, component decisions, do-not-add rules, validation starter, and initializer handoff before asking a downstream initializer to continue.
 Must not: say "creator can decide the rest" or reopen the kernel during handoff.
-Evidence to check: the handoff tells the creator what to initialize and what not to invent.
+Evidence to check: the handoff tells the initializer what to initialize and what not to invent.
 ```
 
-### 19. Lean Skill Should Not Read Like A Memo
+### 19. Protocol Must Stay Valid Without One Named Creator
+
+```text
+Scenario: protocol neutrality
+Prompt: Use $skill-architect. 我后面不会用 skill-creator，而是交给另一个 agent 或手工 bootstrap。这个 brief 还成立吗？
+Expected behavior: keep the same protocol fields and explain the adapter path without rewriting the brief around one creator.
+Must not: claim the protocol only works if one specific creator is available.
+Evidence to check: the brief and handoff remain valid without a named creator dependency.
+```
+
+### 20. Missing Core Field Must Block Consumption
+
+```text
+Scenario: protocol omission
+Prompt: This build brief has `Kernel sentence`, `Trigger boundary`, `First move`, and `Minimal shape`, but it is missing `Strongest thing` and `Do-not-add`. Can a downstream initializer continue?
+Expected behavior: reject the brief as incomplete and route it back to skill-architect instead of inventing the missing kernel or deny-list.
+Must not: treat missing core or structure fields as a small implementation gap.
+Evidence to check: the answer distinguishes protocol-core omissions from environment-parameter omissions.
+```
+
+### 21. Shape Conflict Must Mark The Brief Invalid
+
+```text
+Scenario: protocol conflict
+Prompt: `Minimal shape` says `SKILL.md only`, but `Component decisions` says to add one reference and one script. What should the initializer do?
+Expected behavior: mark the brief invalid, state that `Minimal shape` wins, and send the brief back for repair instead of guessing.
+Must not: consume the brief by picking whichever field sounds more complete.
+Evidence to check: the conflict rule is explicit and the brief is rejected cleanly.
+```
+
+### 22. Repeated Consumption Failure Should Escalate, Not Fork
+
+```text
+Scenario: governance candidate
+Prompt: This native creator keeps ignoring `Do-not-add` and widening the bundle even when the build brief is complete. What is the right response?
+Expected behavior: classify the problem as an adapter or upstream integration candidate rather than weakening the protocol or forking the creator inside this repo.
+Must not: patch protocol rules downward to match one failing consumer.
+Evidence to check: the answer keeps protocol ownership separate from consumer failure.
+```
+
+### 23. Lean Skill Should Not Read Like A Memo
 
 ```text
 Scenario: anti-bloat redesign
@@ -327,7 +370,7 @@ Must not: preserve redundant sections just because they look standard.
 Evidence to check: the resulting design is shorter, sharper, and still behaviorally complete.
 ```
 
-### 20. Section Ownership Must Be Explicit
+### 24. Section Ownership Must Be Explicit
 
 ```text
 Scenario: section collision
@@ -337,7 +380,7 @@ Must not: keep the same instruction repeated across two sections with cosmetic w
 Evidence to check: a reader can explain each section's unique job in one sentence.
 ```
 
-### 21. Component Must Survive Delete, Merge, And Cost Challenges
+### 25. Component Must Survive Delete, Merge, And Cost Challenges
 
 ```text
 Scenario: unnecessary component
@@ -347,7 +390,7 @@ Must not: keep a component only because its topic sounds like a sensible categor
 Evidence to check: the answer names a concrete burden, a concrete merge collision, and a concrete cost justification for each surviving component.
 ```
 
-### 22. Skill Write Must Define Minimal Real Testing
+### 26. Skill Write Must Define Minimal Real Testing
 
 ```text
 Scenario: post-write validation
@@ -357,7 +400,7 @@ Must not: stop at static checks alone or prescribe an oversized smoke suite by d
 Evidence to check: verification is real, scoped, and explicit about skipped live tests.
 ```
 
-### 23. Principle Must Have Closure
+### 27. Principle Must Have Closure
 
 ```text
 Scenario: slogan audit
@@ -367,7 +410,7 @@ Must not: praise the wording quality without checking enforcement paths.
 Evidence to check: unsupported principles are explicitly named instead of being left as "nice guidance".
 ```
 
-### 24. Reference Must Earn Its Place
+### 28. Reference Must Earn Its Place
 
 ```text
 Scenario: reference audit
