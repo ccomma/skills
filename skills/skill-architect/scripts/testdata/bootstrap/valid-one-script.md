@@ -18,10 +18,13 @@ Do-not-add:
 - Do not add extra scripts that reinterpret the protocol semantically.
 Validation starter:
 - Deterministic checks:
+  - run the bundle check and confirm the one-script shape still matches the brief
 - Smoke prompts:
+  - confirm the validator trigger and refusal boundary stay visible on first read
 Initializer handoff:
 - Initialize:
   - create `SKILL.md`
   - create `scripts/check-brief-surface.sh`
 - Do not invent:
   - do not add references
+  - do not add extra scripts that reinterpret the protocol

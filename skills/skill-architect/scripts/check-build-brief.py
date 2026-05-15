@@ -33,6 +33,12 @@ WEAK_DO_NOT_ADD_PATTERNS = [
     re.compile(r"^\s*-\s*avoid if possible\b", re.I),
 ]
 
+WEAK_READY_ITEM_PATTERNS = [
+    re.compile(r"^(none|n/?a|nothing yet|no constraints|no special restrictions)$", re.I),
+    re.compile(r"^(tbd|todo|decide later|same as above)$", re.I),
+    re.compile(r"^follow the brief$", re.I),
+]
+
 
 def parse_fields(text: str) -> tuple[dict[str, list[str]], dict[str, int], list[str]]:
     fields: dict[str, list[str]] = {}
@@ -69,6 +75,27 @@ def has_subitem(block: list[str], subitem: str) -> bool:
     return any(line.strip() == target for line in block)
 
 
+def collect_nested_items(block: list[str], subitem: str) -> list[str]:
+    target = f"- {subitem}:"
+    items: list[str] = []
+    in_section = False
+    for line in block:
+        stripped = line.strip()
+        if stripped == target:
+            in_section = True
+            continue
+        if not in_section:
+            continue
+        if stripped.startswith("- ") and not re.match(r"^\s{2,}-\s+", line):
+            break
+        if re.match(r"^\s{2,}-\s+\S", line):
+            items.append(re.sub(r"^\s{2,}-\s+", "", line).strip())
+            continue
+        if items and line.startswith("    ") and stripped:
+            items[-1] = f"{items[-1]} {stripped}"
+    return items
+
+
 def find_shape_conflict(minimal_shape: str, component_block: list[str]) -> str | None:
     shape = minimal_shape.strip().lower()
     component_text = "\n".join(component_block).lower()
@@ -98,9 +125,21 @@ def check_do_not_add(block: list[str]) -> tuple[str | None, str | None]:
     return None, None
 
 
-def validate(text: str) -> tuple[str, list[str]]:
+def check_readiness_items(items: list[str], label: str) -> list[str]:
+    reasons: list[str] = []
+    if not items:
+        reasons.append(f"`{label}` needs at least one non-empty item")
+        return reasons
+    weak = [item for item in items if any(pattern.match(item) for pattern in WEAK_READY_ITEM_PATTERNS)]
+    if weak:
+        reasons.append(f"manual review needed: `{label}` is too weak or placeholder-like ({', '.join(f'`{item}`' for item in weak)})")
+    return reasons
+
+
+def validate(text: str) -> tuple[str, str, list[str], list[str]]:
     fields, positions, duplicates = parse_fields(text)
     reasons: list[str] = []
+    consumption_reasons: list[str] = []
     status = "valid"
 
     if duplicates:
@@ -157,10 +196,47 @@ def validate(text: str) -> tuple[str, list[str]]:
                 status = "incomplete"
             reasons.append(do_not_add_reason)
 
+    if status == "valid":
+        validation_block = fields.get("Validation starter", [])
+        handoff_block = fields.get("Initializer handoff", [])
+        consumption_reasons.extend(
+            check_readiness_items(
+                collect_nested_items(validation_block, "Deterministic checks"),
+                "Validation starter -> Deterministic checks",
+            )
+        )
+        consumption_reasons.extend(
+            check_readiness_items(
+                collect_nested_items(validation_block, "Smoke prompts"),
+                "Validation starter -> Smoke prompts",
+            )
+        )
+        consumption_reasons.extend(
+            check_readiness_items(
+                collect_nested_items(handoff_block, "Initialize"),
+                "Initializer handoff -> Initialize",
+            )
+        )
+        consumption_reasons.extend(
+            check_readiness_items(
+                collect_nested_items(handoff_block, "Do not invent"),
+                "Initializer handoff -> Do not invent",
+            )
+        )
+
     if not reasons:
         reasons.append("brief matches protocol `v1` deterministic checks")
 
-    return status, reasons
+    consumption_ready = "yes"
+    if status != "valid":
+        consumption_ready = "no"
+        consumption_reasons = ["protocol must be valid before readiness can be satisfied"]
+    elif not consumption_reasons:
+        consumption_reasons.append("brief is ready for downstream consumption")
+    else:
+        consumption_ready = "no"
+
+    return status, consumption_ready, reasons, consumption_reasons
 
 
 def main() -> int:
@@ -170,11 +246,15 @@ def main() -> int:
 
     path = Path(args.brief_file)
     text = path.read_text(encoding="utf-8")
-    status, reasons = validate(text)
+    status, consumption_ready, reasons, consumption_reasons = validate(text)
 
     print(f"status: {status}")
+    print(f"consumption_ready: {consumption_ready}")
     print("reasons:")
     for reason in reasons:
+        print(f"- {reason}")
+    print("consumption_reasons:")
+    for reason in consumption_reasons:
         print(f"- {reason}")
 
     if status == "valid":

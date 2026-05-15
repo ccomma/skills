@@ -23,8 +23,4 @@ Validation starter:
   - confirm the validator trigger and refusal boundary stay visible on first read
 Initializer handoff:
 - Initialize:
-  - create `SKILL.md`
-  - create one script for deterministic brief checking
 - Do not invent:
-  - do not add references
-  - do not add extra scripts that reinterpret the protocol

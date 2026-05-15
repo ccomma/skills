@@ -18,9 +18,13 @@ Do-not-add:
 - Do not add extra references for neighboring workflows that the main reference already covers.
 Validation starter:
 - Deterministic checks:
+  - run the bundle check and confirm the one-reference shape still matches the brief
 - Smoke prompts:
+  - confirm the first-turn owner judgment is clear before opening the reference
 Initializer handoff:
 - Initialize:
   - create `SKILL.md`
+  - create one reference file for edge-case routing examples
 - Do not invent:
   - do not add scripts
+  - do not add extra references beyond the one edge-case routing reference

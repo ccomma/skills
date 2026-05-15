@@ -18,7 +18,12 @@ Do-not-add:
 - Do not add scripts unless one repeated verification step becomes deterministic and fragile.
 Validation starter:
 - Deterministic checks:
+  - run the bundle check for the skill before installation or handoff
 - Smoke prompts:
+  - confirm the checkpoint loop and refusal boundary are visible on first read
 Initializer handoff:
 - Initialize:
+  - create `SKILL.md`
 - Do not invent:
+  - do not add references
+  - do not add scripts

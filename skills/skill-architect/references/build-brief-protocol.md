@@ -35,6 +35,21 @@ Initializer handoff:
 
 Keep the field labels in English. Keep the explanations, examples, and notes in the user's language when helpful.
 
+## Sufficiency Layers
+
+Keep these layers distinct:
+
+- `protocol-valid`
+  - the brief satisfies protocol `v1` field, order, and basic substructure requirements
+- `consumption-ready`
+  - the brief gives a downstream initializer enough non-empty `Validation starter` and `Initializer handoff` detail to continue without reopening the kernel
+- `repo-local executable`
+  - the brief is not only ready in general, but also deterministic enough for the repo-local proof helper to execute
+
+`protocol-valid` does not automatically mean `consumption-ready`.
+
+`repo-local executable` is not a protocol-layer property. It belongs to adapter/helper execution.
+
 ## Freeze Levels
 
 ### 1. Core Freeze
@@ -106,6 +121,8 @@ Any consumer must do one of three things:
 
 Do not silently reinterpret the brief.
 
+Before a consumer attempts real initialization, it should check not only whether the brief is `protocol-valid`, but also whether it is `consumption-ready` enough for that downstream mode.
+
 ## Retrofit Rule
 
 The main protocol story is pre-create handoff.
@@ -124,4 +141,9 @@ Expected behavior: reject consumption and send it back to skill-architect instea
 ```text
 Prompt: `Minimal shape` says `SKILL.md only`, but `Component decisions` names a reference and a script. What now?
 Expected behavior: mark the brief invalid and route back for repair.
+```
+
+```text
+Prompt: Every field is present, but `Validation starter` and `Initializer handoff` still contain only empty headings. Is the brief ready?
+Expected behavior: keep protocol validity separate from readiness and say the brief is not yet consumption-ready.
 ```

@@ -15,6 +15,8 @@ The adapter defines how one downstream consumption mode should follow that same 
 - inventing forbidden components
 - depending on private runtime defaults
 
+Adapters should treat `protocol-valid` and `consumption-ready` as separate gates. A brief may satisfy protocol `v1` while still being too empty to hand off safely.
+
 ## Adapter Classes
 
 ### 1. Native Creator Adapter
@@ -76,6 +78,8 @@ Default actions:
 5. run the `Validation starter`
 
 If the brief is missing kernel fields, stop and return it to `skill-architect`.
+
+If the brief is protocol-valid but not yet `consumption-ready`, stop and return it for stronger `Validation starter` or `Initializer handoff` detail instead of improvising.
 
 Wrapper template:
 
@@ -160,6 +164,7 @@ Expected output:
 - Adapters are consumption mappings, not upstream patches.
 - Adapters may ask at most one narrow implementation question when a non-protocol environment parameter is missing.
 - Adapters must reject missing or conflicting core protocol fields instead of inventing them.
+- Adapters must also reject briefs that are still too empty to be consumption-ready, even when field labels and order are already protocol-valid.
 - Adapters may map `Initializer handoff` into concrete steps, but they may not broaden `Minimal shape` or weaken `Do-not-add`.
 - Repo-local proof helpers may refuse a brief as `repo-local ambiguous` even when the brief is protocol-valid, if file naming or placement is still not deterministic enough for local bootstrap.
 

@@ -33,7 +33,7 @@ def parse_fields(text: str) -> dict[str, list[str]]:
     return fields
 
 
-def run_validator(script_dir: Path, brief_file: Path) -> tuple[str, list[str]]:
+def run_validator(script_dir: Path, brief_file: Path) -> tuple[str, str, list[str], list[str]]:
     validator = script_dir / "check-build-brief.py"
     result = subprocess.run(
         [str(validator), str(brief_file)],
@@ -43,16 +43,31 @@ def run_validator(script_dir: Path, brief_file: Path) -> tuple[str, list[str]]:
     )
     lines = [line.rstrip() for line in result.stdout.splitlines()]
     status = "unknown"
+    consumption_ready = "unknown"
     reasons: list[str] = []
+    consumption_reasons: list[str] = []
     in_reasons = False
+    in_consumption_reasons = False
     for line in lines:
         if line.startswith("status: "):
             status = line.split(": ", 1)[1].strip()
+            in_reasons = False
+            in_consumption_reasons = False
+        elif line.startswith("consumption_ready: "):
+            consumption_ready = line.split(": ", 1)[1].strip()
+            in_reasons = False
+            in_consumption_reasons = False
         elif line == "reasons:":
             in_reasons = True
+            in_consumption_reasons = False
+        elif line == "consumption_reasons:":
+            in_reasons = False
+            in_consumption_reasons = True
         elif in_reasons and line.startswith("- "):
             reasons.append(line[2:])
-    return status, reasons
+        elif in_consumption_reasons and line.startswith("- "):
+            consumption_reasons.append(line[2:])
+    return status, consumption_ready, reasons, consumption_reasons
 
 
 def parse_create_paths(lines: list[str]) -> list[str]:
@@ -203,19 +218,30 @@ def main() -> int:
     target_dir = Path(args.target_dir).resolve()
     fields = parse_fields(brief_file.read_text(encoding="utf-8"))
 
-    validator_status, validator_reasons = run_validator(script_dir, brief_file)
+    validator_status, consumption_ready, validator_reasons, consumption_reasons = run_validator(script_dir, brief_file)
     if validator_status != "valid":
         print("execution_status: refused: protocol invalid/incomplete")
         print(f"validator_status: {validator_status}")
+        print(f"consumption_ready: {consumption_ready}")
         print("reasons:")
         for reason in validator_reasons:
             print(f"- {reason}")
         return 1
 
+    if consumption_ready != "yes":
+        print("execution_status: refused: not consumption-ready")
+        print(f"validator_status: {validator_status}")
+        print(f"consumption_ready: {consumption_ready}")
+        print("reasons:")
+        for reason in consumption_reasons:
+            print(f"- {reason}")
+        return 4
+
     repo_local_state, repo_local_reasons = classify_repo_local(fields)
     if repo_local_state != "executable":
         print("execution_status: refused: repo-local ambiguous")
         print("validator_status: valid")
+        print(f"consumption_ready: {consumption_ready}")
         print("reasons:")
         for reason in repo_local_reasons:
             print(f"- {reason}")
@@ -225,6 +251,7 @@ def main() -> int:
     if target_dir_state != "safe":
         print("execution_status: refused: target-dir safety")
         print("validator_status: valid")
+        print(f"consumption_ready: {consumption_ready}")
         print("reasons:")
         for reason in target_dir_reasons:
             print(f"- {reason}")
@@ -235,6 +262,7 @@ def main() -> int:
         create_paths = ["SKILL.md"]
 
     print("validator_status: valid")
+    print(f"consumption_ready: {consumption_ready}")
     print(f"execution_status: {'planned' if args.dry_run else 'executed'}")
     print("planned_files:")
     for path in create_paths:

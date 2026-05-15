@@ -399,6 +399,16 @@ Must not: silently accept the brief or rewrite it for the user.
 Evidence to check: deterministic failures are surfaced cleanly and protocol ownership stays in the references.
 ```
 
+### 23b. Readiness Must Stay Separate From Protocol Validity
+
+```text
+Scenario: protocol-valid but not ready
+Prompt: Every field is present, but `Validation starter` and `Initializer handoff` still contain only empty headings. What should the validator and downstream initializer say?
+Expected behavior: keep the brief protocol-valid, mark it not consumption-ready, and require stronger handoff detail before initialization.
+Must not: quietly promote empty headings into readiness or collapse the case into protocol-invalid.
+Evidence to check: the answer distinguishes structural validity from downstream sufficiency.
+```
+
 ### 24. One Brief Must Survive Multiple Wrapper Classes
 
 ```text
@@ -414,7 +424,7 @@ Evidence to check: wrapper differences stay at execution mapping level only.
 ```text
 Scenario: protocol-valid but repo-local ambiguous brief
 Prompt: This build brief is valid, but `Minimal shape` says `SKILL.md + one reference` and the `Initializer handoff` never names the reference path. What should the repo-local proof helper do?
-Expected behavior: refuse as `repo-local ambiguous`, keep the protocol valid, and require clearer adapter-local mapping instead of guessing.
+Expected behavior: refuse as `repo-local ambiguous`, keep the protocol valid and consumption-ready, and require clearer adapter-local mapping instead of guessing.
 Must not: downgrade the brief to protocol-invalid or invent a filename.
 Evidence to check: the refusal boundary distinguishes protocol validity from local executability.
 ```
