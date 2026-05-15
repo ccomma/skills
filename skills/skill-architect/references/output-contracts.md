@@ -24,9 +24,10 @@ For `skill-architect` specifically:
 
 - keep the rule that a build brief is mandatory in `SKILL.md`
 - keep the protocol definition in `build-brief-protocol.md`
-- keep the detailed brief template in `kernel-build-brief.md`
-- keep adapter guidance in `initializer-adapters.md`
+- keep the detailed brief template and canonical examples in `kernel-build-brief.md`
+- keep adapter guidance and wrapper templates in `initializer-adapters.md`
 - keep `design-report.md` as closeout explanation, not pre-create handoff
+- keep `scripts/check-build-brief.py` as a repo-local validator, not as the protocol owner
 
 ### 2. Contract First, Wording Second
 
@@ -50,6 +51,8 @@ If output consistency matters, make the contract easy to validate:
 - stable labels or placeholders
 - explicit completion checks
 
+For `skill-architect`, repo-local deterministic validation should run `scripts/check-build-brief.py` when a standalone brief artifact exists.
+
 ## Skill-Architect Default Contract
 
 Unless the user is explicitly asking for retrospective explanation, `skill-architect` should default to a build brief with stable field names:
@@ -70,6 +73,8 @@ The protocol version lives in `build-brief-protocol.md`, not in every brief inst
 The field labels stay in English; the explanatory content may follow the user's language.
 
 The brief is the pre-create contract.
+
+The repo-local validator checks whether one brief instance matches protocol `v1` deterministic requirements. It does not redefine protocol semantics or replace pressure tests.
 
 `design-report.md` is the closeout contract for explaining why a finished design was shaped this way.
 

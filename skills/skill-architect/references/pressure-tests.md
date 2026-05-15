@@ -33,6 +33,7 @@ Create at least these scenarios for non-trivial skills:
 21. **Public-positioning pressure** — frontmatter, first-screen language, metadata, and supporting docs should all describe the same build-brief-first identity.
 22. **Initializer-adapter pressure** — the design should freeze what a downstream initializer should initialize and what it should not invent.
 23. **Protocol-validity pressure** — the brief should stay valid without depending on one creator, one runtime, or one directory layout.
+24. **Validator pressure** — a repo-local validator should catch deterministic contract failures without becoming the protocol owner.
 
 ## Test Format
 
@@ -74,6 +75,7 @@ For each scenario, ask:
 - Did frontmatter, first-screen language, metadata, and public docs all describe the same build-brief-first identity?
 - Would a downstream initializer know what to initialize, what not to add, and which decisions are already frozen?
 - Would the same brief still make sense if the next consumer were manual bootstrap instead of a native creator?
+- Would the repo-local validator catch missing fields, weak deny-lists, or shape conflicts without pretending to replace semantic review?
 - Did output format and language match the user's need?
 - Did it choose a language strategy explicitly when the skill emits user-facing artifacts or templates?
 - Would a project-visible template remain understandable to a human or weaker model without hidden context?
@@ -95,6 +97,7 @@ For each scenario, ask:
 - The design jumps straight to references/scripts/assets without a design-expansion pass.
 - The design says "initializer can finish the rest" without freezing a build brief first.
 - The design turns one creator example into a protocol requirement.
+- The validator is treated as the protocol source of truth instead of a deterministic helper.
 - Every dimension gets deep treatment even though only one or two needed it.
 - The skill duplicates another skill's job instead of routing.
 - The skill has no wrong-scope behavior.
@@ -360,7 +363,27 @@ Must not: patch protocol rules downward to match one failing consumer.
 Evidence to check: the answer keeps protocol ownership separate from consumer failure.
 ```
 
-### 23. Lean Skill Should Not Read Like A Memo
+### 23. Validator Must Catch Deterministic Brief Failures
+
+```text
+Scenario: repo-local validator
+Prompt: This build brief is missing `Strongest thing`, its `Do-not-add` only says `- none`, and its `Initializer handoff` forgot `- Do not invent:`. What should the validator report?
+Expected behavior: classify the brief as incomplete or invalid with explicit reason lines and keep the validator positioned as a repo-local checker, not the protocol author.
+Must not: silently accept the brief or rewrite it for the user.
+Evidence to check: deterministic failures are surfaced cleanly and protocol ownership stays in the references.
+```
+
+### 24. One Brief Must Survive Multiple Wrapper Classes
+
+```text
+Scenario: consumption proof
+Prompt: Use the same valid build brief once through a native creator wrapper, once through a manual bootstrap wrapper, and once through a repo-local wrapper. What must stay identical?
+Expected behavior: keep kernel, minimal shape, component decisions, and do-not-add frozen across all three consumption modes.
+Must not: let any wrapper reinterpret the kernel or widen the bundle.
+Evidence to check: wrapper differences stay at execution mapping level only.
+```
+
+### 25. Lean Skill Should Not Read Like A Memo
 
 ```text
 Scenario: anti-bloat redesign
@@ -370,7 +393,7 @@ Must not: preserve redundant sections just because they look standard.
 Evidence to check: the resulting design is shorter, sharper, and still behaviorally complete.
 ```
 
-### 24. Section Ownership Must Be Explicit
+### 26. Section Ownership Must Be Explicit
 
 ```text
 Scenario: section collision
@@ -380,7 +403,7 @@ Must not: keep the same instruction repeated across two sections with cosmetic w
 Evidence to check: a reader can explain each section's unique job in one sentence.
 ```
 
-### 25. Component Must Survive Delete, Merge, And Cost Challenges
+### 27. Component Must Survive Delete, Merge, And Cost Challenges
 
 ```text
 Scenario: unnecessary component
@@ -390,7 +413,7 @@ Must not: keep a component only because its topic sounds like a sensible categor
 Evidence to check: the answer names a concrete burden, a concrete merge collision, and a concrete cost justification for each surviving component.
 ```
 
-### 26. Skill Write Must Define Minimal Real Testing
+### 28. Skill Write Must Define Minimal Real Testing
 
 ```text
 Scenario: post-write validation
@@ -400,7 +423,7 @@ Must not: stop at static checks alone or prescribe an oversized smoke suite by d
 Evidence to check: verification is real, scoped, and explicit about skipped live tests.
 ```
 
-### 27. Principle Must Have Closure
+### 29. Principle Must Have Closure
 
 ```text
 Scenario: slogan audit
@@ -410,7 +433,7 @@ Must not: praise the wording quality without checking enforcement paths.
 Evidence to check: unsupported principles are explicitly named instead of being left as "nice guidance".
 ```
 
-### 28. Reference Must Earn Its Place
+### 30. Reference Must Earn Its Place
 
 ```text
 Scenario: reference audit

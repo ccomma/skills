@@ -93,6 +93,7 @@ Do not use this to repair one existing skill whose role should stay stable.
    - if no downstream initializer is being edited in this phase, state that the build brief is the handoff contract for the next initializer layer rather than pretending initialization is complete
    - validate from cheapest proof upward:
      - run deterministic bundle checks first
+     - if a standalone build brief artifact exists, run `scripts/check-build-brief.py` before broader smoke so protocol `v1` drift is caught deterministically
      - if the smoke harness or runner changed, run its deterministic self-check before broader live smoke
      - then run the smallest live smoke that still touches the changed behavior, usually `references/minimal-smoke-prompts.md`
      - escalate to `references/pressure-tests.md` only when the change touched trigger boundary, authority, cadence, or broader routing, or when the narrow smoke stays ambiguous
@@ -142,6 +143,7 @@ If the real problem is repairing one existing skill without changing its core ro
 - Every surviving component should be able to defend itself against a delete challenge, a merge challenge, and a cost challenge.
 - Every durable principle must close through at least one enforcement path: explicit path step, hard invariant, deterministic check, pressure test, or smoke test. If it closes through none, cut it or operationalize it.
 - A skill write is not complete until deterministic checks and at least one real smoke test both ran, or runtime unavailability was stated explicitly.
+- If a standalone build brief artifact exists, deterministic validation should include `scripts/check-build-brief.py` before live smoke claims count.
 - If a smoke runner changed, its deterministic self-check must pass before the broader smoke result counts.
 - A skill write is not complete while live smoke still shows an in-scope issue that has not yet been repaired, rerun, deferred with reason, or escalated out of this workflow.
 - If a skill's power depends on cadence, first-turn pressure, or stop conditions, make that explicit.
