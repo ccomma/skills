@@ -29,6 +29,7 @@ For `skill-architect` specifically:
 - keep `design-report.md` as closeout explanation, not pre-create handoff
 - keep `scripts/check-build-brief.py` as a repo-local validator, not as the protocol owner
 - keep `scripts/bootstrap-build-brief.py` as a repo-local consumption proof helper, not as a generic creator
+- keep `scripts/_brief_runtime.py` as a private shared parsing core for the two repo-local helpers, not as a public helper entrypoint
 
 ### 2. Contract First, Wording Second
 
@@ -58,6 +59,13 @@ That validator now answers two different questions:
 
 - is the brief `protocol-valid`
 - is the brief `consumption-ready`
+
+The repo-local helper contract supports two output modes:
+
+- human-readable text for manual inspection
+- structured diagnostics for repo-local automation
+
+That structured mode is a helper-layer contract only. It does not redefine the brief protocol and it is not a second schema owner.
 
 When the question is whether a validated brief can actually be consumed inside this repo, run `scripts/bootstrap-build-brief.py` as a proof helper after validation. It may refuse with `repo-local ambiguous` even when the protocol itself is valid.
 
