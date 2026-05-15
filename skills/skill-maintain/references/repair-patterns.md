@@ -1,6 +1,10 @@
 # Skill Maintain Repair Patterns
 
-Load this when auditing or repairing a skill beyond a trivial wording fix.
+Load this when the repair shape is not obvious after the repair expansion pass.
+
+Use it as the pattern library for deciding whether to cut, merge, move, or limit the patch.
+
+If the problem is specifically that references are too vague, duplicated, or badly split, load `reference-quality.md`.
 
 ## Failure Modes
 
@@ -19,7 +23,7 @@ Check the reported issue before widening scope:
 - **Ownership leak**: the artifact implies ownership over local context, external workflows, or helper layers it does not actually own.
 - **Structure drift**: `SKILL.md` carries content that belongs in `references/`, scripts, or assets; or references have no clear load condition.
 - **Workflow-clarity drift**: the dominant happy path is hard to see, branch cases appear too early, a usage-expansion section absorbs goals instead of trigger guidance, or entrypoint roles are blurred together.
-- **Reference-routing drift**: support files are linked inconsistently, load conditions are hard to spot, or the wording in generic references is more concrete than the skill's public abstraction level should allow.
+- **Reference-routing drift**: references are linked inconsistently, load conditions are hard to spot, or the wording in generic references is more concrete than the skill's public abstraction level should allow.
 - **Output-contract drift**: required sections, labels, fields, evidence expectations, or artifact checks are no longer stable.
 - **Interaction-intensity drift**: the skill asks too much, too little, batches poorly, or fails to expand again when risk rises.
 - **Bundle mismatch**: `SKILL.md`, references, scripts, assets, or agent metadata no longer describe the same behavior.
@@ -30,7 +34,7 @@ Check the reported issue before widening scope:
 - **Thin-but-correct core**: a core artifact keeps the right boundary but lacks enough judgment or depth to carry its real role.
 - **Helper-layer misplacement**: a helper artifact quietly becomes source of truth for a core layer without being promoted or referenced correctly.
 
-Start with a maintenance breadth-and-depth pass before deciding that only one of these dimensions matters.
+Start with a repair expansion pass before deciding that only one of these dimensions matters.
 
 Typical escalation candidates include:
 
@@ -84,6 +88,12 @@ If the skill feels more like a handbook than a tool, extract repeated artifact s
 
 Also check the inverse problem: if a repeated artifact shape appears often enough to drift, but has not yet been split into a companion format file, call that out explicitly instead of waiting for the user to ask for templates.
 
+For every surviving non-core component, force these challenges:
+
+- delete challenge: what exact failure returns if this component disappears
+- merge challenge: what exact collision returns if it merges with its nearest neighbor
+- cost challenge: what maintenance, token, read, or drift cost does it add, and why is that cost worth paying
+
 ### 2a. Recover Workflow Clarity
 
 For workflow skills:
@@ -125,9 +135,9 @@ If one layer starts swallowing the job of another, repair the layering instead o
 
 ### 4b. Repair Reference Routing And Abstraction
 
-When a skill points to support files:
+When a skill points to references:
 
-- use a consistent link style for the same kind of support file
+- use a consistent link style for the same kind of reference
 - keep important references one hop from `SKILL.md`
 - describe generic references through artifact categories, not through overly specific local examples
 - keep concrete filenames or domain-specific examples only when they materially clarify the public contract
@@ -207,6 +217,18 @@ For every important dimension, decide whether it needs:
 - explicit deferral
 
 This prevents both narrow repairs and over-repairs.
+
+### 14. Interrogate The Whole Bundle
+
+Do not stop at boundary ownership alone. Ask about each component:
+
+- what behavior it protects
+- what ambiguity it removes
+- what deterministic work it isolates
+- what artifact contract it stabilizes
+- what cost it adds
+
+If the component cannot justify its existence beyond "it seems like a useful category", cut, merge, or downgrade it.
 
 ## High-Risk Changes
 

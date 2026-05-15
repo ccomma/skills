@@ -1,13 +1,49 @@
 # Skill Architect Bundle Design
 
-Load this when deciding how `SKILL.md`, references, scripts, assets, and agent metadata should work as one published bundle.
+Load this when deciding what overall component combination the skill should keep, or how that bundle should stay aligned across the main skill surface, references, scripts, assets, format files, and agent metadata.
+
+If the real question is whether references should exist, merge, split, or sharpen, load `reference-design.md`.
+
+## Routing Position
+
+- common upstream:
+  - `reference-routing.md`
+  - `design-expansion.md`
+- if the real question is owner component, jump to `component-paths.md`
+
+## Distinction
+
+Use `component-paths.md` to decide where one piece of guidance belongs.
+
+Use this file to decide what overall combination of components the skill should keep across repeated burdens.
+
+If you are only placing one rule, one checklist, one template description, or one example, you are probably in `component-paths.md`, not here.
 
 ## Design Questions
 
 - Which files are part of the public bundle?
 - Which files are always loaded, conditionally loaded, used, or executed?
 - How will the skill stay internally consistent after renames or upgrades?
-- Which support files need a direct path from `SKILL.md`?
+- Which references need a direct path from `SKILL.md`?
+
+## Bundle Shapes
+
+Use the lightest overall combination that protects the real failure mode:
+
+- `SKILL.md only`
+  - for narrow skills with short stable rules
+- `SKILL.md + references/`
+  - for optional depth, examples, policies, or variants
+- `SKILL.md + scripts/`
+  - for deterministic repeated work
+- `SKILL.md + format file`
+  - for one repeated artifact shape whose structure must stay stable
+- `SKILL.md + assets/`
+  - for reusable templates, starters, or media resources
+- `bundle metadata`
+  - when the environment needs a human-facing entry surface
+
+Do not add a component just because similar skills often have one. Add it only when it removes a clear burden from the main entry surface or protects a real bundle contract.
 
 ## Design Patterns
 
@@ -17,7 +53,7 @@ Every important reference, script, or asset should have a clear load or use cond
 
 ### 2. Keep Entry Surfaces Aligned
 
-Frontmatter, title, agent metadata, and any support-file descriptions should all describe the same skill and the same trigger boundary.
+Frontmatter, title, agent metadata, and any reference descriptions should all describe the same skill and the same trigger boundary.
 
 ### 3. Keep The Core Thin And Sharp
 
@@ -39,9 +75,19 @@ Do not create companion files just to fragment the bundle. Add them when they pr
 
 If a design makes it easy for names, modes, or entrypoints to drift apart, simplify it or add deterministic checks.
 
+## Necessity Check
+
+Before keeping a component in the bundle, ask:
+
+- what recurring burden does this component remove from the main entry surface
+- why is that burden recurring rather than local to one rule
+- why would repeated `component-paths.md` decisions not already be enough
+- what token, maintenance, read, or drift cost this component adds
+- why that cost is still worth paying
+
 ## Pressure Prompts
 
 ```text
 Prompt: Design a mature skill with references, scripts, and agent metadata that other runtimes can install.
-Expected design: clear bundle structure, aligned entry surfaces, and explicit use conditions for support files.
+Expected design: clear bundle structure, aligned entry surfaces, and explicit use conditions for references.
 ```

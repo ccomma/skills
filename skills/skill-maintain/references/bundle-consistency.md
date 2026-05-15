@@ -1,6 +1,22 @@
 # Skill Maintain Bundle Consistency
 
-Load this when the problem may come from mismatches across `SKILL.md`, references, scripts, assets, or agent metadata rather than from one paragraph of prose.
+Load this when the problem may come from mismatches across the main skill surface, references, format files, scripts, assets, or agent metadata rather than from one paragraph of prose.
+
+If the real problem is that references are too vague, duplicated, or badly split, load `reference-quality.md`.
+
+## Routing Position
+
+- common upstream:
+  - `reference-routing.md`
+  - `repair-expansion.md`
+- if the real question is owner component, jump to `component-paths.md`
+- if the real question is only repair shape after ownership is known, jump to `repair-patterns.md`
+
+## Distinction
+
+Use `component-paths.md` to route one drift to one owner component.
+
+Use this file when the real issue is that several components drifted together or the bundle contract itself has become inconsistent.
 
 ## What To Check
 
@@ -26,6 +42,14 @@ Use [scripts/check-skill-bundle.sh](../scripts/check-skill-bundle.sh) for the re
 
 Use manual review after the script when the problem is about meaning, clarity, or whether a file should exist at all.
 
+## Necessity Check
+
+Before keeping a non-core bundle component, ask:
+
+- what exact burden or contract it protects
+- whether that burden is recurring across the bundle rather than local to one rule
+- whether the same value would survive with one fewer component
+
 ## Repair Patterns
 
 ### 1. Reconcile The Entry Surface
@@ -44,7 +68,7 @@ When a file no longer belongs to the bundle:
 - check whether its behavior was replaced elsewhere
 - delete or rename it only after the replacement path is clear
 
-### 4. Align Support Files With Real Behavior
+### 4. Align References With Real Behavior
 
 If `agents/openai.yaml`, scripts, templates, or assets still describe old modes, old names, or old outputs, update them as part of the same repair.
 
@@ -62,7 +86,7 @@ When extracting bundle facts, prefer a deterministic script that emits a short s
 
 ```text
 Prompt: This skill was renamed, but its agent metadata and one reference still use the old name. Repair the bundle.
-Pass if: all user-facing and support-file entrypoints agree on the current name and behavior.
+Pass if: all user-facing and reference entrypoints agree on the current name and behavior.
 ```
 
 ```text

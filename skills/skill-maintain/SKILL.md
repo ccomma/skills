@@ -1,186 +1,146 @@
 ---
 name: skill-maintain
-description: Use when auditing or repairing one existing skill, especially for portability issues, bundle drift, weak boundaries, bloated structure, or token/context cost. Do not use this for multi-skill boundary disputes or for deciding whether a skill should be created, split, or merged.
+description: Use when one existing skill needs audit or repair for weak structure, duplicated sections, blurry triggers, buried core behavior, bundle drift, or token-heavy sprawl.
 ---
 
 # Skill Maintain
 
-Audit and repair one existing skill without blurring its role. Use this when a skill already exists and needs an internal fix.
+Audit and repair one existing skill without changing its role by accident.
 
-## Boundaries
+<main-path>
+
+1. Establish the baseline:
+   - what should trigger the skill
+   - what it should do first
+   - what the dominant path is
+   - what references, format files, scripts, assets, or metadata it depends on
+   - what public boundary or artifact contract it must preserve
+
+2. Find the drift that hurts first-read usability most:
+   - the first 20-30 lines do not tell the model what to do
+   - trigger is blurry or repeated
+   - first move or dominant path is hard to find
+   - the dominant path appears too late
+   - the skill depends on a literal heading name instead of making the dominant path obvious
+   - wrong-scope guidance names example domains instead of the real workflow object boundary
+   - sections collide, restate each other, or bury behavior under explanation
+   - sibling bullets inside one step repeat the same decision instead of sharpening it
+   - multiple bullets restate one governing decision with slight condition changes instead of collapsing into one sharper rule
+   - a cross-cutting invariant block restates local path steps instead of guarding global invariants
+   - a durable principle has no path step, hard invariant, deterministic check, pressure test, or smoke test backing it
+   - a component does not make its job obvious enough for its layer
+   - two components answer the same question and should merge or split more sharply
+   - a component survives only as a plausible topic bucket, not as a uniquely necessary bundle part
+   - bundle drift exists across the main file, references, format files, scripts, assets, or metadata
+   - token cost comes from low-value narration instead of real invariants
+
+3. Classify the repair:
+   - wording fix
+   - section rewrite
+   - reference repair
+   - bundle-wide patch
+   - explicit defer
+   - if the patch would span too many modes, stop and ask whether this is really redesign rather than maintenance
+
+4. Rewrite the hot path first:
+   - keep the main path easy to find
+   - collapse repeated guidance before polishing prose:
+     - if deleting text leaves trigger, first move, boundary, and output unchanged, cut it
+     - if top-level sections or sibling bullets are teaching the same judgment, merge them
+     - if an invariant only repeats a local path step, move that judgment back into the path block
+   - keep non-core material only when it earns clarity:
+     - if a component needs browsing or guesswork before its job is clear, rewrite, move, merge, or cut it
+     - move heavy detail away from the main file only when the main file becomes sharper because of it
+     - keep any non-core component only when it removes a clear burden from the main entry surface or protects a real bundle contract
+   - interrogate each surviving component one by one:
+     - if this component vanished, what exact failure would return
+     - if it merged with its nearest neighbor, what exact confusion or collision would return
+     - if a weaker model encountered it first, could it still recover cleanly
+     - what cost does this component add in tokens, reads, maintenance, or drift risk
+   - cut text that does not change behavior or protect a boundary
+
+5. Validate the repaired skill:
+   - first move is now clear
+   - trigger is sharp
+   - strongest behavior is easy to find
+   - top-level sections no longer collide in responsibility
+   - sections no longer duplicate each other
+   - each surviving component can name its burden, nearest merge collision, and cost
+   - bundle components still align
+   - the skill is lighter only where it was safe to lighten
+   - any remaining strong principle still names its enforcement path
+   - validate from cheapest proof upward:
+     - deterministic bundle checks pass
+     - if the smoke harness or runner changed, run its deterministic self-check before broader live smoke
+     - then run the smallest live smoke that still touches the repaired behavior, usually `references/minimal-smoke-prompts.md`
+     - escalate to `references/pressure-tests.md` or `references/regression-tests.md` only when the repair touched trigger boundary, authority, cadence, broader capability preservation, or the narrow smoke stays ambiguous
+   - keep narrow smoke lean:
+     - disable unrelated rules, memory, plugins, or other ambient context when the runtime allows it
+     - keep the live prompt tiny and limited to one repair judgment unless the changed dimension is still ambiguous
+   - close the loop:
+     - if live smoke exposes one in-scope issue, repair it and rerun the narrowest proving smoke
+     - stop when the smallest sufficient smoke is clean; otherwise defer or escalate explicitly
+     - if no suitable runtime is available, hand back exact manual regression prompts and mark live behavior as unverified
+
+</main-path>
+
+<scope>
 
 Use this for one existing skill at a time.
 
-Route away when:
+Do not use this when the main task is designing a different skill, routing across multiple skills, or executing the underlying workflow itself rather than repairing this skill.
 
-- the main question is whether a skill should exist, be created, split, or merged from scratch -> skill-design workflow
-- the main problem is overlap, conflict, stale duplication, or routing ambiguity between multiple skills -> skill-boundary workflow
-- the main value now is not single-skill repair but a cross-layer governance judgment about where the durable fix belongs -> higher-layer governance review workflow
-- the request is general prompt compression, code optimization, runtime performance, or arbitrary chat summarization
+If the real task is changing the target skill's role rather than repairing it, route to a skill-architecture workflow.
 
-## Core Rules
+</scope>
 
-- Repair the smallest surface that fixes the problem.
-- When the user asks to audit, review, inspect, or check a specific skill, default to a proactive maintenance audit across all major maintenance dimensions before narrowing the patch.
-- Keep guidance publishable, environment-neutral, and aligned with the user's language.
-- Prefer capability categories and workflow contracts over hardcoded runtime terms, local paths, or downstream skill names.
-- Keep trigger-contract layering clear: frontmatter description for shortest trigger, usage sections for expanded trigger and wrong-scope guidance, workflow sections for process.
-- When a skill is one step in a broader workflow, check whether it clearly defines what artifact it owns, what state it must not mutate, and what downstream capability should consume its output.
-- When a skill is itself a workflow, check whether the dominant happy path is easy to see before branch cases, whether usage-expansion sections stay about trigger and wrong-scope guidance, and whether entrypoint roles remain distinct.
-- When a reported issue may actually belong to a higher governance layer, stop and route instead of smuggling meta-governance redesign into one-skill maintenance.
-- When a concrete issue in this skill may also reveal an upstream reusable failure mode, mark it as an `upstream-check candidate`.
-- This workflow must remain independently usable even when no compatible higher-layer governance review workflow is available in the current environment.
-- If a compatible higher-layer governance review workflow is available and the upstream-check candidate matters, recommend or route there so the candidate can receive a fuller governance-status judgment. If not, finish the local audit and repair guidance anyway instead of stalling.
-- Keep reference routing legible: important support files should be linked consistently and described at the right abstraction level.
-- Prefer deterministic scripts for repeated bundle checks, metadata extraction, link validation, and compact reporting when those steps do not require judgment.
-- When a script exists for a deterministic check, use it instead of redoing the same inspection through prose alone.
-- Treat every edit as a behavior change until validated against a capability baseline.
+<invariants>
 
-## Core Principle
+- Treat the skill as a behavior bundle, not just a text file.
+- Do not justify structure by citing another skill alone; justify it with the target skill's real job or failure mode.
+- Describe scope by the workflow object being repaired, not by a list of example domains.
+- If a repair crosses too many modes, treat that as redesign pressure and say so explicitly.
+- Prefer fixing the teaching failure over preserving familiar prose.
+- Collapse sibling bullets when they are really restating one governing repair decision with minor condition changes.
+- Apply the same collapse rule to references and other bundle components, not only to `SKILL.md`.
+- Collapse toward a clearer system, not just shorter prose: related repair judgments should compose into stable routes, layers, or rules instead of staying as scattered local fixes.
+- Treat bundle components as first-class teaching surfaces or deterministic helpers, not storage bins.
+- A surviving non-core component should defend itself with a real job, a real burden it removes, a real reason it should not merge, and a cost worth paying.
+- When real smoke tests are skipped, say whether the blocker was runtime availability, side-effect risk, or token budget.
+- If a durable principle has no enforcement path, either add one compactly or cut the principle.
+- Treat every repair as a behavior change until verified.
+- A skill write is not complete until deterministic checks and at least one real smoke test both ran, or runtime unavailability was stated explicitly.
+- If a smoke runner changed, its deterministic self-check must pass before the broader smoke result counts.
+- A skill write is not complete while live smoke still shows an in-scope issue that has not yet been repaired, rerun, deferred with reason, or escalated out of this workflow.
 
-Repair quality first, then trim weight. A smaller skill is not a better skill if it loses trigger accuracy, safety, evidence requirements, persistence rules, or practical usefulness.
+</invariants>
 
-## Workflow
+<support-routing>
 
-### 1. Confirm The Target And Failure Mode
+If you are unsure which repair reference should be next, load `references/reference-routing.md` first.
 
-If the target skill is not explicit, ask which skill to inspect.
+For early audit:
+- load `references/repair-expansion.md` at the start of any non-trivial audit
 
-If the user explicitly asks to audit, review, inspect, or check a specific skill, do not wait for a bug list. Treat that as authorization to run a full maintenance breadth scan, surface the real issues you find, and repair the ones that are safe or clearly required.
+For repair ownership:
+- load `references/component-paths.md` when deciding whether the fix belongs in `SKILL.md`, a reference, a format file, a script, an asset, or bundle metadata
+- load `references/reference-quality.md` when references themselves may be too vague, duplicated, or badly split
+- load `references/bundle-consistency.md` and `scripts/check-skill-bundle.sh` when references, format files, scripts, assets, or metadata may have drifted together
+- load `references/repair-patterns.md` when deciding whether to cut, merge, relocate, or deepen the patch
 
-When the work is to revise, mature, or harden an existing skill, prefer starting with this maintenance workflow before making direct edits, unless the change is purely mechanical and carries no judgment.
+For narrower repair depth:
+- load `references/interaction-intensity.md`
+- load `references/language-and-portability.md`
+- load `references/output-contracts.md`
+- load `references/safety-and-authority.md`
+- load `references/token-optimization.md`
+- load `references/format-file-quality.md`
+- load `references/regression-tests.md`
+only when the failure is clearly about that dimension
 
-If the request is broad and not an explicit audit/review request, narrow it to one repair mode first.
+For closeout:
+- load `references/runtime-smoke-harness.md` when the question is how to run the cheapest useful live smoke or how to reduce runtime noise
+- load `references/minimal-smoke-prompts.md` for cheap narrow live checks
+- load `references/pressure-tests.md` before calling the repair mature
 
-If the real issue is between multiple skills, route to a skill-boundary workflow — the workflow that compares multiple skills and clarifies which one should own which situation — instead of continuing here.
-
-### 2. Run A Maintenance Breadth-And-Depth Pass
-
-Start with a maintenance breadth-and-depth pass before locking the repair scope.
-
-Load [repair-breadth-and-depth.md](references/repair-breadth-and-depth.md) to scan the major maintenance dimensions and choose repair depth.
-
-For explicit audit/review requests, this breadth pass is mandatory even if the user only mentioned one visible symptom. The workflow should proactively discover adjacent drift in structure, routing, output contract, bundle consistency, safety, and token cost rather than waiting for the user to enumerate them.
-
-### 3. Inspect The Skill Skeleton
-
-Read metadata, file layout, `SKILL.md`, and only the references needed for the problem. Note neighboring capability categories before proposing changes.
-
-Load the matching repair-mode references when doing more than a quick wording fix.
-
-If the reported problem is deterministic and bundle-wide, prefer a matching local script before manual inspection.
-
-When the skill was newly renamed, newly published, or just generated by another skill workflow, treat YAML validity, agent metadata alignment, old-name residue, and public index updates as first-class inspection targets rather than optional cleanup.
-
-### 4. Establish A Capability Baseline
-
-Before editing, write a short baseline for:
-
-- valid trigger cases and wrong-scope cases
-- safety, confirmation, evidence, and persistence rules
-- output quality plus user-facing language and interaction style
-- workflow readability: main path, branch cases, and entrypoint-role separation
-- trigger-contract layering and reference-routing clarity
-- reachable references, scripts, and assets
-- companion format files and their quality thresholds when they exist
-- repeated inline artifact shapes that may deserve companion format files
-- explicit upstream/downstream workflow contracts
-- execution-state artifacts this skill must not mutate
-
-If the user supplied a failure report, transcript, diff, or complaint, use it as a regression fixture. Otherwise create realistic before/after scenarios from the skill's stated purpose.
-
-### 5. Diagnose And Plan
-
-Classify findings using the same maintenance dimensions from the breadth scan.
-
-Make repair depth explicit for each important dimension: `no issue`, `light wording fix`, `section rewrite`, `reference repair`, `script-assisted repair`, `bundle-wide patch`, or `defer explicitly`.
-
-If token economy is the primary failure mode, use the stronger token-optimization workflow from [token-optimization.md](references/token-optimization.md) instead of treating token trimming as a minor side check.
-
-Show a concise repair plan before editing unless the user explicitly asked for direct implementation.
-
-For explicit audit/review requests, the repair plan should separate:
-
-- issues explicitly reported by the user
-- issues proactively discovered by the maintenance audit
-- issues that are only `upstream-check candidates`
-
-Do not ignore proactively discovered issues just because the user did not name them first. Fix the safe, clearly justified ones in the same pass, and call out any higher-risk findings before changing them.
-
-Classify each planned change as `safe`, `moderate`, or `risky`.
-
-Load [regression-tests.md](references/regression-tests.md) before proposing or implementing anything beyond a trivial wording-only change.
-
-### 6. Patch And Validate
-
-Edit the smallest necessary files. Load [pressure-tests.md](references/pressure-tests.md) before calling a reusable skill mature.
-
-Validate that:
-
-- the capability baseline still passes and the reported failure mode is fixed
-- frontmatter, metadata, support files, and public bundle surfaces stay aligned
-- breadth coverage and repair depth are explicit
-- routing, workflow boundaries, language, output checks, and interaction pacing still match the intended contract
-- workflow skills still keep the main path easy to scan, keep branch cases subordinate, and keep entrypoint roles distinct
-- the default load is smaller or more focused when token cost was part of the problem
-- authority levels, confirmation gates, execution-state boundaries, and safety/evidence/persistence rules still hold
-- all planned regression tests were run, simulated, or explicitly marked not runnable with a reason
-
-Do not call a repair complete based on one dimension alone. Report residual quality risk if any baseline behavior could not be verified.
-
-## Repair Modes
-
-Choose the narrowest mode that matches the problem:
-
-- `portability + language`: runtime terms, mixed language, local paths, ownership leakage, abstraction leaks, or examples that are too concrete for a public reference
-- `structure + routing`: bloated `SKILL.md`, misplaced content, weak routing
-- `workflow clarity`: the main path is diluted, branch cases are too prominent, usage-expansion sections absorb goals instead of trigger guidance, or entrypoint roles are blurred
-- `core sharpness`: strong behavior diluted by explanatory sprawl or by missing companion format files
-- `format opportunity`: a repeated high-value artifact shape is still trapped inline and would be better as a companion format file
-- `format-file quality`: companion format files are bloated, vague, ritualized, or drifted from the parent skill
-- `output contracts`: unstable report shape, labels, fields, or artifact checks
-- `interaction intensity`: too many questions, too few checkpoints, bad batching, weak recovery
-- `bundle consistency`: drift across `SKILL.md`, frontmatter, references, scripts, metadata, or public bundle surfaces
-- `reference routing`: support files are loaded unclearly, linked inconsistently, or described at the wrong level of abstraction
-- `safety + authority`: overreach, missing confirmations, weak permission boundaries
-- `token optimization`: heavy default load, repeated narration, weak progressive disclosure
-
-Load only the references needed for the active mode:
-
-- [language-and-portability.md](references/language-and-portability.md) for portability or language problems
-- [repair-patterns.md](references/repair-patterns.md) for workflow clarity, structure, routing, reference routing, core sharpness, or general repair planning
-- [format-file-quality.md](references/format-file-quality.md) for auditing or repairing companion format files
-- [output-contracts.md](references/output-contracts.md) for unstable sections, fields, templates, or artifact quality expectations
-- [interaction-intensity.md](references/interaction-intensity.md) for questioning depth, pacing, batching, or recovery behavior
-- [bundle-consistency.md](references/bundle-consistency.md) for cross-file drift
-- [safety-and-authority.md](references/safety-and-authority.md) for overreach or confirmation problems
-- [token-optimization.md](references/token-optimization.md) when token/context cost is the primary failure mode
-
-## Output
-
-Use the user's session language for visible section labels in reports. Keep technical tokens such as file names, exact mode labels, or skill ids verbatim when translation would reduce precision.
-
-For review-only work:
-
-```text
-[Localized label for target skill]:
-[Localized label for primary failure mode]:
-[Localized label for diagnosis]:
-- [Localized portability label]:
-- [Localized language label]:
-- [Localized abstraction label]:
-- [Localized structure label]:
-- [Localized output label]:
-- [Localized interaction label]:
-- [Localized bundle label]:
-- [Localized safety label]:
-- [Localized token label]:
-[Localized label for suspected upstream governance candidates]:
-[Localized breadth coverage label]:
-[Localized repair depth label]:
-[Localized recommended changes label]:
-[Localized risk label]:
-[Localized validation label]:
-```
-
-For implementation work, report changed files, why each change was made, the capability baseline, tests run, and any residual quality risk.
+</support-routing>

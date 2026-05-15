@@ -1,8 +1,10 @@
 # Skill Architect Pressure Tests
 
-Load this before calling a reusable skill mature, or when the user asks whether a skill is actually robust.
+Load this when you are about to call a reusable skill mature, or when the user asks whether a skill is actually robust.
 
 A pressure test is a realistic prompt or situation designed to reveal whether the skill triggers correctly, asks the right amount, avoids neighbor overlap, and preserves token efficiency.
+
+The deeper goal is not "can this skill be improved from bad version A to better version B". The deeper goal is "does this design already obey the properties of a strong skill, and does it prevent the known weak-skill patterns from being designed in the first place".
 
 ## Minimum Test Set
 
@@ -16,9 +18,16 @@ Create at least these scenarios for non-trivial skills:
 6. **Token pressure** — request should use metadata, references, scripts, or assets lazily instead of loading everything.
 7. **Language/style pressure** — if the skill is user-facing, menus and reports should follow the user's language and tone.
 8. **Authority pressure** — risky actions should have explicit boundaries and confirmation design.
-9. **Bundle pressure** — support files should stay aligned and reachable.
+9. **Bundle pressure** — references and other bundle components should stay aligned and reachable.
 10. **Output-contract pressure** — required sections, fields, or artifacts should be intentionally designed rather than implied.
 11. **Breadth/depth pressure** — the design should scan major dimensions and deepen only the ones that matter.
+12. **First-turn pressure** — the design should make the first move and multi-turn cadence explicit when the skill's power depends on interaction.
+13. **Sharpness pressure** — the design should resist redundant sections, late workflow, and explanatory weight that makes the skill read like a document instead of a tool.
+14. **Section-ownership pressure** — top-level sections should not compete for the same job.
+15. **Real-test pressure** — skill writes should define the smallest real smoke test and the reason if live behavior cannot be exercised.
+16. **Principle-closure pressure** — strong-sounding principles should map to an enforcement path instead of floating as slogans.
+17. **Component-necessity pressure** — each surviving reference, script, format file, asset, or metadata layer should survive a delete challenge, a merge challenge, and a cost challenge.
+18. **Systematization pressure** — related judgments should collapse into a stable system of routes, layers, or rules instead of remaining as scattered local patches.
 
 ## Test Format
 
@@ -37,6 +46,16 @@ For each scenario, ask:
 - Did the skill trigger only when appropriate?
 - Did it choose the right interaction strength?
 - Did it choose the right interaction intensity?
+- Did it make the first move explicit instead of leaving it to chance?
+- If the skill depends on questioning pressure, did it define one-question cadence, trunk persistence, and when summaries are allowed?
+- Did it avoid redundant sections whose only job is to restate frontmatter or adjacent sections?
+- Did each top-level section own a different primary responsibility?
+- Did each durable principle close through a step, hard rule, deterministic check, pressure test, or smoke test?
+- Did the design turn repeated local judgments into a coherent system instead of merely shortening them?
+- Did each surviving component survive a delete challenge, a merge challenge, and a cost challenge?
+- Would the top of the file tell a weaker model what to do before the explanatory text takes over?
+- Does each surviving section have a unique job that would be missed if removed?
+- Did the design avoid completeness theater such as template sections that survive without a real failure mode behind them?
 - Did it avoid unnecessary questions?
 - Did it avoid acting before required confirmation?
 - Did it load references/scripts/assets only when justified?
@@ -59,12 +78,24 @@ For each scenario, ask:
 - The skill has no explicit authority boundary despite risky actions.
 - The skill promises a stable artifact but never defines the contract.
 - The script layer is broad and policy-heavy instead of deterministic.
-- The bundle structure can drift because support files are not wired back from `SKILL.md`.
-- The design jumps straight to references/scripts/assets without a coverage pass.
+- The bundle structure can drift because references are not wired back from `SKILL.md`.
+- The design jumps straight to references/scripts/assets without a design-expansion pass.
 - Every dimension gets deep treatment even though only one or two needed it.
 - The skill duplicates another skill's job instead of routing.
 - The skill has no wrong-scope behavior.
 - The skill says it is mature without scenario evidence.
+- The skill is supposed to grill or validate, but it never states whether it should ask one question at a time or keep pushing the same trunk branch.
+- The workflow starts too late because overview, boundary, or usage prose swallowed the hot path.
+- One path step keeps stacking bullets that are really the same decision with slight condition changes instead of collapsing them into one sharper rule.
+- The design removed a few duplicates, but the remaining rules still do not add up to a clear system of routes, layers, or governing decisions.
+- The design keeps sections such as Overview, When To Use, Response Language, or Artifact Contract without proving they add behavior here.
+- The design can explain how it improved a bad skill, but still cannot state the properties a strong skill must satisfy.
+- `what-to-do`, `workflow`, `boundaries`, or `rules` are all talking about the same job with different wording.
+- The design says "test after writing" but never defines the smallest real smoke test or the fallback when no runtime is available.
+- The design contains strong principles, but some of them are not backed by any concrete enforcement path.
+- A reference exists, but the design never explains what hot-path burden it removes.
+- A reference exists, but the design cannot say why repeated local component placement would not already be enough.
+- A component exists, but the design cannot say what cost it adds and why that cost is worth paying.
 - The design relies on headings-only templates for project-visible artifacts.
 - The design silently mixes public-facing and internal-working language expectations.
 - The design creates a new standard layer when a helper-layer classification would be enough.
@@ -72,6 +103,10 @@ For each scenario, ask:
 ## Optional Subagent Validation
 
 If subagents are available and the user wants stronger validation, ask an independent agent to run the pressure prompts against the skill without revealing your intended answer. Use this for reusable or high-impact skills, not tiny personal helpers.
+
+## Minimal Live Smoke
+
+For small component or reference changes, load `minimal-smoke-prompts.md` instead of running this whole suite.
 
 
 ## Built-in Regression Prompts
@@ -125,7 +160,7 @@ Scenario: authority-sensitive skill
 Prompt: 帮我做一个会修改配置并发布结果的 skill。
 Expected behavior: design explicit authority levels, confirmation gates, and verification before irreversible actions.
 Must not: hide execution inside vague prose.
-Evidence to check: risky steps are explicit in SKILL.md and support files only deepen the policy.
+Evidence to check: risky steps are explicit in SKILL.md and references only deepen the policy.
 ```
 
 ### 6. Wrong-Scope Request Should Route Away
@@ -153,12 +188,22 @@ Evidence to check: uses provided name, layout, interaction model, and output.
 ```text
 Scenario: maturity upgrade
 Prompt: 升级这个已有 skill，让它更成熟，但不要整体重写。
-Expected behavior: run a breadth-and-depth pass, identify the weak dimensions, and deepen only the ones that materially improve the skill.
+Expected behavior: run a design-expansion pass, identify the weak dimensions, and deepen only the ones that materially improve the skill.
 Must not: inflate every dimension or turn maintenance drift into a full redesign.
 Evidence to check: coverage is explicit and depth choices are selective.
 ```
 
-### 9. New Or Renamed Skill Should Stay Publishable
+### 9. Interactive Grilling Skill Must Define Cadence
+
+```text
+Scenario: grilling workflow
+Prompt: 帮我设计一个会持续拷打现有方案、直到关键边界说清楚的 skill。
+Expected behavior: define the first move, one-question cadence, trunk persistence, concrete counterfactual follow-ups, and the stop condition for switching into summary.
+Must not: only say "ask good questions" while leaving cadence and anti-summary behavior implicit.
+Evidence to check: the main file makes the interaction contract obvious near the top.
+```
+
+### 10. New Or Renamed Skill Should Stay Publishable
 
 ```text
 Scenario: renamed public skill
@@ -166,4 +211,74 @@ Prompt: 把一个公开 skill 改个更短的名字，并补齐需要的文件�
 Expected behavior: keep frontmatter YAML valid, keep the description concise, align agent metadata, and update public bundle surfaces such as README when they exist.
 Must not: stop after renaming the folder and main file while leaving stale ids, invalid YAML, or missing index updates.
 Evidence to check: the renamed skill is internally consistent and publicly enumerable.
+```
+
+### 11. Lean Skill Should Not Read Like A Memo
+
+```text
+Scenario: anti-bloat redesign
+Prompt: 重构这个 skill。它的问题不是事实错误，而是太啰嗦、重复、workflow 太晚、像文档不像 skill。
+Expected behavior: design a thinner skeleton, keep the strongest behavior near the top, and justify every section that remains.
+Must not: preserve redundant sections just because they look standard.
+Evidence to check: the resulting design is shorter, sharper, and still behaviorally complete.
+```
+
+### 12. Section Ownership Must Be Explicit
+
+```text
+Scenario: section collision
+Prompt: 这个 skill 的 what-to-do 和 workflow 都在讲步骤，rules 和 boundaries 也有部分重复。请重新设计。
+Expected behavior: assign one primary job per top-level section and remove or merge overlapping text.
+Must not: keep the same instruction repeated across two sections with cosmetic wording changes.
+Evidence to check: a reader can explain each section's unique job in one sentence.
+```
+
+### 13. Component Must Survive Delete, Merge, And Cost Challenges
+
+```text
+Scenario: unnecessary component
+Prompt: This skill has a reference, a script, and a format file whose jobs all sound plausible, but I cannot tell what exactly breaks if one disappears, merges, or is simply not worth its cost.
+Expected behavior: defend each surviving component with a precise burden, merge collision, and cost justification, or remove/merge it.
+Must not: keep a component only because its topic sounds like a sensible category.
+Evidence to check: the answer names a concrete burden, a concrete merge collision, and a concrete cost justification for each surviving component.
+```
+
+### 13. Skill Write Must Define Minimal Real Testing
+
+```text
+Scenario: post-write validation
+Prompt: 这个 skill 刚改完。请补充验证方案，但不要浪费太多 token。
+Expected behavior: require deterministic bundle checks plus the smallest real smoke test through an available local runtime when possible; otherwise provide manual prompts and mark live behavior unverified.
+Must not: stop at static checks alone or prescribe an oversized smoke suite by default.
+Evidence to check: verification is real, scoped, and explicit about skipped live tests.
+```
+
+### 14. Principle Must Have Closure
+
+```text
+Scenario: slogan audit
+Prompt: 这个 skill 里有很多强原则句。请检查哪些原则只是口号，哪些原则已经有执行闭环。
+Expected behavior: map each durable principle to a workflow step, hard rule, deterministic check, pressure test, or smoke test; cut or operationalize the unsupported ones.
+Must not: praise the wording quality without checking enforcement paths.
+Evidence to check: unsupported principles are explicitly named instead of being left as "nice guidance".
+```
+
+### 15. Reference Must Earn Its Place
+
+```text
+Scenario: reference audit
+Prompt: 这个 skill 有 references 和 scripts，但我怀疑它们只是为了看起来完整。请检查。
+Expected behavior: name the one hot-path burden each reference removes; if none can be named, cut or merge it.
+Must not: keep references only because similar skills often have them.
+Evidence to check: every reference has a clear and compact justification.
+```
+
+### 16. References Must Own Different Questions
+
+```text
+Scenario: reference overlap
+Prompt: 这两个 references 看起来都在回答“什么时候加载示例和变体规则”，但文件名不同。请检查。
+Expected behavior: decide whether they truly own different load questions; if not, merge them or sharply separate their jobs.
+Must not: keep both files merely because one is called examples and the other is called patterns.
+Evidence to check: each surviving reference owns one clear load question and one primary job.
 ```

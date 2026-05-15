@@ -75,6 +75,7 @@ If yes, consider an ADR or durable note in `DESIGN.md`.
 - Which unresolved decisions are foundational, and which are downstream consequences?
 - Is the discussion getting stuck on leaf details before the trunk decisions are actually settled?
 - What question, if answered now, would collapse the most uncertainty across the rest of the plan?
+- Can that first question be asked as a concrete scenario, counterfactual, or boundary test instead of a summary prompt?
 
 Use this lens to preserve the strongest part of a real grilling session: walk the design tree in dependency order instead of collecting disconnected comments.
 
@@ -92,5 +93,6 @@ Use this lens when a platform, orchestration, governance, or control layer is be
 - Which existing artifact, code path, operator workflow, or state transition most strongly contradicts the current explanation?
 - If the current proposal is wrong, where would implementation fail first: ownership, API contract, lifecycle semantics, acceptance, or operability?
 - Has the plan only been explained, or has it actually survived adversarial examples?
+- Which one counterfactual would force the user to reveal the real timing, ownership, permission, or versioning model immediately?
 
 Use this lens when a plan starts sounding coherent too early. The goal is not to add random skepticism, but to force the plan to survive the strongest realistic counterexample before it is treated as validated.

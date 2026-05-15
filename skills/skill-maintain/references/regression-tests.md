@@ -1,6 +1,6 @@
 # Skill Maintain Regression Tests
 
-Load this before proposing or implementing non-trivial changes to another skill. Use it to prove the repaired skill still does its job after the fix.
+Load this when proposing or implementing non-trivial changes to another skill. Use it to prove the repaired skill still does its job after the fix.
 
 ## Required Test Plan
 
@@ -113,6 +113,10 @@ Use these when the change is moderate or risky:
 - run scripts or linters for skill layout, links, YAML, or generated metadata
 - check that moved content is linked from `SKILL.md` with a clear load condition
 - re-run one real transcript or failure case that motivated the repair
+
+## Minimal Live Smoke
+
+For narrow component or reference repairs, load `minimal-smoke-prompts.md` first and use one or two prompts before escalating to the larger suite.
 
 ## Completion Gate
 

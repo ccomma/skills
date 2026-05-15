@@ -69,7 +69,7 @@ Ask:
 - What should this skill own?
 - What should it explicitly hand off to another skill?
 
-### G. Breadth And Depth
+### G. Design Expansion And Depth
 
 Ask when the skill is broad, reusable, or being upgraded:
 
@@ -78,6 +78,8 @@ Ask when the skill is broad, reusable, or being upgraded:
 - Which deserve their own `reference`?
 - Which deterministic steps should become scripts?
 - Which dimensions can be deferred explicitly for now?
+
+When the user already gave a solid first shape but the design still feels too narrow, hand off to `design-expansion.md` instead of repeating intake.
 
 ## Intake Shortcuts
 

@@ -1,24 +1,26 @@
-# Skill Maintain Repair Breadth And Depth
+# Skill Maintain Repair Expansion
 
-Load this at the start of non-trivial repair or correction work on an existing skill.
+Load this when one existing skill clearly has drift, but you still need to expand the repair across the important product dimensions before freezing the patch.
 
-## Purpose
+If you are not yet sure whether repair expansion is the next right move, load `reference-routing.md` first.
 
-Use a maintenance breadth-and-depth pass to prevent two common failures:
+If the visible drift is already clearly narrower than repair expansion, jump directly to that narrower reference instead.
 
-- **narrow repair**: the workflow fixes the first visible symptom but misses adjacent drift such as labels, bundle metadata, or interaction behavior
-- **over-repair**: the workflow rewrites half the skill when the real issue only needed a small targeted patch
+## Repair Expansion
 
-This pass is for repair and correction work. Use an architecture workflow instead when the main task is to redesign or mature a skill rather than repair drift or failure.
+Repair expansion means: scan the important repair dimensions before freezing the patch so you avoid two failures:
 
-When the user explicitly asks to review, inspect, audit, or check a named skill, assume they want this breadth scan by default even if they did not provide a bug list. The scan should actively look for drift and not wait for the user to point at every issue first.
+- **narrow repair**: fixing the first visible symptom while adjacent drift survives
+- **undirected repair depth**: rewriting too many dimensions when only one needed real correction
 
-## Maintenance Breadth Scan
+This is an expansion pass for repair work, not the owner of every downstream repair question.
+
+When the user explicitly asks to review, inspect, audit, or check a named skill, assume they want this expansion pass by default even if they did not provide a bug list.
 
 Scan these dimensions before freezing the repair plan:
 
-- trigger boundary and wrong-scope routing
-- workflow clarity: dominant happy path, branch-case load, and entrypoint-role separation
+- request and trigger fit
+- first-read teaching model: dominant path, branch-case load, and entrypoint-role separation
 - trigger-contract layering and reference-routing clarity
 - portability and language behavior
 - abstraction level
@@ -44,7 +46,18 @@ For each dimension, record one of:
 
 If more than two adjacent dimensions look suspicious, the repair should not stop at the first reported symptom.
 
+After the expansion pass, pick one next owner:
+
+- `component-paths.md` when owner component is still unclear
+- `reference-quality.md` when the issue is really reference-layer quality
+- `bundle-consistency.md` when the issue is really bundle alignment
+- `repair-patterns.md` when repair shape is still unclear
+
 ## Repair Depth Decision
+
+Depth means: decide how much repair weight each suspicious dimension deserves.
+
+It does not mean "touch more files". A repair can be deep because one dimension needs serious correction, and a multi-file patch can still be shallow if it is only reconciling one owner dimension.
 
 Choose the lightest repair depth that actually removes the problem:
 
@@ -56,16 +69,16 @@ Choose the lightest repair depth that actually removes the problem:
 - **`bundle-wide patch`**: multiple linked files must change together
 - **`defer explicitly`**: real issue acknowledged but intentionally left for later
 
-Do not deepen a repair just because the dimension exists. Deepen only when drift, failure, or fragility makes it necessary.
+Do not deepen a repair just because the dimension exists. Deepen only when drift, failure, or fragility makes it necessary to restore the skill's intended behavior.
 
-## Coverage Table Template
+## Repair Expansion Table Template
 
 Render in the user's language when reporting.
 
 ```text
-Maintenance breadth scan:
-- Trigger boundary:
-- Workflow clarity:
+Repair expansion:
+- Request and trigger fit:
+- First-read teaching model:
 - Trigger layering and reference routing:
 - Portability and language:
 - Abstraction:
@@ -97,5 +110,5 @@ Expected behavior: scan adjacent dimensions, then choose targeted deeper repairs
 
 ```text
 Prompt: Fix this skill, but keep the patch as small as possible.
-Expected behavior: run the breadth scan, confirm which dimensions have no issue, and keep repair depth intentionally narrow.
+Expected behavior: run the expansion pass, confirm which dimensions have no issue, and keep repair depth intentionally narrow.
 ```

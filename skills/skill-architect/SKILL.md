@@ -1,132 +1,130 @@
 ---
 name: skill-architect
-description: Use when designing, upgrading, splitting, merging, productizing, or deciding whether to create a skill, especially when the work needs the right authority boundary, output contract, interaction model, references, scripts, assets, validation, token efficiency, frontmatter discipline, or clearer boundaries beyond a basic scaffold.
+description: "Use when one skill needs deliberate design or redesign: trigger boundary, first-screen behavior, dominant-path shape, reference layout, output contract, component placement, or publishable bundle structure."
 ---
 
 # Skill Architect
 
-Design mature, token-efficient skills. This complements basic skill creators: use it to decide whether a skill should exist, whether it should be split or merged, and how to choose authority boundaries, output contracts, interaction strength, references, scripts, assets, bundle structure, validation, and adaptive token behavior before writing or rewriting a skill.
+Design one skill so it reads like a strong skill, not a loose document.
 
-## Boundaries
+<main-path>
 
-Use this for skill architecture and quality. Do not replace basic skill creation docs, installation mechanics, or generic frontmatter rules unless the current design needs them.
+1. Freeze the target:
+   - what job the skill owns
+   - what request should trigger it
+   - what it should do first
+   - what output or boundary it must preserve
 
-Use this when the main question is how one skill should be shaped: whether it should exist, how it should be structured, or whether it should be split or merged after the boundary problem is already understood.
+2. Choose the lightest top-level shape:
+   - start with the fewest sections that still teach the behavior
+   - keep the shortest trigger in frontmatter
+   - near the top of `SKILL.md`, default to one hot-path block that carries the strongest instruction and dominant path
+   - a literal step-by-step section is optional; an obvious dominant path is not
+   - add an extra top-level section only when that hot path cannot carry one of these jobs cleanly:
+     - ordered path
+     - wrong-scope or ownership boundary
+     - hard invariant
+     - conditional support routing
 
-If the real uncertainty is between multiple skills, such as overlap, trigger conflict, duplicate responsibility, or unclear routing, use a skill-boundary workflow first — the workflow that compares multiple skills and clarifies who should own which situation. Come back to this workflow after the conflict is clarified and the remaining task is structural design for one skill.
+3. Cut what does not earn its place:
+   - collapse repeated decisions instead of listing them three ways:
+     - if two sections or sibling bullets are teaching the same judgment, merge them
+     - if a section can disappear without blurring trigger, first move, boundary, or output, cut it
+   - keep each surviving layer on one job:
+     - trigger guidance should not repeat unless the later layer adds new routing value
+     - a reference should name one hot-path burden it removes and one load question it answers near the top
+     - scripts are for deterministic repeated work; assets are for output shapes that truly depend on them
 
-Do not use for normal code implementation, code review, debugging, product roadmap work, or executing the skill being designed.
+4. Pressure-test the first read:
+   - does it read like a skill or like a memo
+   - can a weaker model tell what to do from the first screen
+   - is the dominant path visible early
+   - is any core behavior buried by explanation
+   - do any two sections own the same job
+   - does each durable principle have an enforcement path
+   - is any top-level section present only because it is common in other skills
+   - interrogate each surviving component one by one:
+     - if this component vanished, what exact behavior, artifact quality, or safety would fail
+     - if it merged with its nearest neighbor, what exact confusion or collision would return
+     - if a weaker model opened it first by mistake, could it redirect cleanly
+     - what cost does this component add in tokens, reads, maintenance, or drift risk
 
-Use a retrospective token-audit workflow when the primary request is to audit or reduce the token/context cost of an existing skill. Keep token efficiency in mind while designing new skills, but do not make this design workflow absorb every existing-skill optimization task.
+5. Write and validate:
+   - keep public wording portable and publishable
+   - name any local or runtime-specific term that still needs a portable replacement
+   - validate from cheapest proof upward:
+     - run deterministic bundle checks first
+     - if the smoke harness or runner changed, run its deterministic self-check before broader live smoke
+     - then run the smallest live smoke that still touches the changed behavior, usually `references/minimal-smoke-prompts.md`
+     - escalate to `references/pressure-tests.md` only when the change touched trigger boundary, authority, cadence, or broader routing, or when the narrow smoke stays ambiguous
+   - keep narrow smoke lean:
+     - disable unrelated rules, memory, plugins, or other ambient context when the runtime allows it
+     - keep the prompt tiny and tied to one judgment unless the changed dimension is still ambiguous
+   - close the loop:
+     - if live smoke exposes one in-scope issue, repair it and rerun the narrowest proving smoke
+     - stop when the smallest sufficient smoke is clean; otherwise defer or escalate explicitly
+     - if no suitable runtime is available, provide exact manual regression prompts and mark live behavior unverified
+     - record what was tested and what was intentionally skipped because it would be redundant or too token-expensive
 
-## Core Principle
+</main-path>
 
-Use the lightest structure that reliably works. Strong interaction, references, scripts, and assets are tools, not defaults.
+<scope>
 
-**Platform neutrality**: Skills are published artifacts usable across agent runtimes. Skill content must use platform-generic language. Refer to concepts by their function (e.g., "cold-start entrypoint file", "agent runtime", "session context loader"), not by vendor-specific filenames (e.g., `CLAUDE.md`, `AGENTS.md`). Vendor-specific names may appear only as illustrative examples with qualifiers ("e.g.,", "varies by platform").
+Use this when the main question is how one skill should be shaped or reshaped.
 
-Interaction profiles:
+Do not use this when the main task is executing the underlying workflow itself rather than designing the skill for it.
 
-- `simple`: short instructions; no fixed questions.
-- `guided`: suggested sequence; flexible user flow.
-- `constrained`: fixed options, staged questions, stop points.
-- `deterministic`: scripts/tools handle fragile repeated work.
-- `asset-backed`: templates/assets carry output shape.
+If the real problem is overlap between multiple skills, route to a skill-boundary workflow first.
 
-## Workflow
+If the real problem is repairing one existing skill without changing its core role, route to a skill-maintenance workflow.
 
-### 1. Choose Intake Mode
+</scope>
 
-If the user already gave a clear skill goal, proceed directly. If important design information is missing, ask a concise intake from [design-intake.md](references/design-intake.md).
+<invariants>
 
-Use:
+- A skill is a behavior surface first and a document second.
+- Do not start by copying a familiar section template.
+- Optimize for clear section jobs and a visible dominant path, not heading conventions.
+- Collapse sibling bullets when they are really expressing one governing decision with different conditions or examples.
+- Apply the same collapse rule to references and other bundle components, not only to `SKILL.md`.
+- Collapse toward a clearer system, not just shorter prose: related judgments should compose into stable routes, layers, or rules instead of staying as scattered local fixes.
+- Describe scope by the workflow object being designed, not by a list of example domains.
+- Every reference should have one clear load question and one primary job.
+- Every surviving component should be able to defend itself against a delete challenge, a merge challenge, and a cost challenge.
+- Every durable principle must close through at least one enforcement path: explicit path step, hard invariant, deterministic check, pressure test, or smoke test. If it closes through none, cut it or operationalize it.
+- A skill write is not complete until deterministic checks and at least one real smoke test both ran, or runtime unavailability was stated explicitly.
+- If a smoke runner changed, its deterministic self-check must pass before the broader smoke result counts.
+- A skill write is not complete while live smoke still shows an in-scope issue that has not yet been repaired, rerun, deferred with reason, or escalated out of this workflow.
+- If a skill's power depends on cadence, first-turn pressure, or stop conditions, make that explicit.
+- Keep platform-specific names out unless they are necessary examples.
+- A slimmer skill is better only if it stays equally teachable.
 
-- `quick intake` for small upgrades or obvious skills
-- `full intake` for new, broad, risky, or previously failed skills
-- `skip intake` when the user already specified enough
+</invariants>
 
-### 2. Design The Skill Architecture
+<support-routing>
 
-Start with a breadth-and-depth pass before locking the structure.
+If the next reference is unclear, load `references/reference-routing.md` first.
 
-Decide:
+For early design:
+- load `references/design-intake.md` when the request is underspecified
+- load `references/design-expansion.md` when the idea is broadly clear but still needs multidimensional expansion before the design is frozen
 
-- primary job and trigger boundary
-- whether the skill is a workflow skill with one dominant happy path
-- authority and safety boundary
-- output contract and artifact expectations
-- neighboring skills and non-goals
-- whether neighboring responsibilities can be described as portable capability categories instead of private skill names
-- interaction profile
-- interaction intensity, pacing, and stop points
-- file layout
-- bundle consistency across `SKILL.md`, references, scripts, assets, and agent metadata
-- frontmatter contract for `name` and `description`
-- what stays in `SKILL.md`
-- whether repeated artifact shapes deserve companion format files
-- what moves to `references/`, `scripts/`, or `assets/`
-- whether deterministic checks or transformations should be extracted into scripts
-- validation method
-- pressure-test scenarios
-- token-cost failure modes and adaptive verbosity or batching triggers
+For structure decisions:
+- load `references/component-paths.md` when deciding where one piece of guidance belongs
+- load `references/reference-design.md` when deciding whether references should exist, merge, split, or sharpen
+- load `references/bundle-design.md` when deciding what overall component combination the skill should keep
 
-For workflow skills, make the main path explicit before adding branch cases. The frontmatter description owns the shortest trigger contract. A `When To Use` section, when present, should expand trigger situations, wrong-scope boundaries, and neighboring routes without absorbing workflow goals, token goals, resumability goals, or branch-case policy. Distinguish public orientation, runtime entrypoint, current execution state, and durable long-form context when the skill owns multiple document or loading layers.
+For narrower depth:
+- load `references/authority-and-safety.md` for risky authority boundaries
+- load `references/output-contracts.md` for stable report or artifact shape
+- load `references/interaction-intensity.md` for pacing and cadence
+- load `references/format-file-design.md` for repeated artifact shape
+- load `references/script-design.md` for deterministic repeated work
 
-For any non-trivial design or major upgrade, load [breadth-and-depth.md](references/breadth-and-depth.md) first to scan coverage and choose which dimensions stay implicit, move into `SKILL.md`, get their own `reference`, require a `script`, or justify an `asset`. Then load [architecture-patterns.md](references/architecture-patterns.md) when choosing structure or tradeoffs. Load [authority-and-safety.md](references/authority-and-safety.md) when the skill may act, persist, publish, delete, install, or cross a permission boundary. Load [output-contracts.md](references/output-contracts.md) when output shape, fields, or artifacts matter. Load [interaction-intensity.md](references/interaction-intensity.md) when deciding questioning depth, pacing, batching, or stop points. Load [bundle-design.md](references/bundle-design.md) when planning references, scripts, assets, and agent metadata as one bundle. Load [format-file-design.md](references/format-file-design.md) when deciding whether a repeated artifact deserves a companion format file or when artifact quality depends on a stable mini-template. Load [script-design.md](references/script-design.md) when deterministic work may justify scripts. Load [examples.md](references/examples.md) when examples would clarify the structure. Load [pressure-tests.md](references/pressure-tests.md) before calling a reusable skill mature.
+For closeout:
+- load `references/runtime-smoke-harness.md` when the question is how to run the cheapest useful live smoke or how to reduce runtime noise
+- load `references/design-report.md` when reporting a non-trivial architecture recommendation
+- load `references/minimal-smoke-prompts.md` for cheap narrow live checks
+- load `references/pressure-tests.md` before calling the design mature
 
-### 3. Write Or Propose
-
-If the user asks for design only, output a concise architecture spec. If they ask to implement, write the skill files after the design is clear.
-
-### 4. Validate And Report
-
-Before calling the skill mature, check:
-
-- frontmatter description keeps the shortest trigger contract and does not try to summarize the whole workflow
-- workflow skills present the dominant happy path before edge cases, governance branches, or rare repair paths
-- frontmatter is valid YAML and the description is concise, single-purpose, and free of fragile inline examples or mixed-language clutter unless explicitly required
-- authority level is explicit and risky actions have the right confirmation design
-- output contract is clear when consistency matters
-- breadth coverage is explicit: major dimensions were considered, not only the most obvious ones
-- depth choices are explicit: each important dimension was intentionally left light, deepened into a `reference`, extracted into a `script`, turned into an `asset`, or deferred
-- `SKILL.md` is the router/rules layer, not a dumping ground
-- the strongest behavioral instructions stay easy to find near the top of `SKILL.md`
-- references are conditional and lazy-loaded
-- companion format files are used when they keep the core skill shorter while preserving artifact precision
-- companion format files have explicit creation thresholds, quality bars, and wrong-scope guidance
-- usage sections expand trigger situations and wrong-scope boundaries without swallowing workflow goals, quality goals, or branch-case policy
-- entrypoint roles stay distinct when the skill touches multiple loading layers, such as public orientation, runtime entrypoint, current execution state, and durable long-form context
-- scripts/assets are justified by repeatability, fragility, or output shape
-- scripts have narrow inputs, predictable outputs, and compact summaries
-- interaction strength matches ambiguity, risk, and token cost
-- interaction intensity matches ambiguity, user effort, and safety
-- neighboring skills have routing boundaries
-- bundle files stay aligned: `SKILL.md`, references, scripts, assets, and agent metadata describe the same skill
-- renamed or newly added skills update public bundle surfaces that enumerate skills, such as `README.md` or other maintained indexes, when those surfaces exist
-- routing guidance is publishable and does not depend on private skill names, local paths, or a user's personal workflow names unless they are explicitly part of the public bundle being designed
-- skill content uses platform-generic terminology (e.g., "cold-start entrypoint file" not "CLAUDE.md"), with vendor-specific names only as illustrative examples
-- the skill can fail gracefully when inputs are missing
-- pressure tests cover underspecified, overspecified, wrong-scope, and neighboring-skill scenarios
-- a concise design report explains design rationale, testing, residual risks, and token cost
-
-## Output
-
-Use the user's session language for visible report labels and section headers. Keep exact technical tokens such as skill names, file paths, profile ids, or mode labels verbatim when translation would reduce precision.
-
-For design-only work:
-
-```text
-[Localized label for skill name]:
-[Localized label for purpose]:
-[Localized label for trigger description]:
-[Localized label for non-goals / neighboring skills]:
-[Localized label for recommended profile]:
-[Localized label for file layout]:
-[Localized label for interaction model]:
-[Localized label for references / scripts / assets]:
-[Localized label for validation plan]:
-[Localized label for pressure tests]:
-[Localized label for risks]:
-```
-
-For implementation work, create or update files directly and include a concise design report. Load [design-report.md](references/design-report.md) when writing the report.
+</support-routing>

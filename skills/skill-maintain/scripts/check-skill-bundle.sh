@@ -113,6 +113,28 @@ extract_frontmatter_name() {
   ' "$1"
 }
 
+check_frontmatter_yaml() {
+  local parse_output
+  if ! command -v ruby >/dev/null 2>&1; then
+    add_warning "bundle" "Ruby is unavailable; skipping YAML frontmatter parse check"
+    return 0
+  fi
+
+  if ! parse_output="$(
+    ruby -e '
+      require "yaml"
+      path = ARGV.fetch(0)
+      text = File.read(path)
+      match = text.match(/\A---\n(.*?)\n---\n/m)
+      raise "missing YAML frontmatter fence" unless match
+      data = YAML.safe_load(match[1], permitted_classes: [], aliases: false)
+      raise "frontmatter is not a mapping" unless data.is_a?(Hash)
+    ' "$skill_file" 2>&1
+  )"; then
+    add_error "SKILL.md frontmatter is not valid YAML: $parse_output"
+  fi
+}
+
 extract_display_name() {
   awk -F'"' '/display_name:/ { print $2; exit }' "$1"
 }
@@ -234,6 +256,20 @@ check_references_reachable() {
   return 0
 }
 
+check_reference_openings() {
+  [[ -d "$references_dir" ]] || return 0
+  local ref_file rel_path opening
+  while IFS= read -r ref_file; do
+    [[ -n "$ref_file" ]] || continue
+    rel_path="${ref_file#$skill_dir/}"
+    opening="$(sed -n '1,8p' "$ref_file")"
+    if ! printf '%s' "$opening" | rg -qi 'load this (when|at)'; then
+      add_warning "semantic-drift" "Reference opening may be missing an explicit load contract near the top: $rel_path"
+    fi
+  done < <(find "$references_dir" -maxdepth 1 -type f | sort)
+  return 0
+}
+
 check_reference_link_style() {
   [[ -f "$skill_file" ]] || return 0
 
@@ -300,6 +336,33 @@ check_scripts_reachable() {
       add_warning "reachability" "Script not mentioned by SKILL.md, references, or agent metadata: scripts/$script_name"
     fi
   done < <(find "$scripts_dir" -maxdepth 1 -type f | sort)
+  return 0
+}
+
+check_scripts_syntax_and_self_checks() {
+  local scripts_dir="$skill_dir/scripts"
+  [[ -d "$scripts_dir" ]] || return 0
+  local script_file rel_path script_name
+
+  while IFS= read -r script_file; do
+    [[ -n "$script_file" ]] || continue
+    rel_path="${script_file#$skill_dir/}"
+    if ! bash -n "$script_file" 2>/dev/null; then
+      add_error "Shell syntax check failed: $rel_path"
+    fi
+  done < <(find "$scripts_dir" -maxdepth 1 -type f -name '*.sh' | sort)
+
+  while IFS= read -r script_file; do
+    [[ -n "$script_file" ]] || continue
+    rel_path="${script_file#$skill_dir/}"
+    script_name="$(basename "$script_file")"
+    if [[ "$script_name" == "check-skill-bundle.sh" ]]; then
+      continue
+    fi
+    if ! bash "$script_file" >/dev/null 2>&1; then
+      add_error "Deterministic script self-check failed: $rel_path"
+    fi
+  done < <(find "$scripts_dir" -maxdepth 1 -type f -name 'check-*.sh' | sort)
   return 0
 }
 
@@ -433,14 +496,17 @@ print_summary() {
 
 check_required_files
 check_hidden_junk
+[[ -f "$skill_file" ]] && check_frontmatter_yaml
 [[ -f "$skill_file" ]] && check_frontmatter_name
 check_agent_metadata
 [[ -f "$skill_file" ]] && check_local_links
 check_references_reachable
+check_reference_openings
 check_reference_link_style
 check_usage_section_goal_language
 check_meta_reference_example_abstraction
 check_scripts_reachable
+check_scripts_syntax_and_self_checks
 check_companion_format_files
 check_forbidden_names
 print_summary
