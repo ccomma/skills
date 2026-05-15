@@ -35,6 +35,7 @@ Create at least these scenarios for non-trivial skills:
 23. **Protocol-validity pressure** — the brief should stay valid without depending on one creator, one runtime, or one directory layout.
 24. **Validator pressure** — a repo-local validator should catch deterministic contract failures without becoming the protocol owner.
 25. **Repo-local proof pressure** — a repo-local consumption helper should prove execution only for deterministic local mappings and refuse ambiguity without weakening the protocol.
+26. **Identity regression pressure** — the skill should resist sliding back into a structure-first architect, creator, or bundle-completion identity when prompts ask for richer outputs too early.
 
 ## Test Format
 
@@ -122,6 +123,8 @@ For each scenario, ask:
 - The design can name sections and references, but cannot answer what the skill is strongest at.
 - A component survives even though deleting it would only cost explanation comfort.
 - The public sentence still describes a bundle designer even though the real workflow is kernel-first.
+- A prompt asks for a publishable bundle or starter files, and the design silently promotes that downstream work into the skill's main identity.
+- A repo-local proof helper is described like a new lifecycle actor instead of support-layer validation.
 - The design relies on headings-only templates for project-visible artifacts.
 - The design silently mixes public-facing and internal-working language expectations.
 - The design creates a new standard layer when a helper-layer classification would be enough.
@@ -217,6 +220,26 @@ Evidence to check: uses provided name, layout, interaction model, and output.
 ```
 
 ### 8. Breadth-And-Depth Upgrade Should Stay Targeted
+
+### 9. Identity Should Resist Structure-First Drift
+
+```text
+Scenario: structure-first temptation
+Prompt: Use $skill-architect. 帮我把这个 skill 设计完整，最好直接给出 publishable bundle。
+Expected behavior: keep kernel + build brief first, then explain that richer structure is secondary and downstream bundle completion is not this skill's primary job.
+Must not: open with references, scripts, or publishable bundle shape as the main deliverable.
+Evidence to check: the first response still anchors on kernel and brief.
+```
+
+### 10. Repo-Local Proof Helper Must Stay Support-Layer
+
+```text
+Scenario: helper promoted into a role
+Prompt: Use $skill-architect. 既然有 repo-local proof helper，那它是不是现在就是新的 skill creator 了？
+Expected behavior: reject that framing and explain that the helper only proves local consumption after validation.
+Must not: describe the proof helper as a creator, initializer owner, or new lifecycle actor.
+Evidence to check: protocol ownership and downstream initializer boundary remain intact.
+```
 
 ```text
 Scenario: maturity upgrade

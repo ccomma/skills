@@ -5,11 +5,11 @@ description: "Use when one skill's boundary is already clear and you need to loc
 
 # Skill Architect
 
-Lock one skill's kernel and turn it into an initializer-neutral build brief before structural design.
+Own one skill's kernel and build brief before any richer structure discussion.
 
-Use this when the boundary is already clear and the remaining question is: what does this skill exist to do, when should it trigger, what should it do first, what is it strongest at, what is the wrong-scope boundary, and what is the lightest build brief any downstream initializer should follow.
+Use this when the boundary is already clear and the remaining question is: what does this skill exist to do, when should it trigger, what should it do first, what is it strongest at, what is the wrong-scope boundary, and what is the lightest build brief any downstream initializer should follow before deeper structure is even considered.
 
-Do not use this as the generic skill-creation workflow.
+Do not use this as the generic skill-creation workflow, starter-file workflow, or publishable-bundle workflow.
 
 Do not use this to repair one existing skill whose role should stay stable.
 
@@ -42,7 +42,7 @@ Do not use this to repair one existing skill whose role should stay stable.
    - use `references/design-expansion.md` only after the kernel is stable enough to teach back clearly and the build brief still has unresolved engineering choices
    - expansion may deepen dimensions, but it does not get to discover the kernel for you
    - if expansion reveals that the strongest thing is still unclear, stop and return to `references/kernel-extraction.md`
-   - if the user asks for folder creation, starter files, or generic scaffolding, still finish the build brief first and mark initialization as downstream initializer work
+   - if the user asks for folder creation, starter files, publishable bundle completion, or generic scaffolding, still finish the build brief first and mark initialization as downstream initializer work
 
 4. Choose the lightest top-level shape:
    - start with the fewest sections that still teach the behavior
@@ -56,6 +56,9 @@ Do not use this to repair one existing skill whose role should stay stable.
      - wrong-scope or ownership boundary
      - hard invariant
      - conditional support routing
+   - treat richer structure as a support-layer decision:
+     - bundle shape, component placement, references, and scripts are allowed to sharpen the brief
+     - they are not allowed to replace the brief as the skill's main identity
 
 5. Cut what does not earn its place:
    - collapse repeated decisions instead of listing them three ways:
@@ -132,6 +135,7 @@ If the real problem is repairing one existing skill without changing its core ro
 - Do not start from section names, references, scripts, or bundle shape before the kernel is explicit.
 - The minimum architecture output is not "a draft bundle". It is a teachable kernel: kernel sentence, trigger boundary, first move, strongest thing, and wrong-scope sentence.
 - The default explicit deliverable is not "starter files". It is a build brief protocol instance: kernel, minimal shape, component decisions, do-not-add rules, validation starter, and initializer handoff.
+- Richer structure is secondary. Bundle shape, references, scripts, and publishable surfaces may deepen a design only after the kernel and build brief are already clear.
 - The build brief protocol is `v1` until a later protocol reference explicitly changes it.
 - Optimize for clear section jobs and a visible dominant path, not heading conventions.
 - Collapse sibling bullets when they are really expressing one governing decision with different conditions or examples.
@@ -169,6 +173,7 @@ For kernel-first design:
 - load `references/initializer-adapters.md` when the next question is how a native creator, manual bootstrap flow, or repo-local initializer should safely consume the same brief
 
 For structure decisions:
+- these are support-layer owners, not alternate entry workflows
 - load `references/component-paths.md` when deciding where one piece of guidance belongs
 - load `references/reference-design.md` when deciding whether references should exist, merge, split, or sharpen
 - load `references/bundle-design.md` when deciding what overall component combination the skill should keep
@@ -182,7 +187,7 @@ For narrower depth:
 
 For closeout:
 - load `references/runtime-smoke-harness.md` when the question is how to run the cheapest useful live smoke or how to reduce runtime noise
-- load `references/design-report.md` when reporting a non-trivial architecture recommendation
+- load `references/design-report.md` only when a closeout explanation is truly needed after the build brief and support-layer decisions already exist
 - load `references/minimal-smoke-prompts.md` for cheap narrow live checks
 - load `references/pressure-tests.md` before calling the design mature
 

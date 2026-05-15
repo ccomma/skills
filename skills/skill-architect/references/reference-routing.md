@@ -1,8 +1,8 @@
 # Skill Architect Reference Routing
 
-Load this when you know `skill-architect` is the right workflow but you are not yet sure which reference should be next.
+Load this when you know `skill-architect` is the right workflow but you are not yet sure which support-layer reference should be next.
 
-This is a fallback routing layer, not a second content outline and not a substitute for kernel extraction.
+This is a fallback routing layer, not a second content outline, not a second main path, and not a substitute for kernel extraction or build-brief production.
 
 Use it only after the grouped `support-routing` list in `SKILL.md` still leaves the next hop unclear.
 

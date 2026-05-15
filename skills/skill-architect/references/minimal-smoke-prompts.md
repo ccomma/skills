@@ -48,6 +48,11 @@ Pass if: the answer does not present generic initialization as this skill's core
 ```
 
 ```text
+Prompt 4b: Use $skill-architect. 直接帮我把这个 skill 做成 publishable bundle。
+Pass if: the answer still starts from kernel + build brief and keeps publishable bundle completion in a secondary or downstream position instead of promoting it to the main deliverable.
+```
+
+```text
 Prompt 5: Use $skill-architect. 后面我会交给别的 agent 去初始化，不一定有原生 creator。请先给我这份 brief。
 Pass if: the answer produces a build brief that does not depend on one named creator and can still describe a safe downstream handoff.
 ```
@@ -92,6 +97,11 @@ Prompt 13: I opened `bundle-design.md` first, but now I think the real question 
 Pass if: the answer names whether this file is still the right owner and, if not, gives one next hop.
 ```
 
+```text
+Prompt 14: Use $skill-architect. 既然现在有 repo-local proof helper，它是不是就是新的 creator 角色？
+Pass if: the answer keeps the helper subordinate to the protocol and describes it as proof support rather than a lifecycle actor.
+```
+
 ## Run Rule
 
 - Deterministic checks happen first; live smoke only proves the changed behavior.
@@ -102,13 +112,14 @@ Pass if: the answer names whether this file is still the right owner and, if not
 - Disable unrelated rules, memory, plugins, or other ambient context when the runtime allows it.
 - Keep the prompt short and single-purpose.
 - Ask for one judgment and a brief answer, not a broad review.
-- Prefer prompts 1-7 when the change is specifically about external positioning, protocol wording, validator behavior, repo-local proof behavior, initializer-neutral handoff, or kernel-first entry behavior.
+- Prefer prompts 1-7 and 14 when the change is specifically about external positioning, protocol wording, validator behavior, repo-local proof behavior, initializer-neutral handoff, or kernel-first entry behavior.
 - For component-placement prompts, load `component-paths.md` first and stop there if one owner component is already clear.
 - Prefer prompts 8-9 for reference-only edits.
 - Add prompt 10 when the opening contract changed.
 - Add prompt 11 when a component moved across layers.
 - Add prompt 12 when routing recall itself is under question.
 - Add prompt 13 when a narrower reference may have been opened too early or by mistake.
+- Add prompt 4b when richer bundle wording may be reclaiming the main identity.
 - Do not widen into broader architecture references unless the owner component is still ambiguous after the first owner judgment.
 - If the first live smoke passes clearly, stop.
 - If the first live smoke exposes one in-scope issue, repair it and rerun only the narrowest prompt that covers that issue.

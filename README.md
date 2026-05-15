@@ -174,9 +174,9 @@ These governance skills solve different layers of the same problem:
   - Output: clearer boundaries, routing guidance, and conflict classification.
   - Best used before redesigning one specific skill when the real uncertainty is still between skills.
 - `skill-architect`
-  - Use when the boundary is already clear and the remaining question is how to lock one skill's kernel, turn it into an initializer-neutral build brief protocol instance, and only then deepen structure.
+  - Use when the boundary is already clear and the remaining question is how to lock one skill's kernel and turn it into an initializer-neutral build brief before any richer structure work.
   - Output: the kernel sentence, trigger boundary, first move, strongest thing, wrong-scope sentence, minimal shape, component decisions, do-not-add rules, validation starter, and initializer handoff.
-  - This is the pre-create enhancer: the right place to freeze what a downstream initializer should initialize and what it should not invent, with repo-local validation support plus canonical examples, wrapper examples, and a narrow repo-local consumption proof path kept under the existing protocol owners.
+  - This is the pre-create enhancer: the right place to freeze what a downstream initializer should initialize and what it should not invent. Validation support, canonical examples, wrapper examples, and repo-local proof stay subordinate to that brief-owner role.
 - `skill-maintain`
   - Use when one existing skill already exists and needs an audit or repair.
   - Output: focused repairs for portability, structure, routing, kernel drift, output contracts, safety, bundle consistency, format-file opportunities, format-file quality, or token cost.

@@ -1,17 +1,25 @@
 # Skill Architect Bundle Design
 
-Load this when deciding what overall component combination the skill should keep, or how that bundle should stay aligned across the main skill surface, references, scripts, assets, format files, and agent metadata.
+Load this when deciding what overall support-layer component combination should survive after the kernel and build brief are already frozen.
 
 If the real question is whether references should exist, merge, split, or sharpen, load `reference-design.md`.
+
+If the real question is still "what is this skill's kernel" or "what should the build brief say", go back to `kernel-extraction.md`, `build-brief-protocol.md`, or `kernel-build-brief.md`.
 
 ## Routing Position
 
 - common upstream:
   - `kernel-extraction.md`
+  - `build-brief-protocol.md`
+  - `kernel-build-brief.md`
   - `design-expansion.md`
 - if the real question is owner component, jump to `component-paths.md`
 
 ## Distinction
+
+Use this file for bundle-wide component alignment after the build brief already exists.
+
+Do not use this file to discover the kernel, render the build brief, decide downstream initialization, or choose one component owner in isolation.
 
 Use `component-paths.md` to decide where one piece of guidance belongs.
 

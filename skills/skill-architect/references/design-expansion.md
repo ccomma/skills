@@ -2,6 +2,8 @@
 
 Load this when the skill kernel is already explicit, the build brief protocol is frozen, the build brief exists, and one or more brief fields still need engineering judgment before the design is frozen.
 
+This is a post-brief deepening pass, not a second primary workflow.
+
 If you are not even sure whether design expansion is the next right move, load `reference-routing.md` first.
 
 If the question is already clearly narrower than design expansion, jump directly to the narrower reference instead.
@@ -9,6 +11,8 @@ If the question is already clearly narrower than design expansion, jump directly
 Do not use this file to discover the kernel. If the kernel sentence, trigger boundary, first move, strongest thing, or wrong-scope sentence is still fuzzy, go back to `kernel-extraction.md`.
 
 Do not use this file as a substitute for the protocol or the build brief. If the protocol is not yet locked, go to `build-brief-protocol.md` first. If the brief has not been rendered yet, go to `kernel-build-brief.md` next.
+
+Do not let expansion become "design the full bundle". Expansion only resolves the engineering choices the brief still needs.
 
 ## Expansion Pass
 
