@@ -7,7 +7,7 @@ If the real question is whether references should exist, merge, split, or sharpe
 ## Routing Position
 
 - common upstream:
-  - `reference-routing.md`
+  - `kernel-extraction.md`
   - `design-expansion.md`
 - if the real question is owner component, jump to `component-paths.md`
 
@@ -21,6 +21,7 @@ If you are only placing one rule, one checklist, one template description, or on
 
 ## Design Questions
 
+- Which components directly teach, protect, or verify the kernel?
 - Which files are part of the public bundle?
 - Which files are always loaded, conditionally loaded, used, or executed?
 - How will the skill stay internally consistent after renames or upgrades?
@@ -43,7 +44,7 @@ Use the lightest overall combination that protects the real failure mode:
 - `bundle metadata`
   - when the environment needs a human-facing entry surface
 
-Do not add a component just because similar skills often have one. Add it only when it removes a clear burden from the main entry surface or protects a real bundle contract.
+Do not add a component just because similar skills often have one. Add it only when it removes a clear burden from the main entry surface, protects a real bundle contract, or makes the kernel more teachable, stable, or verifiable.
 
 ## Design Patterns
 
@@ -63,6 +64,7 @@ Good signs for a companion reference or format file:
 
 - the content describes the shape of a repeated artifact such as a decision record, domain-language entry, handoff, or report
 - the detail is important, but not needed on every invocation
+- keeping it out of the main file makes the kernel sharper rather than merely shorter
 - the main skill is starting to feel explanatory instead of directive
 
 ### 4. Use Companion Format Files Deliberately
@@ -79,11 +81,14 @@ If a design makes it easy for names, modes, or entrypoints to drift apart, simpl
 
 Before keeping a component in the bundle, ask:
 
+- what exact kernel burden this component removes from the entry surface
 - what recurring burden does this component remove from the main entry surface
 - why is that burden recurring rather than local to one rule
 - why would repeated `component-paths.md` decisions not already be enough
 - what token, maintenance, read, or drift cost this component adds
 - why that cost is still worth paying
+
+If removing the component would only reduce explanation comfort, cut it.
 
 ## Pressure Prompts
 

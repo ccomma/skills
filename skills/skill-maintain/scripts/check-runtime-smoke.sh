@@ -14,6 +14,10 @@ EOF
 cat > "$tmpdir/pass.txt" <<'EOF'
 Pass if one owner component is named clearly.
 EOF
+cat > "$tmpdir/context.txt" <<'EOF'
+Changed snippet:
+- Keep generic governance text abstract.
+EOF
 
 bash -n "$runner"
 
@@ -22,11 +26,14 @@ bash -n "$runner"
   --mode direct-pack \
   --workdir "$tmpdir/work" \
   --prompt-file "$tmpdir/prompt.txt" \
+  --context-file "$tmpdir/context.txt" \
   --pass-file "$tmpdir/pass.txt" \
   --output-file "$tmpdir/pack.md"
 
 rg -q '^# Direct Smoke Pack' "$tmpdir/pack.md"
 rg -q 'target skill: skill-maintain' "$tmpdir/pack.md"
+rg -q '^## Context' "$tmpdir/pack.md"
+rg -q 'Changed snippet:' "$tmpdir/pack.md"
 
 "$runner" \
   --runtime direct \
@@ -34,6 +41,7 @@ rg -q 'target skill: skill-maintain' "$tmpdir/pack.md"
   --pack-format json \
   --workdir "$tmpdir/work" \
   --prompt-file "$tmpdir/prompt.txt" \
+  --context-file "$tmpdir/context.txt" \
   --pass-file "$tmpdir/pass.txt" \
   --output-file "$tmpdir/pack.json"
 
@@ -49,6 +57,8 @@ assert payload["target_skill"] == "skill-maintain"
 assert payload["runtime_class"] == "direct-smoke"
 assert "owner component" in payload["prompt"]
 assert "Pass if" in payload["pass_criteria"]
+assert payload["context"][0]["label"] == "context.txt"
+assert "Changed snippet:" in payload["context"][0]["text"]
 assert isinstance(payload["use_rule"], list) and payload["use_rule"]
 PY
 

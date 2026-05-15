@@ -20,6 +20,7 @@ When the user explicitly asks to review, inspect, audit, or check a named skill,
 Scan these dimensions before freezing the repair plan:
 
 - request and trigger fit
+- kernel clarity: kernel sentence, strongest thing, and wrong-scope boundary
 - first-read teaching model: dominant path, branch-case load, and entrypoint-role separation
 - trigger-contract layering and reference-routing clarity
 - portability and language behavior
@@ -43,6 +44,8 @@ For each dimension, record one of:
 - `script-assisted repair`
 - `bundle-wide patch`
 - `defer explicitly`
+
+If the kernel stays fuzzy after the scan, repair `SKILL.md` first before polishing structure around it.
 
 If more than two adjacent dimensions look suspicious, the repair should not stop at the first reported symptom.
 
@@ -78,6 +81,7 @@ Render in the user's language when reporting.
 ```text
 Repair expansion:
 - Request and trigger fit:
+- Kernel clarity:
 - First-read teaching model:
 - Trigger layering and reference routing:
 - Portability and language:

@@ -2,6 +2,8 @@
 
 Load this when the repair question is not "what should we patch", but "how do we prove the repaired behavior with the cheapest useful live test".
 
+The user should not need to choose these runtime layers explicitly. They are internal testing modes for the workflow to choose automatically.
+
 ## What A Harness Is
 
 A runtime smoke harness is a thin, repeatable test wrapper around an available agent runtime.
@@ -15,6 +17,8 @@ A harness fixes one tiny repair test:
 - pass condition
 - ambient context to disable
 - stop / rerun / escalate rule
+
+When the repaired behavior can be judged from one changed excerpt or tiny context extract, pass that narrower context first instead of forcing the runtime to recover the same context by reading whole files.
 
 ## Runtime Classes
 
@@ -38,16 +42,16 @@ If downstream automation needs machine-readable input, prefer a direct pack form
 
 ### 2. Lean Agent-CLI Smoke
 
-Use this when you need real installed-agent behavior, but the repaired dimension is still narrow.
+Use this when direct smoke is not enough, but a full live session would be wasteful.
 
-The runtime should be launched in its leanest mode:
+In practice, this means:
 
-- ephemeral if available
-- ignore unrelated user config if available
-- ignore unrelated rules if available
-- disable plugins, apps, browser layers, memories, or other ambient context if available
-- if possible, run against an isolated smoke home that contains only system skills plus the target skill
-- keep reasoning effort low when that does not weaken the test
+- the workflow still needs real behavior from an installed agent runtime
+- but the repaired surface is narrow enough that one tiny live check should be enough
+
+This is an internal workflow choice, not something the user should have to decide manually.
+
+Launch the runtime in its leanest trustworthy mode: isolate it from unrelated ambient context, keep only the target skill plus system skills in view when possible, and keep reasoning effort low unless that would weaken the test.
 
 ### 3. Full Runtime Smoke
 
@@ -63,16 +67,13 @@ If a lean smoke already proves the repaired behavior, do not escalate.
 
 ## Adapter Rule
 
-Treat Codex as one adapter, not the definition of the harness.
+Treat any concrete runtime as one adapter, not the definition of the harness.
 
-If the user uses a different agent, keep the same harness contract and map it onto the runtime class that agent actually exposes.
+Do not let the generic harness contract hardcode one brand, one local installation, or one machine-specific runtime. Keep the same contract and map it onto the runtime class the active environment actually exposes.
 
 Adapter questions:
 
-- Can the runtime run ephemerally?
-- Can it ignore user config or local rules?
-- Can it disable plugins, apps, memories, or other ambient layers?
-- Can it keep the prompt/output narrow?
+- Can this runtime be made lean enough: ephemeral, isolated from unrelated config/rules/plugins/memory, and narrow in prompt/output?
 
 If yes, build a lean adapter.
 
@@ -96,22 +97,17 @@ At each layer:
 - repair and rerun the same narrow layer if it exposes one in-scope issue
 - escalate only when the lower layer cannot prove the repaired behavior or exposes a broader risk
 
-## Codex Example
+The workflow should choose this ladder automatically. Only surface these layer names to the user when explaining verification strategy or debugging the harness itself.
 
-Codex is only one current adapter. A lean Codex smoke can use flags such as:
+## Adapter-Specific Detail
 
-- `--ephemeral`
-- `--ignore-user-config`
-- `--ignore-rules`
-- `--disable plugins`
-- `--disable apps`
-- `--disable browser_use`
-- `--disable computer_use`
-- `--disable memories`
+Keep concrete flags, environment variables, and isolation tricks inside the adapter implementation or its adapter-local test note, not in the generic harness contract.
 
-For stronger isolation, launch Codex against a temporary `HOME/CODEX_HOME` that contains only the target skill plus system skills. This removes injected local bundles such as `superpowers` from the model-visible skill list.
+Adapter-local test notes are non-normative for the generic harness contract.
 
-Use Codex-specific flags only when Codex is the runtime being tested.
+If an adapter can launch in a lean isolated mode, prefer that mode there rather than teaching brand-specific toggles in this reference.
+
+If an adapter can accept explicit changed snippets or tiny context extracts, prefer that over prompting it to rediscover the same context from full-file reads.
 
 If this bundle ships `scripts/run-runtime-smoke.sh`, use it instead of hand-assembling the command every time.
 

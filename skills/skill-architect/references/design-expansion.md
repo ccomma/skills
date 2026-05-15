@@ -1,21 +1,31 @@
 # Skill Architect Design Expansion
 
-Load this when one skill idea is already broadly understood, but you still need to expand it across the important product dimensions before freezing the design.
+Load this when the skill kernel is already explicit, but you still need to expand it across the important product dimensions before freezing the design.
 
 If you are not even sure whether design expansion is the next right move, load `reference-routing.md` first.
 
 If the question is already clearly narrower than design expansion, jump directly to the narrower reference instead.
 
+Do not use this file to discover the kernel. If the kernel sentence, trigger boundary, first move, strongest thing, or wrong-scope sentence is still fuzzy, go back to `kernel-extraction.md`.
+
 ## Expansion Pass
 
-Design expansion means: scan the important dimensions before freezing the skill shape so you avoid two failures:
+Design expansion means: scan the important dimensions after the kernel exists so you avoid two failures:
 
 - **narrow design**: the skill looks tidy but misses real product dimensions
 - **undirected depth**: the skill deepens several dimensions without a real failure mode
 
-This is an expansion pass for design and upgrade work, not the owner of every downstream design question.
+The kernel stays the fixed center. Expansion only decides what additional structure is needed to teach it, protect it, or verify it.
 
-Scan these dimensions before freezing the design:
+Start from these fixed kernel inputs:
+
+- `kernel sentence`
+- `trigger boundary`
+- `first move`
+- `strongest thing`
+- `not-this-skill-if...`
+
+Then scan these dimensions before freezing the design:
 
 - request and trigger fit
 - first-read teaching model: what the skill shows first, and how much branch complexity it exposes
@@ -40,7 +50,17 @@ For each dimension, record one of:
 - `use asset/template`
 - `defer explicitly`
 
+For each dimension, also answer:
+
+- does this teach the kernel
+- does this protect the kernel
+- does this verify the kernel
+- or does it only make the design feel more complete
+
+If the answer is only "more complete", default to leaving that dimension light.
+
 If more than two important dimensions are left as "unspecified", the design is usually still under-architected.
+If the strongest thing is still hard to state after the scan, the design is under-kernelled, not under-expanded.
 
 ## Depth Of Treatment
 
@@ -58,7 +78,7 @@ Choose the lightest depth that still protects behavior:
 
 These are delivery mechanisms, not the definition of depth itself.
 
-Do not deepen a dimension just because it exists. Deepen only when it protects against a real failure mode or clearly improves the skill's ability to satisfy the user's need.
+Do not deepen a dimension just because it exists. Deepen only when it protects against a real failure mode or clearly improves the skill's ability to satisfy the user's need by strengthening the kernel's teachability, stability, or verification.
 
 ## After Expansion
 
@@ -75,9 +95,10 @@ If the next owner is still unclear, return to `reference-routing.md` instead of 
 
 For an existing skill being upgraded:
 
-1. Run the same expansion pass.
-2. Mark which dimensions are already strong, weak, missing, or overbuilt.
-3. Deepen only the dimensions that materially improve the skill's maturity or product fit.
+1. Keep the existing kernel if it is still strong.
+2. Run the same expansion pass.
+3. Mark which dimensions are already strong, weak, missing, or overbuilt.
+4. Deepen only the dimensions that materially improve the skill's maturity or product fit.
 
 If the main work is repairing drift, stale files, or broken behavior, hand off to a maintenance workflow instead of treating the task as architecture-first.
 
@@ -113,15 +134,15 @@ Depth choices:
 
 ```text
 Prompt: Design a reusable skill for high-risk workflow setup, but keep it lightweight.
-Expected behavior: expand the full dimension set, then deepen only authority, output contract, validation, and script opportunities instead of inflating every category.
+Expected behavior: confirm the kernel first, then expand the full dimension set, then deepen only authority, output contract, validation, and script opportunities instead of inflating every category.
 ```
 
 ```text
 Prompt: Upgrade this existing skill so it feels more mature.
-Expected behavior: run the expansion pass, identify weak dimensions, and propose targeted upgrades rather than a full rewrite.
+Expected behavior: keep the existing kernel if it is still strong, run the expansion pass, identify weak dimensions, and propose targeted upgrades rather than a full rewrite.
 ```
 
 ```text
 Prompt: Design a reusable workflow skill for long-lived project planning. The workflow has one common path and several rare branch cases.
-Expected behavior: keep the dominant happy path early and easy to scan, move branch cases behind it, and deepen only the dimensions that protect the user's planning workflow instead of blindly adding structure.
+Expected behavior: keep the kernel visible, keep the dominant happy path early and easy to scan, move branch cases behind it, and deepen only the dimensions that protect the user's planning workflow instead of blindly adding structure.
 ```

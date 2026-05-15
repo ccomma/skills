@@ -1,6 +1,8 @@
 # Skill Architect Design Intake
 
-Load this when the user's skill request is underspecified or when designing a new mature skill.
+Load this when the user's skill request is too underspecified to extract the kernel honestly.
+
+This file does not own full skill design. Its job is to gather the missing inputs needed for `kernel-extraction.md`.
 
 Render questions in the user's language. Keep option ids stable.
 
@@ -8,29 +10,30 @@ Render questions in the user's language. Keep option ids stable.
 
 Ask these together when the request is mostly clear:
 
-1. What should this skill help with?
-2. What usually goes wrong without this skill?
-3. Should it act directly, ask questions first, or choose based on context?
-4. Should output be flexible, structured, or template-based?
-5. Are there neighboring skills it must avoid overlapping with?
-6. Which dimension most needs depth: authority, output contract, interaction, bundle structure, scripts, or token cost?
+1. What should this skill exist to do?
+2. What usually goes wrong without it?
+3. What should it do first when triggered?
+4. What is the strongest thing it should be especially good at?
+5. What should clearly stay out of scope?
+6. Are there neighboring skills it must avoid overlapping with?
 
 ## Full Intake
 
-Use for broad, risky, reusable, or previously failed skills.
+Use for broad, risky, reusable, or previously failed ideas when the kernel cannot yet be stated cleanly.
 
-### A. Skill Job
+### A. Kernel Inputs
 
 - What user request should trigger this skill?
-- What output should it produce?
+- What single job should it own?
+- What should it do first?
+- What makes it stronger than a generic assistant answer?
 - What is explicitly out of scope?
 
 ### B. Failure Modes
 
 - What mistakes should this skill prevent?
-- Does the task often suffer from vague scope, wrong defaults, excessive token use, unsafe actions, inconsistent format, or skill overlap?
-- Does it need a stable output contract or artifact shape?
-- Does it need deterministic checks or transformations that should become scripts?
+- Does the task often suffer from vague scope, wrong defaults, weak first move, unsafe actions, or skill overlap?
+- Which failure most needs the kernel to guard against?
 
 ### C. Interaction Strength
 
@@ -43,43 +46,27 @@ Offer fixed options:
 - `E. asset-backed` — templates/assets; use when output shape matters.
 - `F. recommend for me` — infer from failure modes and output needs.
 
-### D. Structure Needs
+Do not use this section to pick the bundle yet. Use it only to clarify what the first move and strongest thing must support.
 
-Ask only the relevant questions:
-
-- Are there long menus, examples, variants, or policies? If yes, use `references/`.
-- Is there repeated fragile parsing, validation, conversion, or generation? If yes, consider `scripts/`.
-- Are reusable templates, media, boilerplate, or visual resources needed? If yes, use `assets/`.
-- Does the skill need UI metadata for a skill list? If yes, use `agents/openai.yaml` when supported.
-
-### E. Authority And Output
-
-Ask only if relevant:
-
-- What is the highest authority this skill should hold?
-- Which actions require confirmation or stop points?
-- Does the skill need a fixed report, fields, or artifact structure?
-- What must be validated before the output counts as complete?
-
-### F. Neighbor Boundaries
-
-Ask:
+### D. Boundary Inputs
 
 - Which existing skills are adjacent?
 - What should this skill own?
 - What should it explicitly hand off to another skill?
 
-### G. Design Expansion And Depth
+### E. Kernel Readiness Check
 
-Ask when the skill is broad, reusable, or being upgraded:
+Before leaving intake, confirm you can now state:
 
-- Which dimensions are most likely to fail if left too light?
-- Which dimensions need only a short rule in `SKILL.md`?
-- Which deserve their own `reference`?
-- Which deterministic steps should become scripts?
-- Which dimensions can be deferred explicitly for now?
+- `kernel sentence`
+- `trigger boundary`
+- `first move`
+- `strongest thing`
+- `not-this-skill-if...`
 
-When the user already gave a solid first shape but the design still feels too narrow, hand off to `design-expansion.md` instead of repeating intake.
+If not, keep intake focused on the missing line only.
+
+When the missing lines are filled, return to `kernel-extraction.md` immediately. Do not jump from intake straight into structural expansion.
 
 ## Intake Shortcuts
 
@@ -87,9 +74,9 @@ Skip intake when the user already provides:
 
 - skill name
 - trigger conditions
-- expected output
+- owned job
 - boundaries
-- desired file layout
-- interaction model
+- first move
+- strongest thing
 
 Do not force fixed options when they add more work than they save.

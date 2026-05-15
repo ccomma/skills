@@ -1,4 +1,4 @@
 interface:
   display_name: "Skill Architect"
-  short_description: "Design, split, merge, and harden mature skills across structure, authority, outputs, scripts, and token cost."
-  default_prompt: "Use $skill-architect to decide whether to create, split, merge, or upgrade a skill, expand the design across the right product dimensions before freezing it, and design the right authority boundary, output contract, interaction intensity, references, scripts, assets, validation, bundle structure, and token behavior."
+  short_description: "Lock a skill's kernel before designing its structure."
+  default_prompt: "Use $skill-architect when one skill's boundary is already clear and you need to lock the kernel first: produce the kernel sentence, trigger boundary, first move, strongest thing, and wrong-scope sentence before deciding expansion, sections, references, scripts, or bundle structure."

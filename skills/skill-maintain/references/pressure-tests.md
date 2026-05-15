@@ -39,6 +39,14 @@ Evidence to check: the main file becomes smaller or more focused.
 ```
 
 ```text
+Scenario: missing kernel inside a complete-looking skill
+Prompt: This skill has sections, references, and rules, but I still cannot tell what it is strongest at. Repair it.
+Expected behavior: treat the missing kernel as a real drift, restore the kernel sentence, strongest thing, and wrong-scope boundary in the main skill surface, then decide whether any deeper structure still needs repair.
+Must not: only polish section names or wording while leaving the core ability implicit.
+Evidence to check: after repair, the core can be taught back in a few lines.
+```
+
+```text
 Scenario: duplicated trigger contract
 Prompt: This skill says when to use it in frontmatter, then repeats the same thing in Overview and When To Use with slightly different wording. Repair it.
 Expected behavior: keep the shortest trigger in frontmatter and cut or rewrite later sections so they add new information instead of restating the trigger.
@@ -100,6 +108,22 @@ Prompt: This skill has three bullets that all say "merge or cut repeated structu
 Expected behavior: collapse them into one sharper governing rule, with conditions nested only when they truly add a different decision.
 Must not: keep near-duplicate bullets just because each one sounds locally reasonable.
 Evidence to check: the repaired step reads as one decision, not three paraphrases.
+```
+
+```text
+Scenario: repeated operational mode
+Prompt: This skill lists five runtime toggles separately, but they are all just ways of making the runtime lean. Repair it.
+Expected behavior: collapse the toggles into one higher-level operational rule, and keep concrete toggles only as examples or adapter specifics where needed.
+Must not: preserve a long checklist when the real teaching is one runtime mode.
+Evidence to check: the repaired text teaches one operational mode instead of a flat toggle list.
+```
+
+```text
+Scenario: abstract rule leaked into a concrete brand
+Prompt: This supposedly generic skill rule says "Treat BrandX as one adapter" and then explains the policy through BrandX-only wording. Repair it.
+Expected behavior: move the brand-specific detail into adapter-specific material and restate the governing rule in runtime-neutral terms.
+Must not: keep one vendor or one local runtime name inside the generic governing rule.
+Evidence to check: the repaired rule still teaches the same policy without depending on one named runtime.
 ```
 
 ```text
@@ -185,7 +209,7 @@ Evidence to check: coverage is explicit and repair depth is selective.
 ```text
 Scenario: explicit skill audit without bug list
 Prompt: Review this skill and fix what needs fixing.
-Expected behavior: treat the request as authorization for a proactive maintenance audit, discover structure, bundle, output, interaction, safety, and token issues without waiting for the user to list them, then repair the safe and clearly justified ones.
+Expected behavior: treat the request as authorization for a proactive maintenance audit, discover structure, bundle, output, interaction, safety, token, and kernel issues without waiting for the user to list them, then repair the safe and clearly justified ones.
 Must not: respond as if no action is needed just because the user did not pre-enumerate concrete bugs.
 Evidence to check: the report distinguishes user-reported issues from proactively discovered issues and fixes the safe findings in the same pass.
 ```
@@ -242,6 +266,8 @@ Evidence to check: the audit covers SKILL.md, references, scripts, format files,
 
 - Did the repair stay inside one existing skill?
 - Was the reported failure mode fixed directly?
+- Did the repair restore a teachable kernel instead of only producing a tidier structure?
+- Can the repaired skill now state its kernel sentence, strongest thing, and wrong-scope sentence clearly?
 - Did the repair restore durable skill properties instead of only reducing visible clutter?
 - Did the repair turn repeated local fixes into a clearer system instead of merely shortening the text?
 - Did the repair convert unsupported principles into enforced ones, or remove them?

@@ -10,6 +10,7 @@ Usage:
     --workdir /path/to/repo \
     --prompt-file /path/to/prompt.txt \
     --output-file /path/to/output.txt \
+    [--context-file /path/to/context.txt] \
     [--pass-file /path/to/pass.txt] \
     [--pack-format markdown|json] \
     [--no-isolated-home]
@@ -35,6 +36,8 @@ output_file=""
 use_isolated_home="true"
 pass_file=""
 pack_format="markdown"
+context_files=()
+context_file_count=0
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -67,6 +70,12 @@ while [[ $# -gt 0 ]]; do
       output_file="$2"
       shift 2
       ;;
+    --context-file)
+      [[ $# -ge 2 ]] || die "--context-file requires a value"
+      context_files+=("$2")
+      context_file_count=$((context_file_count + 1))
+      shift 2
+      ;;
     --pass-file)
       [[ $# -ge 2 ]] || die "--pass-file requires a value"
       pass_file="$2"
@@ -93,6 +102,11 @@ done
 [[ -n "$output_file" ]] || die "--output-file is required"
 [[ -d "$workdir" ]] || die "Workdir not found: $workdir"
 [[ -f "$prompt_file" ]] || die "Prompt file not found: $prompt_file"
+if (( context_file_count > 0 )); then
+  for context_file in "${context_files[@]}"; do
+    [[ -f "$context_file" ]] || die "Context file not found: $context_file"
+  done
+fi
 
 case "$runtime" in
   codex)
@@ -131,20 +145,28 @@ emit_direct_pack() {
   skill_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
   skill_name="$(basename "$skill_root")"
   if [[ "$pack_format" == "json" ]]; then
-    python3 - "$skill_name" "$workdir" "$prompt_file" "$pass_file" > "$output_file" <<'PY'
+    python3 - "$skill_name" "$workdir" "$prompt_file" "$pass_file" "${context_files[@]+"${context_files[@]}"}" > "$output_file" <<'PY'
 import json
 import pathlib
 import sys
 
-skill_name, workdir, prompt_path, pass_path = sys.argv[1:]
+skill_name, workdir, prompt_path, pass_path, *context_paths = sys.argv[1:]
 payload = {
     "target_skill": skill_name,
     "runtime_class": "direct-smoke",
     "workdir": workdir,
     "prompt": pathlib.Path(prompt_path).read_text(),
     "pass_criteria": pathlib.Path(pass_path).read_text(),
+    "context": [
+        {
+            "label": pathlib.Path(path).name,
+            "text": pathlib.Path(path).read_text(),
+        }
+        for path in context_paths
+    ],
     "use_rule": [
         "Use this pack with the lightest available model wrapper, API harness, or agent test runner that can load only the target skill or changed artifact.",
+        "Prefer changed snippets or tiny context extracts over full-file reads when they are enough to prove the behavior.",
         "Keep the answer brief and tied to the changed behavior only.",
         "If this smoke passes clearly, stop.",
         "If it exposes one in-scope issue, repair it and rerun the same pack.",
@@ -169,6 +191,20 @@ PY
 $(cat "$prompt_file")
 \`\`\`
 
+EOF
+  if (( context_file_count > 0 )); then
+    {
+      printf '\n## Context\n\n'
+      for context_file in "${context_files[@]}"; do
+        printf '### %s\n\n' "$(basename "$context_file")"
+        printf '```text\n'
+        cat "$context_file"
+        printf '\n```\n\n'
+      done
+    } >> "$output_file"
+  fi
+  cat >> "$output_file" <<EOF
+
 ## Pass Criteria
 
 \`\`\`text
@@ -178,6 +214,7 @@ $(cat "$pass_file")
 ## Use Rule
 
 - Use this pack with the lightest available model wrapper, API harness, or agent test runner that can load only the target skill or changed artifact.
+- Prefer changed snippets or tiny context extracts over full-file reads when they are enough to prove the behavior.
 - Keep the answer brief and tied to the changed behavior only.
 - If this smoke passes clearly, stop.
 - If it exposes one in-scope issue, repair it and rerun the same pack.
@@ -185,9 +222,21 @@ $(cat "$pass_file")
 EOF
 }
 
+compose_prompt() {
+  cat "$prompt_file"
+  if (( context_file_count > 0 )); then
+    printf '\n\nUse the following changed snippets or tiny context extracts first. Do not read broader files unless this context is insufficient.\n'
+    for context_file in "${context_files[@]}"; do
+      printf '\n[%s]\n' "$(basename "$context_file")"
+      cat "$context_file"
+      printf '\n'
+    done
+  fi
+}
+
 run_codex() {
   local -a cmd
-  local skill_root skill_name smoke_home
+  local skill_root skill_name smoke_home=""
   skill_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
   skill_name="$(basename "$skill_root")"
   cmd=(
@@ -210,11 +259,11 @@ run_codex() {
     )
   fi
 
-  cmd+=("$(cat "$prompt_file")")
+  cmd+=("$(compose_prompt)")
 
   if [[ "$mode" == "lean-cli" && "$use_isolated_home" == "true" ]]; then
     smoke_home="$(mktemp -d "${TMPDIR:-/tmp}/codex-smoke-home.XXXXXX")"
-    trap 'rm -rf "$smoke_home"' EXIT
+    trap 'if [[ -n "${smoke_home:-}" ]]; then rm -rf "${smoke_home:-}"; fi' EXIT
     mkdir -p "$smoke_home/skills"
     if [[ -f "${CODEX_HOME:-$HOME/.codex}/auth.json" ]]; then
       cp "${CODEX_HOME:-$HOME/.codex}/auth.json" "$smoke_home/auth.json"

@@ -15,6 +15,8 @@ Load this when deciding which bundle component should receive the repair.
 
 - Repair `SKILL.md` when the failure is about first read:
   - trigger
+  - kernel sentence
+  - strongest thing
   - first move
   - dominant path
   - wrong-scope boundary
@@ -24,6 +26,14 @@ Load this when deciding which bundle component should receive the repair.
 - Repair a `script` when deterministic helper logic is stale, unmentioned, too broad, or doing policy work that belongs in prose.
 - Repair an `asset` when a template or resource is stale, wrongly selected, or being pasted into context instead of used as a resource.
 - Repair `bundle metadata` when naming, reachability, publishability, or entry-surface alignment has drifted across files.
+
+## Kernel Necessity Check
+
+Before keeping a non-core component, ask:
+
+- if this component vanished, would the loss be kernel clarity, kernel stability, kernel verification, or only explanation comfort
+- if it merged with its nearest neighbor, what exact confusion or collision would return
+- if the answer is only explanation comfort, should this component survive the repair at all
 
 ## Escalation Clue
 

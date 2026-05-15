@@ -11,7 +11,10 @@ Audit and repair one existing skill without changing its role by accident.
 
 1. Establish the baseline:
    - what should trigger the skill
+   - what its kernel sentence is
    - what it should do first
+   - what its strongest thing is
+   - what `not-this-skill-if...` boundary it depends on
    - what the dominant path is
    - what references, format files, scripts, assets, or metadata it depends on
    - what public boundary or artifact contract it must preserve
@@ -19,7 +22,10 @@ Audit and repair one existing skill without changing its role by accident.
 2. Find the drift that hurts first-read usability most:
    - the first 20-30 lines do not tell the model what to do
    - trigger is blurry or repeated
+   - the kernel is still implicit even though the structure looks complete
    - first move or dominant path is hard to find
+   - the strongest thing is hard to state even after reading the file
+   - the `not-this-skill-if...` boundary is missing, vague, or buried
    - the dominant path appears too late
    - the skill depends on a literal heading name instead of making the dominant path obvious
    - wrong-scope guidance names example domains instead of the real workflow object boundary
@@ -27,6 +33,7 @@ Audit and repair one existing skill without changing its role by accident.
    - sibling bullets inside one step repeat the same decision instead of sharpening it
    - multiple bullets restate one governing decision with slight condition changes instead of collapsing into one sharper rule
    - a cross-cutting invariant block restates local path steps instead of guarding global invariants
+   - a supposedly generic rule still depends on one named runtime, brand, or machine-specific example
    - a durable principle has no path step, hard invariant, deterministic check, pressure test, or smoke test backing it
    - a component does not make its job obvious enough for its layer
    - two components answer the same question and should merge or split more sharply
@@ -40,18 +47,20 @@ Audit and repair one existing skill without changing its role by accident.
    - reference repair
    - bundle-wide patch
    - explicit defer
-   - if the patch would span too many modes, stop and ask whether this is really redesign rather than maintenance
+   - if the patch would span too many modes, or would redefine the skill's role or kernel rather than repair drift around it, stop and ask whether this is really redesign rather than maintenance
 
 4. Rewrite the hot path first:
+   - restore the kernel before polishing structure:
+     - if the kernel sentence, strongest thing, or wrong-scope boundary is weak, repair those in `SKILL.md` before expanding references
    - keep the main path easy to find
    - collapse repeated guidance before polishing prose:
-     - if deleting text leaves trigger, first move, boundary, and output unchanged, cut it
+     - if deleting text leaves trigger, first move, strongest thing, boundary, and output unchanged, cut it
      - if top-level sections or sibling bullets are teaching the same judgment, merge them
      - if an invariant only repeats a local path step, move that judgment back into the path block
    - keep non-core material only when it earns clarity:
      - if a component needs browsing or guesswork before its job is clear, rewrite, move, merge, or cut it
      - move heavy detail away from the main file only when the main file becomes sharper because of it
-     - keep any non-core component only when it removes a clear burden from the main entry surface or protects a real bundle contract
+     - keep any non-core component only when it removes a clear burden from the main entry surface, protects a real bundle contract, or protects kernel clarity, stability, or verification
    - interrogate each surviving component one by one:
      - if this component vanished, what exact failure would return
      - if it merged with its nearest neighbor, what exact confusion or collision would return
@@ -60,9 +69,11 @@ Audit and repair one existing skill without changing its role by accident.
    - cut text that does not change behavior or protect a boundary
 
 5. Validate the repaired skill:
+   - kernel sentence is now explicit
    - first move is now clear
    - trigger is sharp
    - strongest behavior is easy to find
+   - the wrong-scope boundary is explicit enough to route away
    - top-level sections no longer collide in responsibility
    - sections no longer duplicate each other
    - each surviving component can name its burden, nearest merge collision, and cost
@@ -75,6 +86,7 @@ Audit and repair one existing skill without changing its role by accident.
      - then run the smallest live smoke that still touches the repaired behavior, usually `references/minimal-smoke-prompts.md`
      - escalate to `references/pressure-tests.md` or `references/regression-tests.md` only when the repair touched trigger boundary, authority, cadence, broader capability preservation, or the narrow smoke stays ambiguous
    - keep narrow smoke lean:
+     - feed changed snippets or tiny context extracts first when they are enough; do not default to full-file reads
      - disable unrelated rules, memory, plugins, or other ambient context when the runtime allows it
      - keep the live prompt tiny and limited to one repair judgment unless the changed dimension is still ambiguous
    - close the loop:
@@ -90,13 +102,14 @@ Use this for one existing skill at a time.
 
 Do not use this when the main task is designing a different skill, routing across multiple skills, or executing the underlying workflow itself rather than repairing this skill.
 
-If the real task is changing the target skill's role rather than repairing it, route to a skill-architecture workflow.
+If the real task is changing the target skill's role, redefining its kernel, or turning a repair into a redesign, route to a skill-architecture workflow.
 
 </scope>
 
 <invariants>
 
 - Treat the skill as a behavior bundle, not just a text file.
+- A structurally complete skill is still drifted if its kernel is not explicit.
 - Do not justify structure by citing another skill alone; justify it with the target skill's real job or failure mode.
 - Describe scope by the workflow object being repaired, not by a list of example domains.
 - If a repair crosses too many modes, treat that as redesign pressure and say so explicitly.
@@ -104,6 +117,7 @@ If the real task is changing the target skill's role rather than repairing it, r
 - Collapse sibling bullets when they are really restating one governing repair decision with minor condition changes.
 - Apply the same collapse rule to references and other bundle components, not only to `SKILL.md`.
 - Collapse toward a clearer system, not just shorter prose: related repair judgments should compose into stable routes, layers, or rules instead of staying as scattered local fixes.
+- Collapse checklist-style capability toggles into one operational rule when they are only different ways of achieving the same runtime mode or system behavior.
 - Treat bundle components as first-class teaching surfaces or deterministic helpers, not storage bins.
 - A surviving non-core component should defend itself with a real job, a real burden it removes, a real reason it should not merge, and a cost worth paying.
 - When real smoke tests are skipped, say whether the blocker was runtime availability, side-effect risk, or token budget.
@@ -112,13 +126,12 @@ If the real task is changing the target skill's role rather than repairing it, r
 - A skill write is not complete until deterministic checks and at least one real smoke test both ran, or runtime unavailability was stated explicitly.
 - If a smoke runner changed, its deterministic self-check must pass before the broader smoke result counts.
 - A skill write is not complete while live smoke still shows an in-scope issue that has not yet been repaired, rerun, deferred with reason, or escalated out of this workflow.
+- Keep generic governance text abstract: brand names, local runtime names, and machine-specific examples belong in adapter detail only, not in the governing rule itself.
+- Prefer snippet-first smoke context when a changed excerpt can prove the repaired behavior; do not spend live tokens on full-file reads unless the narrower context is insufficient.
 
 </invariants>
 
 <support-routing>
-
-If you are unsure which repair reference should be next, load `references/reference-routing.md` first.
-
 For early audit:
 - load `references/repair-expansion.md` at the start of any non-trivial audit
 
@@ -142,5 +155,7 @@ For closeout:
 - load `references/runtime-smoke-harness.md` when the question is how to run the cheapest useful live smoke or how to reduce runtime noise
 - load `references/minimal-smoke-prompts.md` for cheap narrow live checks
 - load `references/pressure-tests.md` before calling the repair mature
+
+If these groups still leave the next repair reference unclear, load `references/reference-routing.md` as the fallback router.
 
 </support-routing>

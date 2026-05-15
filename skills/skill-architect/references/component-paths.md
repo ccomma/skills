@@ -5,7 +5,7 @@ Load this when deciding where one piece of guidance should live inside a skill b
 ## Routing Position
 
 - common upstream:
-  - `reference-routing.md`
+  - `kernel-extraction.md`
   - `design-expansion.md`
 - if the real question is whether a reference should exist or split, jump to `reference-design.md`
 - if the real question is bundle-wide alignment, jump to `bundle-design.md`
@@ -19,13 +19,15 @@ Do not use this file to choose the whole bundle shape. That is the job of `bundl
 ## Component Path
 
 - Keep it in `SKILL.md` when a weaker model must see it on first read:
+  - kernel sentence
   - trigger
+  - strongest thing
   - first move
-  - dominant path
   - wrong-scope boundary
+  - dominant path
   - hard invariant
   - explicit routing to conditional components
-- Put it in a `reference` when it is conditional depth:
+- Put it in a `reference` when it is conditional depth that makes the kernel more teachable, stable, or verifiable:
   - examples
   - variants
   - longer checklists
@@ -37,10 +39,21 @@ Do not use this file to choose the whole bundle shape. That is the job of `bundl
 - Put it in an `asset` when the output shape is best carried by a real template, starter file, media resource, or boilerplate.
 - Put it in `bundle metadata` when the issue is naming, publishability, installability, reachability, or entry-surface alignment across files.
 
+## Kernel Necessity Check
+
+Before adding or keeping a component, ask:
+
+- if this vanished, would the loss be kernel clarity, kernel stability, kernel verification, or only explanation comfort
+- if it merged with its nearest neighbor, what exact kernel confusion or bundle collision would return
+- if the answer is only explanation comfort, why should this component exist at all
+
+Default rule: if the component only improves explanation comfort, do not add it.
+
 ## Anti-Patterns
 
-- keeping first-read behavior in a reference
+- keeping first-read kernel behavior in a reference
 - creating a reference only because similar skills have one
+- creating a component because the architecture feels incomplete without it
 - splitting one load question across two references
 - using a script for policy judgment that belongs in prose
 - creating a format file for a shape that the skill rarely emits

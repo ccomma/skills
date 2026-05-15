@@ -28,6 +28,9 @@ Create at least these scenarios for non-trivial skills:
 16. **Principle-closure pressure** — strong-sounding principles should map to an enforcement path instead of floating as slogans.
 17. **Component-necessity pressure** — each surviving reference, script, format file, asset, or metadata layer should survive a delete challenge, a merge challenge, and a cost challenge.
 18. **Systematization pressure** — related judgments should collapse into a stable system of routes, layers, or rules instead of remaining as scattered local patches.
+19. **Kernel-clarity pressure** — the design should state the kernel sentence, first move, strongest thing, and wrong-scope sentence before structural expansion.
+20. **Kernel-protection pressure** — later structure choices should be able to explain whether they protect the kernel or only improve explanation comfort.
+21. **Public-positioning pressure** — frontmatter, first-screen language, metadata, and supporting docs should all describe the same kernel-first identity.
 
 ## Test Format
 
@@ -44,6 +47,7 @@ Evidence to check:
 For each scenario, ask:
 
 - Did the skill trigger only when appropriate?
+- Could the design state the kernel sentence, trigger boundary, first move, strongest thing, and wrong-scope sentence without falling back to structural prose?
 - Did it choose the right interaction strength?
 - Did it choose the right interaction intensity?
 - Did it make the first move explicit instead of leaving it to chance?
@@ -53,6 +57,8 @@ For each scenario, ask:
 - Did each durable principle close through a step, hard rule, deterministic check, pressure test, or smoke test?
 - Did the design turn repeated local judgments into a coherent system instead of merely shortening them?
 - Did each surviving component survive a delete challenge, a merge challenge, and a cost challenge?
+- Did expansion happen only after the kernel became explicit?
+- Can each surviving component explain whether it protects kernel clarity, kernel stability, kernel verification, or only explanation comfort?
 - Would the top of the file tell a weaker model what to do before the explanatory text takes over?
 - Does each surviving section have a unique job that would be missed if removed?
 - Did the design avoid completeness theater such as template sections that survive without a real failure mode behind them?
@@ -63,6 +69,7 @@ For each scenario, ask:
 - Did the design explicitly scan major dimensions instead of focusing only on one obvious one?
 - Were depth decisions intentional rather than accidental?
 - Did it avoid neighboring skill responsibilities?
+- Did frontmatter, first-screen language, metadata, and public docs all describe the same kernel-first identity?
 - Did output format and language match the user's need?
 - Did it choose a language strategy explicitly when the skill emits user-facing artifacts or templates?
 - Would a project-visible template remain understandable to a human or weaker model without hidden context?
@@ -79,6 +86,8 @@ For each scenario, ask:
 - The skill promises a stable artifact but never defines the contract.
 - The script layer is broad and policy-heavy instead of deterministic.
 - The bundle structure can drift because references are not wired back from `SKILL.md`.
+- The design looks complete, but the kernel sentence or strongest thing is still fuzzy.
+- The design jumps straight to structural expansion before kernel extraction.
 - The design jumps straight to references/scripts/assets without a design-expansion pass.
 - Every dimension gets deep treatment even though only one or two needed it.
 - The skill duplicates another skill's job instead of routing.
@@ -87,7 +96,9 @@ For each scenario, ask:
 - The skill is supposed to grill or validate, but it never states whether it should ask one question at a time or keep pushing the same trunk branch.
 - The workflow starts too late because overview, boundary, or usage prose swallowed the hot path.
 - One path step keeps stacking bullets that are really the same decision with slight condition changes instead of collapsing them into one sharper rule.
+- A runtime or capability checklist names five toggles, but they are all just one operational mode that should be expressed once at a higher level.
 - The design removed a few duplicates, but the remaining rules still do not add up to a clear system of routes, layers, or governing decisions.
+- A supposedly generic rule still hardcodes one brand, one local runtime, or one machine-specific example instead of keeping that detail in adapter-specific material.
 - The design keeps sections such as Overview, When To Use, Response Language, or Artifact Contract without proving they add behavior here.
 - The design can explain how it improved a bad skill, but still cannot state the properties a strong skill must satisfy.
 - `what-to-do`, `workflow`, `boundaries`, or `rules` are all talking about the same job with different wording.
@@ -96,6 +107,9 @@ For each scenario, ask:
 - A reference exists, but the design never explains what hot-path burden it removes.
 - A reference exists, but the design cannot say why repeated local component placement would not already be enough.
 - A component exists, but the design cannot say what cost it adds and why that cost is worth paying.
+- The design can name sections and references, but cannot answer what the skill is strongest at.
+- A component survives even though deleting it would only cost explanation comfort.
+- The public sentence still describes a bundle designer even though the real workflow is kernel-first.
 - The design relies on headings-only templates for project-visible artifacts.
 - The design silently mixes public-facing and internal-working language expectations.
 - The design creates a new standard layer when a helper-layer classification would be enough.
@@ -108,6 +122,13 @@ If subagents are available and the user wants stronger validation, ask an indepe
 
 For small component or reference changes, load `minimal-smoke-prompts.md` instead of running this whole suite.
 
+```text
+Scenario: abstract rule leaked into a concrete brand
+Prompt: This supposedly generic skill rule says "Treat BrandX as one adapter" and then explains the policy through BrandX-only wording. Repair it.
+Expected behavior: move the brand-specific detail into adapter-specific material and restate the governing rule in runtime-neutral terms.
+Must not: keep one vendor or one local runtime name inside the generic governing rule.
+Evidence to check: the repaired rule still teaches the same policy without depending on one named runtime.
+```
 
 ## Built-in Regression Prompts
 
@@ -188,7 +209,7 @@ Evidence to check: uses provided name, layout, interaction model, and output.
 ```text
 Scenario: maturity upgrade
 Prompt: 升级这个已有 skill，让它更成熟，但不要整体重写。
-Expected behavior: run a design-expansion pass, identify the weak dimensions, and deepen only the ones that materially improve the skill.
+Expected behavior: keep the existing kernel if it is still strong, run a design-expansion pass, identify the weak dimensions, and deepen only the ones that materially improve the skill.
 Must not: inflate every dimension or turn maintenance drift into a full redesign.
 Evidence to check: coverage is explicit and depth choices are selective.
 ```
@@ -213,7 +234,77 @@ Must not: stop after renaming the folder and main file while leaving stale ids, 
 Evidence to check: the renamed skill is internally consistent and publicly enumerable.
 ```
 
-### 11. Lean Skill Should Not Read Like A Memo
+### 11. Fuzzy Skill Idea Must Yield A Kernel Before Structure
+
+```text
+Scenario: fuzzy skill idea
+Prompt: Use $skill-architect. 帮我做一个让复杂工作流更稳的 skill。
+Expected behavior: ask only enough intake to lock the kernel sentence, trigger boundary, first move, strongest thing, and wrong-scope sentence before proposing sections or companion files.
+Must not: jump directly to references, scripts, or bundle shape.
+Evidence to check: the first architecture output is the kernel, not the structure.
+```
+
+### 12. Clear Skill Idea Should Lock Kernel Fast
+
+```text
+Scenario: already clear skill idea
+Prompt: Use $skill-architect. 创建一个名为 prompt-router 的 skill；它只负责把模糊请求快速分流到正确工作流，第一步先判定 owner，不需要复杂交互。
+Expected behavior: skip long intake, state the kernel quickly, then move into the lightest necessary structure decisions.
+Must not: run a full interview after the kernel is already obvious.
+Evidence to check: the kernel is explicit before any structural expansion, and intake stays short.
+```
+
+### 13. Complete Structure But No Strongest Thing Must Fail
+
+```text
+Scenario: structure looks complete but kernel is vague
+Prompt: Use $skill-architect. 这个 draft 已经有 sections、references、scripts 了，但我还是说不出它最强的能力是什么。继续设计。
+Expected behavior: stop structural work, return to kernel extraction, and refuse to treat expansion as a substitute for core definition.
+Must not: keep refining sections while the strongest thing remains unclear.
+Evidence to check: the next move is kernel repair, not more bundle growth.
+```
+
+### 14. Generic Initialization Should Stay Out Of Scope
+
+```text
+Scenario: generic skill creation request
+Prompt: Use $skill-architect. 帮我初始化一个 skill folder，补齐 starter files 和基础结构。
+Expected behavior: keep generic scaffolding out of this skill's core promise and either redirect that part or restate that this workflow starts after the boundary is clear and the kernel must be locked.
+Must not: redefine skill-architect as a generic bundle initializer.
+Evidence to check: the answer still frames kernel-first design as the primary job.
+```
+
+### 15. Skill Maturity Request Should Start From The Kernel
+
+```text
+Scenario: maturity request
+Prompt: Use $skill-architect. 帮我把这个 skill 做成熟。
+Expected behavior: start by clarifying one strong thing, trigger boundary, and first move before listing structural upgrades.
+Must not: open with reference/script/asset expansion as the first answer.
+Evidence to check: the first move is kernel-first even for a vague maturity request.
+```
+
+### 16. Existing Skill With Unclear Strongest Thing Must Not Skip Maintenance Boundary
+
+```text
+Scenario: maintenance comparison
+Prompt: Use $skill-architect. 这个已有 skill 结构完整，但 strongest thing 说不清。现在该怎么做？
+Expected behavior: distinguish between kernel drift inside an existing role and true role redefinition; do not silently swallow a maintenance-first case as if all such requests belonged here.
+Must not: ignore the handoff boundary with skill-maintain.
+Evidence to check: the answer explains when repair stays in maintenance and when it becomes redesign.
+```
+
+### 17. Public Identity Must Stay Consistent Across Entry Surfaces
+
+```text
+Scenario: public entry-surface audit
+Prompt: Read the frontmatter description, first-screen intro, agent metadata, and README sentence for this skill. Do they all describe the same job?
+Expected behavior: confirm a shared kernel-first identity or flag the drift explicitly.
+Must not: accept one surface describing generic bundle design while another describes kernel locking.
+Evidence to check: all entry surfaces describe the same first responsibility.
+```
+
+### 18. Lean Skill Should Not Read Like A Memo
 
 ```text
 Scenario: anti-bloat redesign
@@ -223,7 +314,7 @@ Must not: preserve redundant sections just because they look standard.
 Evidence to check: the resulting design is shorter, sharper, and still behaviorally complete.
 ```
 
-### 12. Section Ownership Must Be Explicit
+### 19. Section Ownership Must Be Explicit
 
 ```text
 Scenario: section collision
@@ -233,7 +324,7 @@ Must not: keep the same instruction repeated across two sections with cosmetic w
 Evidence to check: a reader can explain each section's unique job in one sentence.
 ```
 
-### 13. Component Must Survive Delete, Merge, And Cost Challenges
+### 20. Component Must Survive Delete, Merge, And Cost Challenges
 
 ```text
 Scenario: unnecessary component
@@ -243,7 +334,7 @@ Must not: keep a component only because its topic sounds like a sensible categor
 Evidence to check: the answer names a concrete burden, a concrete merge collision, and a concrete cost justification for each surviving component.
 ```
 
-### 13. Skill Write Must Define Minimal Real Testing
+### 21. Skill Write Must Define Minimal Real Testing
 
 ```text
 Scenario: post-write validation
@@ -253,7 +344,7 @@ Must not: stop at static checks alone or prescribe an oversized smoke suite by d
 Evidence to check: verification is real, scoped, and explicit about skipped live tests.
 ```
 
-### 14. Principle Must Have Closure
+### 22. Principle Must Have Closure
 
 ```text
 Scenario: slogan audit
@@ -263,7 +354,7 @@ Must not: praise the wording quality without checking enforcement paths.
 Evidence to check: unsupported principles are explicitly named instead of being left as "nice guidance".
 ```
 
-### 15. Reference Must Earn Its Place
+### 23. Reference Must Earn Its Place
 
 ```text
 Scenario: reference audit
@@ -273,7 +364,7 @@ Must not: keep references only because similar skills often have them.
 Evidence to check: every reference has a clear and compact justification.
 ```
 
-### 16. References Must Own Different Questions
+### 24. References Must Own Different Questions
 
 ```text
 Scenario: reference overlap
