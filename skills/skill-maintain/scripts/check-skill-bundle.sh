@@ -139,8 +139,24 @@ extract_display_name() {
   awk -F'"' '/display_name:/ { print $2; exit }' "$1"
 }
 
+extract_short_description() {
+  awk -F'"' '/short_description:/ { print $2; exit }' "$1"
+}
+
 extract_default_prompt() {
   awk -F'"' '/default_prompt:/ { print $2; exit }' "$1"
+}
+
+check_loader_consumed_field_length() {
+  local field_name="$1"
+  local field_value="$2"
+  local max_length=1024
+
+  [[ -n "$field_value" ]] || return 0
+
+  if (( ${#field_value} > max_length )); then
+    add_error "agents/openai.yaml ${field_name} exceeds ${max_length} characters and may cause the loader to ignore the primary entry surface"
+  fi
 }
 
 normalize_for_display() {
@@ -191,8 +207,9 @@ check_frontmatter_name() {
 check_agent_metadata() {
   [[ -f "$agent_file" ]] || return 0
 
-  local display_name default_prompt expected_display
+  local display_name short_description default_prompt expected_display
   display_name="$(extract_display_name "$agent_file")"
+  short_description="$(extract_short_description "$agent_file")"
   default_prompt="$(extract_default_prompt "$agent_file")"
   expected_display="$(normalize_for_display "$skill_name")"
 
@@ -207,6 +224,9 @@ check_agent_metadata() {
   elif [[ "$default_prompt" != *"\$${skill_name}"* ]]; then
     add_error "agents/openai.yaml default_prompt does not reference '$skill_name'"
   fi
+
+  check_loader_consumed_field_length "short_description" "$short_description"
+  check_loader_consumed_field_length "default_prompt" "$default_prompt"
 }
 
 check_primary_surface_contract() {

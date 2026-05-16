@@ -111,4 +111,5 @@ If an adapter can accept explicit changed snippets or tiny context extracts, pre
 
 If this bundle ships `scripts/run-runtime-smoke.sh`, use it instead of hand-assembling the command every time.
 
-If this bundle ships `scripts/check-runtime-smoke.sh`, run it after editing the runner so the harness itself is proven before broader live smoke.
+If this bundle ships `scripts/check-runtime-smoke.sh`, run it after editing the runner so the harness baseline is proven before broader live smoke.
+Use runner dry-run coverage there for adapter self-checks when available, and allow missing adapters to skip explicitly rather than failing the whole baseline check. Keep real live runtime behavior as a separate proof layer.

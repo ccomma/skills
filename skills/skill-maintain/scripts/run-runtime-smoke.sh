@@ -13,6 +13,7 @@ Usage:
     [--context-file /path/to/context.txt] \
     [--pass-file /path/to/pass.txt] \
     [--pack-format markdown|json] \
+    [--dry-run] \
     [--no-isolated-home]
 
 Runs one minimal live smoke through a supported runtime adapter.
@@ -34,6 +35,7 @@ workdir=""
 prompt_file=""
 output_file=""
 use_isolated_home="true"
+dry_run="false"
 pass_file=""
 pack_format="markdown"
 context_files=()
@@ -85,6 +87,10 @@ while [[ $# -gt 0 ]]; do
       [[ $# -ge 2 ]] || die "--pack-format requires a value"
       pack_format="$2"
       shift 2
+      ;;
+    --dry-run)
+      dry_run="true"
+      shift
       ;;
     --no-isolated-home)
       use_isolated_home="false"
@@ -138,6 +144,11 @@ esac
 if [[ "$mode" == "direct-pack" ]]; then
   [[ -n "$pass_file" ]] || die "--pass-file is required for direct-pack"
   [[ -f "$pass_file" ]] || die "Pass file not found: $pass_file"
+fi
+
+if [[ "$dry_run" == "true" ]]; then
+  [[ "$runtime" == "codex" ]] || die "--dry-run is supported only with --runtime codex"
+  [[ "$mode" != "direct-pack" ]] || die "--dry-run does not support --mode direct-pack"
 fi
 
 emit_direct_pack() {
@@ -234,11 +245,65 @@ compose_prompt() {
   fi
 }
 
+compose_codex_prompt() {
+  local skill_root="$1"
+  local skill_name="$2"
+  cat <<EOF
+You are validating the target skill bundle \`$skill_name\` at \`$skill_root\`.
+Read \`SKILL.md\` from this bundle first.
+Only if \`SKILL.md\` is insufficient for the current question, read \`references/output-contracts.md\`.
+Open other \`references/\` files only if the question is still unresolved after those two files.
+Do not inspect sibling skills just because the workdir is broader than this bundle.
+
+$(compose_prompt)
+EOF
+}
+
+emit_codex_dry_run() {
+  local skill_root="$1"
+  local skill_name="$2"
+  local composed_prompt="$3"
+  local uses_isolated_home="false"
+
+  if [[ "$mode" == "lean-cli" && "$use_isolated_home" == "true" ]]; then
+    uses_isolated_home="true"
+  fi
+
+  python3 - "$runtime" "$mode" "$skill_name" "$skill_root" "$workdir" "$uses_isolated_home" "$composed_prompt" "${cmd[@]}" > "$output_file" <<'PY'
+import json
+import sys
+
+runtime = sys.argv[1]
+mode = sys.argv[2]
+skill_name = sys.argv[3]
+skill_root = sys.argv[4]
+workdir = sys.argv[5]
+uses_isolated_home = sys.argv[6] == "true"
+composed_prompt = sys.argv[7]
+command = sys.argv[8:]
+
+payload = {
+    "runtime": runtime,
+    "mode": mode,
+    "skill_name": skill_name,
+    "skill_root": skill_root,
+    "workdir": workdir,
+    "uses_isolated_home": uses_isolated_home,
+    "command": command,
+    "composed_prompt": composed_prompt,
+}
+
+json.dump(payload, sys.stdout, ensure_ascii=True, indent=2)
+sys.stdout.write("\n")
+PY
+}
+
 run_codex() {
   local -a cmd
-  local skill_root skill_name smoke_home=""
+  local skill_root skill_name smoke_home="" composed_prompt
   skill_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
   skill_name="$(basename "$skill_root")"
+  composed_prompt="$(compose_codex_prompt "$skill_root" "$skill_name")"
   cmd=(
     codex exec
     --ephemeral
@@ -259,7 +324,12 @@ run_codex() {
     )
   fi
 
-  cmd+=("$(compose_prompt)")
+  cmd+=("$composed_prompt")
+
+  if [[ "$dry_run" == "true" ]]; then
+    emit_codex_dry_run "$skill_root" "$skill_name" "$composed_prompt"
+    return 0
+  fi
 
   if [[ "$mode" == "lean-cli" && "$use_isolated_home" == "true" ]]; then
     smoke_home="$(mktemp -d "${TMPDIR:-/tmp}/codex-smoke-home.XXXXXX")"

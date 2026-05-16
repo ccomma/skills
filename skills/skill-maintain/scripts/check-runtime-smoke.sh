@@ -4,6 +4,11 @@ set -euo pipefail
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 runner="$script_dir/run-runtime-smoke.sh"
 
+codex_available="false"
+if command -v codex >/dev/null 2>&1; then
+  codex_available="true"
+fi
+
 tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/skill-maintain-runtime-smoke.XXXXXX")"
 trap 'rm -rf "$tmpdir"' EXIT
 
@@ -62,4 +67,55 @@ assert "Changed snippet:" in payload["context"][0]["text"]
 assert isinstance(payload["use_rule"], list) and payload["use_rule"]
 PY
 
-printf 'runtime smoke self-check passed for skill-maintain\n'
+if [[ "$codex_available" == "true" ]]; then
+  "$runner" \
+    --runtime codex \
+    --mode lean-cli \
+    --dry-run \
+    --workdir "$tmpdir/work" \
+    --prompt-file "$tmpdir/prompt.txt" \
+    --context-file "$tmpdir/context.txt" \
+    --output-file "$tmpdir/codex-dry-run.json"
+
+  "$runner" \
+    --runtime codex \
+    --mode lean-cli \
+    --dry-run \
+    --no-isolated-home \
+    --workdir "$tmpdir/work" \
+    --prompt-file "$tmpdir/prompt.txt" \
+    --context-file "$tmpdir/context.txt" \
+    --output-file "$tmpdir/codex-dry-run-no-home.json"
+
+  python3 - "$tmpdir/codex-dry-run.json" "$tmpdir/codex-dry-run-no-home.json" <<'PY'
+import json
+import sys
+
+first_path, second_path = sys.argv[1:]
+
+with open(first_path, "r", encoding="utf-8") as fh:
+    first = json.load(fh)
+with open(second_path, "r", encoding="utf-8") as fh:
+    second = json.load(fh)
+
+for payload in (first, second):
+    assert payload["runtime"] == "codex"
+    assert payload["mode"] == "lean-cli"
+    assert payload["skill_name"] == "skill-maintain"
+    assert payload["skill_root"].endswith("/skills/skill-maintain")
+    assert payload["workdir"].endswith("/work")
+    assert isinstance(payload["command"], list) and payload["command"]
+    assert "SKILL.md" in payload["composed_prompt"]
+    assert "references/output-contracts.md" in payload["composed_prompt"]
+    assert "Do not inspect sibling skills" in payload["composed_prompt"]
+    assert "--disable" in " ".join(payload["command"])
+
+assert first["uses_isolated_home"] is True
+assert second["uses_isolated_home"] is False
+PY
+  printf 'codex adapter self-check passed for skill-maintain\n'
+else
+  printf 'codex adapter check skipped for skill-maintain: codex not installed\n'
+fi
+
+printf 'runtime smoke baseline passed for skill-maintain\n'
