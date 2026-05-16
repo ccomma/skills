@@ -62,6 +62,11 @@ Prompt 8: This script, format file, and reference all sound plausible, but I can
 Pass if: the answer challenges each component on failure prevented, merge collision, and cost, then recommends keep/merge/cut.
 ```
 
+```text
+Prompt 9: This repair would be easier if I added one more check script just for this helper boundary. Should I do that?
+Pass if: the answer first checks whether the current validation chain already has a natural owner, and only accepts a new check when the repair truly cannot stay inside existing layers.
+```
+
 ## Run Rule
 
 - Deterministic checks happen first; live smoke only proves the repaired behavior.
@@ -80,6 +85,7 @@ Pass if: the answer challenges each component on failure prevented, merge collis
 - Add prompt 6 when routing recall itself is under question.
 - Add prompt 7 when a narrower repair reference may have been opened too early or by mistake.
 - Add prompt 8 when component necessity itself is under question.
+- Add prompt 9 when the repair is trying to solve drift by growing a new validation or helper layer.
 - Do not load deeper component-specific references unless the repair itself is under question after the owner judgment.
 - If the first live smoke passes clearly, stop.
 - If the first live smoke exposes one in-scope issue, repair it and rerun only the narrowest prompt that covers that issue.

@@ -33,6 +33,7 @@ Check the reported issue before widening scope:
 - **Missed format opportunity**: a repeated artifact shape is embedded inline in `SKILL.md` or a generic reference, but the bundle would be clearer and more stable with a companion format file.
 - **Thin-but-correct core**: a core artifact keeps the right boundary but lacks enough judgment or depth to carry its real role.
 - **Helper-layer misplacement**: a helper artifact quietly becomes source of truth for a core layer without being promoted or referenced correctly.
+- **Validation-layer sprawl**: a repair adds another check script, fallback reference, or verification name even though the current validation chain already had a natural owner.
 
 Start with a repair expansion pass before deciding that only one of these dimensions matters.
 
@@ -41,6 +42,27 @@ Typical escalation candidates include:
 - repeated findings that keep showing up across skills or repos
 - findings whose durable fix appears to belong in a higher governance rule
 - findings where local repair is clear but reusable prevention still feels unresolved
+
+## Long-Term Maintenance Discipline
+
+Use these rules when the skill is already in a stable long-term maintenance phase:
+
+- preserve owner boundaries before polishing convenience:
+  - protocol owners should keep owning protocol
+  - helper scripts should keep supporting owned behavior
+  - smoke harnesses should keep proving runtime behavior
+- do not repair drift by promoting support layers:
+  - a helper should not become a new source of truth
+  - a fallback router should not become a new main workflow
+  - a self-check should not become a broad verification umbrella unless its owner job truly changed
+- prefer the existing validation chain over new entrypoints:
+  - if bundle checks, validators, proof helpers, or smoke self-checks already exist, use them in the right order before inventing another named check
+  - if a repair still feels like it needs a brand-new validation layer, stop and ask whether the real issue is redesign pressure
+- treat helper wording drift as real maintenance work, but keep the fix local:
+  - repair the output shape, refusal boundary, or shared parsing logic
+  - do not rename that repair into a new protocol or lifecycle role
+
+These are maintenance rules, not a new workflow. Keep them inside the existing repair owners.
 
 ## Capability Preservation
 
@@ -184,6 +206,8 @@ When part of the repair is repetitive, mechanical, and stable, prefer a local sc
 
 Keep script output compact so the workflow consumes a summary, not a raw dump.
 
+Do not read this as permission to create a new check script by default. First ask whether an existing deterministic check already owns that surface.
+
 ### 11. Recover A Sharp Core Surface
 
 When a skill used to feel decisive and now feels mushy:
@@ -230,6 +254,18 @@ Do not stop at boundary ownership alone. Ask about each component:
 
 If the component cannot justify its existence beyond "it seems like a useful category", cut, merge, or downgrade it.
 
+### 15. Keep Validation Layers From Growing Sideways
+
+When a repair touches validation or helper behavior:
+
+- ask which existing owner already covers this layer
+- keep helper-to-helper coupling inside the existing helper pair instead of inventing a third mediator
+- keep runtime smoke self-checks focused on runtime smoke
+- keep protocol validation focused on protocol validation
+- if a new file would exist only to restate current repair discipline, merge that discipline back into the current owner
+
+If the cleanest fix still needs a new owner, that is redesign pressure, not ordinary maintenance.
+
 ## High-Risk Changes
 
 Treat these as risky and add explicit regression scenarios:
@@ -244,6 +280,7 @@ Treat these as risky and add explicit regression scenarios:
 - leaving renamed or moved files inconsistent across the bundle
 - weakening confirmation gates or execution labels while simplifying wording
 - deepening every dimension because one dimension failed
+- creating a new helper, validation, or reference layer when the repair could have stayed inside an existing owner
 - removing routing guidance for neighboring workflows
 - splitting or merging skills
 

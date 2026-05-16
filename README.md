@@ -12,7 +12,7 @@ These skills are designed to be small, composable, and easy to install into diff
 - [`skill-governance-escalation`](./skills/skill-governance-escalation/SKILL.md): Explicitly auto-audits a concrete issue first, classifies it as local-only, provisional candidate, or promote-now, and escalates only the findings that suggest reusable upstream causes.
 - [`skill-referee`](./skills/skill-referee/SKILL.md): Referees responsibility boundaries between skills across any domain, using metadata-first discovery and controlled review depth.
 - [`skill-architect`](./skills/skill-architect/SKILL.md): Locks one skill's kernel first, turns it into an initializer-neutral build brief protocol, and only then designs the lightest structure that teaches and protects it so you do not ship a skill that looks complete but has no core.
-- [`skill-maintain`](./skills/skill-maintain/SKILL.md): Audits and repairs one existing skill through modular checks for portability, language consistency, kernel drift, output contracts, interaction intensity, bundle integrity, authority boundaries, structure, routing, companion format-file opportunities, and token/context cost without taking over multi-skill boundary design.
+- [`skill-maintain`](./skills/skill-maintain/SKILL.md): Repairs drift in one existing skill without redefining its role or kernel, using audit-first checks for portability, language consistency, kernel drift, output contracts, interaction intensity, bundle integrity, authority boundaries, structure, routing, companion format-file opportunities, and token/context cost.
 
 ## Product Workflow
 
@@ -178,20 +178,20 @@ These governance skills solve different layers of the same problem:
   - Output: the kernel sentence, trigger boundary, first move, strongest thing, wrong-scope sentence, minimal shape, component decisions, do-not-add rules, validation starter, and initializer handoff.
   - This is the pre-create enhancer: the right place to freeze what a downstream initializer should initialize and what it should not invent. Validation support, canonical examples, wrapper examples, and repo-local proof stay subordinate to that brief-owner role.
 - `skill-maintain`
-  - Use when one existing skill already exists and needs an audit or repair.
+  - Use when one existing skill has drift and needs repair without redefining its role or kernel.
   - Output: focused repairs for portability, structure, routing, kernel drift, output contracts, safety, bundle consistency, format-file opportunities, format-file quality, or token cost.
   - It stays independently usable even if no higher-layer governance review workflow is available in the current environment.
-  - This is not the right tool for deciding whether multiple skills should be split, merged, or rerouted from scratch, or for redefining one skill's role or build brief protocol from scratch.
+  - This is not the right tool for deciding whether multiple skills should be split, merged, or rerouted from scratch, for redefining one skill's role or build brief protocol from scratch, or for turning one local repair into a multi-layer governance review.
 
 The most common skill-management paths are:
 
-1. If one existing skill already needs an audit or repair, use `skill-maintain`.
-2. If that audit reveals a suspected reusable upstream cause, optionally escalate with a higher-layer governance review workflow.
+1. If one existing skill has drift and needs repair without redefining its role or kernel, use `skill-maintain`.
+2. If that repair-first audit reveals a suspected reusable upstream cause, optionally escalate with a higher-layer governance review workflow.
 3. If the main job is generic initialization or quick scaffolding, start with a native creator or other initializer workflow.
 4. If the real problem is boundary confusion between skills, use `skill-referee`.
 5. Once one skill's boundary is clear, use `skill-architect` to lock the kernel first, produce the build brief, and freeze the minimal shape.
 6. Hand that brief to a native creator, manual bootstrap flow, or repo-local initializer without reopening the kernel.
-7. If the created skill later drifts, use `skill-maintain` to repair it without silently redefining the brief.
+7. If the created skill later drifts, use `skill-maintain` to repair that drift without silently redefining the brief.
 
 This phase does not try to make generic prompts such as "help me make a skill" route to `skill-architect` by default. If those prompts still hit a generic skill creator first, that is expected rather than a defect in this bundle.
 
@@ -204,7 +204,7 @@ Many mature skills use companion format files in `references/` for repeated high
 The rule of thumb is:
 
 - use `skill-architect` to decide whether a format file should exist
-- use `skill-maintain` to check whether a format file is missing, bloated, vague, ritualized, or drifted from the parent skill
+- use `skill-maintain` to check whether a format file is missing, bloated, vague, ritualized, or drifted from the parent skill while keeping the parent skill's role and kernel stable
 
 High-quality format files should stay short, define when to use them, define when not to use them, distinguish required structure from optional detail, and stay aligned with the parent skill's artifact contract.
 
