@@ -110,6 +110,10 @@ Load `references/interaction.md` only when:
 - there are too many plausible owners to narrow honestly from the current context
 - an explicit depth, scope, or cost choice is needed before the ruling can be trusted
 
+When the question is how to prove the changed ruling behavior with the cheapest useful live smoke, load `references/runtime-smoke-harness.md` first.
+
+For narrow validation of ruling behavior after deterministic bundle checks, load `references/minimal-smoke-prompts.md`.
+
 ## Output
 
 Default to a short ruling in the user's language:

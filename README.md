@@ -170,7 +170,7 @@ These governance skills solve different layers of the same problem:
   - It auto-audits first, then escalates only the findings that warrant reusable upstream repair, and it can emit durable governance candidates without polluting project repos or skill bundles.
 
 - `skill-referee`
-  - Use when 2 or more skills may plausibly own the same request and you need a metadata-first owner ruling before redesign or repair.
+  - Use when 2 or more skills may plausibly own the same request and you need metadata-first owner arbitration for ambiguous ownership before redesign or repair.
   - Output: `Primary Owner`, `Do Not Use`, and a handoff rule for the situation being judged.
   - Best used before redesigning one specific skill when the real uncertainty is still who should own the work.
 - `skill-architect`
@@ -188,8 +188,8 @@ The most common skill-management paths are:
 1. If one existing skill has drift and needs repair without redefining its role or kernel, use `skill-maintain`.
 2. If that repair-first audit reveals a suspected reusable upstream cause, optionally escalate with a higher-layer governance review workflow.
 3. If the main job is generic initialization or quick scaffolding, start with a native creator or other initializer workflow.
-4. If the real problem is ambiguous ownership or handoff between skills, use `skill-referee`.
-5. Once one skill's boundary is clear, use `skill-architect` to lock the kernel first, produce the build brief, and freeze the minimal shape.
+4. If the real problem is ambiguous ownership or handoff between skills, use `skill-referee` to settle owner arbitration first.
+5. Once that ownership question is clear, use `skill-architect` to lock the kernel first, produce the build brief, and freeze the minimal shape.
 6. Hand that brief to a native creator, manual bootstrap flow, or repo-local initializer without reopening the kernel.
 7. If the created skill later drifts, use `skill-maintain` to repair that drift without silently redefining the brief.
 

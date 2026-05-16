@@ -232,45 +232,73 @@ check_agent_metadata() {
 check_primary_surface_contract() {
   [[ -f "$skill_file" ]] || return 0
 
-  local skill_text prompt_text output_contract_file output_text
+  local skill_text prompt_text output_contract_file output_text combined_text
   skill_text="$(cat "$skill_file")"
   prompt_text=""
   output_contract_file="$references_dir/output-contracts.md"
   output_text=""
 
-  if ! printf '%s' "$skill_text" | rg -qi 'maintenance verdict'; then
-    add_warning "semantic-drift" "SKILL.md does not visibly mention the default maintenance verdict on the primary surface"
-  fi
-
   if [[ -f "$agent_file" ]]; then
     prompt_text="$(extract_default_prompt "$agent_file")"
-    if [[ -n "$prompt_text" ]]; then
-      if ! printf '%s' "$prompt_text" | rg -qi 'maintenance verdict'; then
-        add_warning "semantic-drift" "agents/openai.yaml default_prompt may be missing the default maintenance verdict contract"
-      fi
-      if ! printf '%s' "$prompt_text" | rg -Fq '$skill-architect'; then
-        add_warning "semantic-drift" "agents/openai.yaml default_prompt may be missing the handoff route to \$skill-architect"
-      fi
-      if ! printf '%s' "$prompt_text" | rg -Fq '$skill-referee'; then
-        add_warning "semantic-drift" "agents/openai.yaml default_prompt may be missing the handoff route to \$skill-referee"
-      fi
-      if ! printf '%s' "$prompt_text" | rg -Fq '$skill-governance-escalation'; then
-        add_warning "semantic-drift" "agents/openai.yaml default_prompt may be missing the handoff route to \$skill-governance-escalation"
-      fi
-    fi
   fi
+  combined_text="$(printf '%s\n%s\n' "$skill_text" "$prompt_text")"
 
-  if [[ -f "$output_contract_file" ]]; then
-    output_text="$(cat "$output_contract_file")"
-    if printf '%s' "$output_text" | rg -qi 'default output contract is a `?maintenance verdict`?|default output .*maintenance verdict'; then
+  case "$skill_name" in
+    skill-maintain)
       if ! printf '%s' "$skill_text" | rg -qi 'maintenance verdict'; then
-        add_warning "semantic-drift" "references/output-contracts.md declares the default maintenance verdict, but SKILL.md does not visibly mirror it"
+        add_warning "semantic-drift" "SKILL.md does not visibly mention the default maintenance verdict on the primary surface"
       fi
-      if [[ -f "$agent_file" && -n "$prompt_text" ]] && ! printf '%s' "$prompt_text" | rg -qi 'maintenance verdict'; then
-        add_warning "semantic-drift" "references/output-contracts.md declares the default maintenance verdict, but agents/openai.yaml default_prompt does not visibly mirror it"
+
+      if [[ -n "$prompt_text" ]]; then
+        if ! printf '%s' "$prompt_text" | rg -qi 'maintenance verdict'; then
+          add_warning "semantic-drift" "agents/openai.yaml default_prompt may be missing the default maintenance verdict contract"
+        fi
+        if ! printf '%s' "$prompt_text" | rg -Fq '$skill-architect'; then
+          add_warning "semantic-drift" "agents/openai.yaml default_prompt may be missing the handoff route to \$skill-architect"
+        fi
+        if ! printf '%s' "$prompt_text" | rg -Fq '$skill-referee'; then
+          add_warning "semantic-drift" "agents/openai.yaml default_prompt may be missing the handoff route to \$skill-referee"
+        fi
+        if ! printf '%s' "$prompt_text" | rg -Fq '$skill-governance-escalation'; then
+          add_warning "semantic-drift" "agents/openai.yaml default_prompt may be missing the handoff route to \$skill-governance-escalation"
+        fi
       fi
-    fi
-  fi
+
+      if [[ -f "$output_contract_file" ]]; then
+        output_text="$(cat "$output_contract_file")"
+        if printf '%s' "$output_text" | rg -qi 'default output contract is a `?maintenance verdict`?|default output .*maintenance verdict'; then
+          if ! printf '%s' "$skill_text" | rg -qi 'maintenance verdict'; then
+            add_warning "semantic-drift" "references/output-contracts.md declares the default maintenance verdict, but SKILL.md does not visibly mirror it"
+          fi
+          if [[ -n "$prompt_text" ]] && ! printf '%s' "$prompt_text" | rg -qi 'maintenance verdict'; then
+            add_warning "semantic-drift" "references/output-contracts.md declares the default maintenance verdict, but agents/openai.yaml default_prompt does not visibly mirror it"
+          fi
+        fi
+      fi
+      ;;
+    skill-referee)
+      if ! printf '%s' "$combined_text" | rg -qi 'metadata-first (owner )?ruling|(owner )?ruling.*metadata-first'; then
+        add_warning "semantic-drift" "Primary surface does not visibly state the metadata-first owner ruling contract"
+      fi
+      if ! printf '%s' "$skill_text" | rg -Fq 'Primary Owner'; then
+        add_warning "semantic-drift" "SKILL.md does not visibly expose \`Primary Owner\` on the ruling surface"
+      fi
+      if ! printf '%s' "$skill_text" | rg -Fq 'Handoff Rule'; then
+        add_warning "semantic-drift" "SKILL.md does not visibly expose \`Handoff Rule\` on the ruling surface"
+      fi
+      if [[ -n "$prompt_text" ]]; then
+        if ! printf '%s' "$prompt_text" | rg -Fq '$skill-architect'; then
+          add_warning "semantic-drift" "agents/openai.yaml default_prompt may be missing the handoff route to \$skill-architect"
+        fi
+        if ! printf '%s' "$prompt_text" | rg -Fq '$skill-maintain'; then
+          add_warning "semantic-drift" "agents/openai.yaml default_prompt may be missing the handoff route to \$skill-maintain"
+        fi
+        if ! printf '%s' "$prompt_text" | rg -Fq '$skill-governance-escalation'; then
+          add_warning "semantic-drift" "agents/openai.yaml default_prompt may be missing the handoff route to \$skill-governance-escalation"
+        fi
+      fi
+      ;;
+  esac
 
   return 0
 }
