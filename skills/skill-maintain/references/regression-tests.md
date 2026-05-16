@@ -12,6 +12,8 @@ Primary failure mode:
 Capability baseline:
 - Must still trigger for:
 - Must still refuse or route away for:
+- Must still distinguish maintenance from redesign:
+- Must still hand off reusable upstream causes explicitly:
 - Must preserve safety/confirmation/evidence/persistence:
 - Must preserve output/artifact quality:
 - Must preserve user-facing language, labels, tone, and interaction style:
@@ -25,6 +27,9 @@ Regression scenarios:
 5. Reported failure path:
 6. Neighboring-workflow path:
 7. Language/style preservation path:
+8. Verdict-shape path:
+9. Redesign-handoff path:
+10. Governance-handoff path:
 
 Validation method:
 - Run:
@@ -60,7 +65,7 @@ Repair depth:
 
 Use a prompt that clearly should trigger the target skill and exercise its core workflow.
 
-Pass if the repaired skill still produces the expected kind of plan, action, artifact, or answer with no missing mandatory step.
+Pass if the repaired skill still produces the expected kind of plan, action, artifact, or answer with no missing mandatory step, including a complete maintenance verdict when that is the default output.
 
 ### Wrong Scope
 
@@ -92,6 +97,24 @@ Use prompts that could trigger nearby workflows such as skill design or skill bo
 
 Pass if routing boundaries are explicit and the repaired skill neither disappears from valid cases nor triggers on invalid ones.
 
+### Verdict-Shape Path
+
+Use a prompt that should stay inside maintenance and require the default verdict.
+
+Pass if the repaired skill produces stable sections for drift diagnosis, repair depth, maintenance judgment, handoff, proof, and residual risk without drifting into protocol or governance-report shape.
+
+### Redesign-Handoff Path
+
+Use a prompt where fixing the issue would redefine the skill's role or kernel.
+
+Pass if the repaired skill routes to `skill-architect` instead of pretending the work is still ordinary maintenance.
+
+### Governance-Handoff Path
+
+Use a prompt where the local repair is clear but the same pattern plausibly reflects a reusable upstream cause.
+
+Pass if the repaired skill keeps the local maintenance path explicit and then points to `skill-governance-escalation`.
+
 ### Bundle-Integrity Path
 
 Use a prompt where the issue spans more than one file in the same skill bundle: stale agent metadata, orphaned reference, broken load condition, or renamed mode not propagated everywhere.
@@ -113,6 +136,7 @@ Use these when the change is moderate or risky:
 - run scripts or linters for skill layout, links, YAML, or generated metadata
 - check that moved content is linked from `SKILL.md` with a clear load condition
 - re-run one real transcript or failure case that motivated the repair
+- check that the default verdict still localizes visible labels while preserving technical tokens
 
 ## Minimal Live Smoke
 
@@ -124,9 +148,13 @@ A repair is complete only when:
 
 - each baseline capability has at least one passing scenario
 - the reported failure mode has a passing scenario
+- the default maintenance verdict has at least one passing scenario
+- redesign handoff has at least one passing scenario
+- governance handoff has at least one passing scenario
 - breadth coverage was explicit rather than assumed
 - repair depth was intentional rather than accidental
 - any skipped test has a concrete reason
 - no mandatory rule was silently deleted
 - user-facing language and interaction style did not regress
+- verdict structure stayed stable across the tested language mode
 - the final report states residual risk and confidence

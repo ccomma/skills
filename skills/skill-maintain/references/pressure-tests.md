@@ -65,9 +65,49 @@ Evidence to check: a weaker model could identify the first move quickly.
 ```text
 Scenario: output-contract drift
 Prompt: This skill used to produce a fixed report shape, but now labels and required sections are inconsistent. Repair it.
-Expected behavior: restore the minimum stable output contract.
-Must not: overfit wording while leaving the real contract vague.
-Evidence to check: required sections, labels, and acceptance checks are explicit again.
+Expected behavior: restore the minimum stable maintenance verdict with explicit drift diagnosis, repair depth, maintenance judgment, handoff, proof, and residual risk.
+Must not: overfit wording while leaving the real contract vague, or turn the verdict into a protocol or governance report.
+Evidence to check: required verdict sections, labels, and acceptance checks are explicit again.
+```
+
+```text
+Scenario: missing maintenance judgment
+Prompt: This skill produces a tidy-looking answer, but it never says whether the issue still belongs in maintenance or has crossed into redesign. Repair it.
+Expected behavior: make maintenance-vs-redesign judgment explicit as part of the default verdict.
+Must not: leave the judgment implicit or hide it inside vague prose.
+Evidence to check: the repaired output contract names the judgment as a stable part of the verdict.
+```
+
+```text
+Scenario: governance-cause ambiguity
+Prompt: The local repair is obvious, but the same drift may reflect a reusable upstream failure mode across repos. Repair it.
+Expected behavior: keep the local maintenance path explicit and then hand off to `skill-governance-escalation` when the reusable cause matters.
+Must not: collapse the answer into a governance report or skip the local maintenance locus.
+Evidence to check: the repaired workflow distinguishes local maintenance from governance escalation.
+```
+
+```text
+Scenario: verdict turned into protocol
+Prompt: This skill now answers with fixed English field labels and rigid schema language that read like a build-brief protocol. Repair it.
+Expected behavior: restore a localized maintenance verdict with stable section semantics rather than a protocol instance.
+Must not: keep the verdict in build-brief or protocol-owner shape.
+Evidence to check: visible labels can localize while the verdict sections stay stable.
+```
+
+```text
+Scenario: verdict turned into governance report
+Prompt: This skill now emits a long multi-layer governance report with escalation-first framing even for ordinary local drift. Repair it.
+Expected behavior: shrink the output back to a maintenance verdict and reserve governance-report structure for `skill-governance-escalation`.
+Must not: keep governance-report sections as the default maintenance output.
+Evidence to check: the repaired contract is clearly local maintenance first.
+```
+
+```text
+Scenario: localized labels but unstable structure
+Prompt: In Chinese sessions this skill localizes every label differently from run to run, so the verdict shape keeps drifting. Repair it.
+Expected behavior: keep section semantics and ordering stable while letting visible labels follow the session language.
+Must not: solve localization drift by forcing English-only output.
+Evidence to check: the verdict is stable in shape and still localized.
 ```
 
 ```text
@@ -153,7 +193,7 @@ Evidence to check: the audit distinguishes enforced principles from unsupported 
 ```text
 Scenario: repair has become redesign
 Prompt: This repair now touches structure, routing, output contract, references, and authority all at once. Audit whether we are still in maintenance.
-Expected behavior: flag that the patch may have crossed from maintenance into redesign, and require an explicit justification if it continues as maintenance.
+Expected behavior: flag that the patch may have crossed from maintenance into redesign, require an explicit justification if it continues as maintenance, and refuse to hide the judgment inside a vague verdict.
 Must not: silently normalize a redesign-sized patch as "small repair".
 Evidence to check: the audit names the mode-sprawl and either narrows it or escalates it.
 ```
@@ -266,6 +306,7 @@ Evidence to check: the audit covers SKILL.md, references, scripts, format files,
 
 - Did the repair stay inside one existing skill?
 - Was the reported failure mode fixed directly?
+- Did the default maintenance verdict stay distinct from protocol and governance-report shapes?
 - Did the repair restore a teachable kernel instead of only producing a tidier structure?
 - Can the repaired skill now state its kernel sentence, strongest thing, and wrong-scope sentence clearly?
 - Did the repair restore durable skill properties instead of only reducing visible clutter?
@@ -274,6 +315,8 @@ Evidence to check: the audit covers SKILL.md, references, scripts, format files,
 - Did the repair remove section-ownership collisions instead of merely moving them around?
 - Did the skill avoid taking over multi-skill conflict resolution?
 - Did output shape and labels become stable again when that was the problem?
+- Did the verdict make maintenance-vs-redesign judgment explicit?
+- Did the verdict make governance handoff explicit when needed?
 - Did interaction pressure become better matched to ambiguity and risk?
 - Did the repair scan adjacent dimensions before committing scope?
 - Did the repair interrogate the whole bundle, not only section boundaries or reference openings?

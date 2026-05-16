@@ -179,7 +179,7 @@ These governance skills solve different layers of the same problem:
   - This is the pre-create enhancer: the right place to freeze what a downstream initializer should initialize and what it should not invent. Validation support, canonical examples, wrapper examples, and repo-local proof stay subordinate to that brief-owner role.
 - `skill-maintain`
   - Use when one existing skill has drift and needs repair without redefining its role or kernel.
-  - Output: focused repairs for portability, structure, routing, kernel drift, output contracts, safety, bundle consistency, format-file opportunities, format-file quality, or token cost.
+  - Output: a default `maintenance verdict` for focused drift repairs across portability, structure, routing, kernel drift, output contracts, safety, bundle consistency, format-file opportunities, format-file quality, or token cost.
   - It stays independently usable even if no higher-layer governance review workflow is available in the current environment.
   - This is not the right tool for deciding whether multiple skills should be split, merged, or rerouted from scratch, for redefining one skill's role or build brief protocol from scratch, or for turning one local repair into a multi-layer governance review.
 
