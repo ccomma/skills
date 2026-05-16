@@ -1,4 +1,4 @@
 interface:
   display_name: "Skill Referee"
-  short_description: "Referee skill overlaps and routing rules."
-  default_prompt: "Use $skill-referee to check available skills in any domain for overlap, conflicts, trigger ambiguity, or convention mismatches. It will ask fixed-scope questions, inspect metadata first, then deep-read only confirmed skills."
+  short_description: "Settles ambiguous skill ownership and handoff rules."
+  default_prompt: "Use $skill-referee when 2 or more skills may own the same request and you need a metadata-first owner ruling plus handoff rule. Start with descriptions, trigger-contract wording, visible exclusions, inputs, outputs, touched assets, and authority level. Only deep-read skill bodies if the ruling stays ambiguous. Load the interaction reference only when the user explicitly wants audit or batch comparison, or when explicit scope, cost, or depth choices are needed. If one skill's boundary is already clear and the remaining work is internal redesign, hand off to $skill-architect. If the issue is single-skill drift, hand off to $skill-maintain. If the local issue is clear but points to a reusable upstream cause, hand off to $skill-governance-escalation."
