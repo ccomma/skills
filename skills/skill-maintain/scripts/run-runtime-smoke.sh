@@ -79,6 +79,55 @@ runtime_supports_isolated_home() {
   [[ "$target_runtime" == "codex" && "$target_mode" == "lean-cli" ]]
 }
 
+die_codex_preflight() {
+  local message="$1"
+  printf '%b\n' "$message" >&2
+  exit 2
+}
+
+validate_runtime_selection() {
+  case "$runtime" in
+    codex|direct)
+      ;;
+    *)
+      die "Unsupported runtime adapter: $runtime"
+      ;;
+  esac
+
+  if ! runtime_exists "$runtime"; then
+    if [[ "$runtime" == "codex" ]]; then
+      die_codex_preflight "codex adapter preflight failed: the 'codex' command is not installed.\nThis is a codex adapter availability problem, not a skill-maintain contract failure.\nNext step: keep deterministic checks, use direct-pack, or switch to an environment where codex is available."
+    fi
+    die "$runtime is not installed"
+  fi
+
+  if ! runtime_supports_mode "$runtime" "$mode"; then
+    case "$runtime" in
+      codex)
+        die_codex_preflight "codex adapter preflight failed: mode '$mode' is not valid for runtime '$runtime'.\nThe codex adapter supports only 'lean-cli' and 'full-cli'.\nNext step: rerun with '--mode lean-cli' or '--mode full-cli'."
+        ;;
+      direct)
+        die "Runtime adapter '$runtime' does not support mode '$mode'. Use '--mode direct-pack'."
+        ;;
+    esac
+  fi
+}
+
+validate_codex_live_preflight() {
+  local repo_root_check auth_path
+
+  if ! repo_root_check="$(git -C "$workdir" rev-parse --show-toplevel 2>&1)"; then
+    die_codex_preflight "codex adapter preflight failed: workdir '$workdir' is not inside a trusted Git directory.\nGit said: $repo_root_check\nThis is a codex adapter runtime constraint, not a skill-maintain contract failure.\nNext step: rerun with a workdir inside a trusted Git repository, or stop at deterministic checks / direct-pack instead of codex live smoke."
+  fi
+
+  if runtime_supports_isolated_home "$runtime" "$mode" && [[ "$use_isolated_home" == "true" ]]; then
+    auth_path="${CODEX_HOME:-$HOME/.codex}/auth.json"
+    if [[ ! -f "$auth_path" ]]; then
+      printf '%s\n' "codex adapter note: '$auth_path' was not found, so isolated-home live smoke may still fail later if this environment is not already authenticated." >&2
+    fi
+  fi
+}
+
 runtime=""
 mode="lean-cli"
 workdir=""
@@ -172,16 +221,7 @@ case "$mode" in
     ;;
 esac
 
-case "$runtime" in
-  codex|direct)
-    ;;
-  *)
-    die "Unsupported runtime adapter: $runtime"
-    ;;
-esac
-
-runtime_exists "$runtime" || die "$runtime is not installed"
-runtime_supports_mode "$runtime" "$mode" || die "Runtime adapter '$runtime' does not support mode '$mode'"
+validate_runtime_selection
 
 case "$pack_format" in
   markdown|json)
@@ -385,6 +425,8 @@ run_codex() {
     emit_codex_dry_run "$current_skill_root" "$current_skill_name" "$composed_prompt"
     return 0
   fi
+
+  validate_codex_live_preflight
 
   if runtime_supports_isolated_home "$runtime" "$mode" && [[ "$use_isolated_home" == "true" ]]; then
     smoke_home="$(mktemp -d "${TMPDIR:-/tmp}/codex-smoke-home.XXXXXX")"

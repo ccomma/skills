@@ -149,11 +149,60 @@ assert second["uses_isolated_home"] is False
 PY
 }
 
+check_invalid_runtime_combinations() {
+  local invalid_output
+
+  if invalid_output="$("$runner" \
+    --runtime direct \
+    --mode lean-cli \
+    --workdir "$tmpdir/work" \
+    --prompt-file "$tmpdir/prompt.txt" \
+    --output-file "$tmpdir/invalid.txt" 2>&1)"; then
+    printf '%s\n' "expected direct + lean-cli to fail preflight" >&2
+    return 1
+  fi
+  printf '%s' "$invalid_output" | rg -q "does not support mode 'lean-cli'"
+
+  if invalid_output="$("$runner" \
+    --runtime direct \
+    --mode direct-pack \
+    --dry-run \
+    --workdir "$tmpdir/work" \
+    --prompt-file "$tmpdir/prompt.txt" \
+    --pass-file "$tmpdir/pass.txt" \
+    --output-file "$tmpdir/invalid.txt" 2>&1)"; then
+    printf '%s\n' "expected direct + dry-run to fail preflight" >&2
+    return 1
+  fi
+  printf '%s' "$invalid_output" | rg -q -- "--dry-run is supported only with --runtime codex"
+}
+
+check_codex_trusted_workdir_preflight() {
+  local nonrepo_dir invalid_output
+  nonrepo_dir="$(mktemp -d "${TMPDIR:-/tmp}/skill-maintain-nonrepo.XXXXXX")"
+
+  if invalid_output="$("$runner" \
+    --runtime codex \
+    --mode lean-cli \
+    --workdir "$nonrepo_dir" \
+    --prompt-file "$tmpdir/prompt.txt" \
+    --context-file "$tmpdir/context.txt" \
+    --output-file "$tmpdir/should-not-exist.txt" 2>&1)"; then
+    printf '%s\n' "expected codex trusted-workdir preflight to fail" >&2
+    return 1
+  fi
+  printf '%s' "$invalid_output" | rg -q "not inside a trusted Git directory"
+  printf '%s' "$invalid_output" | rg -q "not a skill-maintain contract failure"
+  rm -rf "$nonrepo_dir"
+}
+
 check_harness_baseline
 printf 'runtime smoke baseline passed for skill-maintain\n'
+check_invalid_runtime_combinations
 
 if adapter_exists codex; then
   check_codex_adapter
+  check_codex_trusted_workdir_preflight
   validated_adapters+=("codex")
   printf 'codex adapter self-check passed for skill-maintain\n'
 else
