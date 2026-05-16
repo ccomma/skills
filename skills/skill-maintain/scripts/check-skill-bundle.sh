@@ -209,6 +209,52 @@ check_agent_metadata() {
   fi
 }
 
+check_primary_surface_contract() {
+  [[ -f "$skill_file" ]] || return 0
+
+  local skill_text prompt_text output_contract_file output_text
+  skill_text="$(cat "$skill_file")"
+  prompt_text=""
+  output_contract_file="$references_dir/output-contracts.md"
+  output_text=""
+
+  if ! printf '%s' "$skill_text" | rg -qi 'maintenance verdict'; then
+    add_warning "semantic-drift" "SKILL.md does not visibly mention the default maintenance verdict on the primary surface"
+  fi
+
+  if [[ -f "$agent_file" ]]; then
+    prompt_text="$(extract_default_prompt "$agent_file")"
+    if [[ -n "$prompt_text" ]]; then
+      if ! printf '%s' "$prompt_text" | rg -qi 'maintenance verdict'; then
+        add_warning "semantic-drift" "agents/openai.yaml default_prompt may be missing the default maintenance verdict contract"
+      fi
+      if ! printf '%s' "$prompt_text" | rg -Fq '$skill-architect'; then
+        add_warning "semantic-drift" "agents/openai.yaml default_prompt may be missing the handoff route to \$skill-architect"
+      fi
+      if ! printf '%s' "$prompt_text" | rg -Fq '$skill-referee'; then
+        add_warning "semantic-drift" "agents/openai.yaml default_prompt may be missing the handoff route to \$skill-referee"
+      fi
+      if ! printf '%s' "$prompt_text" | rg -Fq '$skill-governance-escalation'; then
+        add_warning "semantic-drift" "agents/openai.yaml default_prompt may be missing the handoff route to \$skill-governance-escalation"
+      fi
+    fi
+  fi
+
+  if [[ -f "$output_contract_file" ]]; then
+    output_text="$(cat "$output_contract_file")"
+    if printf '%s' "$output_text" | rg -qi 'default output contract is a `?maintenance verdict`?|default output .*maintenance verdict'; then
+      if ! printf '%s' "$skill_text" | rg -qi 'maintenance verdict'; then
+        add_warning "semantic-drift" "references/output-contracts.md declares the default maintenance verdict, but SKILL.md does not visibly mirror it"
+      fi
+      if [[ -f "$agent_file" && -n "$prompt_text" ]] && ! printf '%s' "$prompt_text" | rg -qi 'maintenance verdict'; then
+        add_warning "semantic-drift" "references/output-contracts.md declares the default maintenance verdict, but agents/openai.yaml default_prompt does not visibly mirror it"
+      fi
+    fi
+  fi
+
+  return 0
+}
+
 check_local_links() {
   local file rel target
   while IFS=$'\t' read -r file rel; do
@@ -499,6 +545,7 @@ check_hidden_junk
 [[ -f "$skill_file" ]] && check_frontmatter_yaml
 [[ -f "$skill_file" ]] && check_frontmatter_name
 check_agent_metadata
+check_primary_surface_contract
 [[ -f "$skill_file" ]] && check_local_links
 check_references_reachable
 check_reference_openings

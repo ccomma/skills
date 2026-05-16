@@ -20,6 +20,7 @@ Repair drift in one existing skill without redefining its role or kernel.
    - what public boundary or bundle contract it must preserve
 
 2. Audit for the drift that hurts first-read usability most:
+   - state the drift in a way that can close back into the default `maintenance verdict`, not just into an isolated wording patch
    - the first 20-30 lines do not tell the model what to do
    - trigger is blurry or repeated
    - the kernel is still implicit even though the structure looks complete
@@ -49,6 +50,7 @@ Repair drift in one existing skill without redefining its role or kernel.
    - script-layer repair
    - bundle-wide patch
    - explicit defer
+   - make the chosen repair depth and any required handoff judgment explicit enough to land cleanly in the final `maintenance verdict`
    - if the patch would span too many modes, would introduce a new owner layer, or would redefine the skill's role or kernel rather than repair drift around it, stop and ask whether this is really redesign rather than maintenance
 
 4. Rewrite the hot path first:
@@ -100,6 +102,13 @@ Repair drift in one existing skill without redefining its role or kernel.
      - feed changed snippets or tiny context extracts first when they are enough; do not default to full-file reads
      - disable unrelated rules, memory, plugins, or other ambient context when the runtime allows it
      - keep the live prompt tiny and limited to one repair judgment unless the changed dimension is still ambiguous
+   - close out with the default `maintenance verdict` unless the task explicitly asks for a different artifact:
+     - drift diagnosis
+     - repair depth
+     - maintenance vs redesign judgment
+     - handoff judgment
+     - proof
+     - residual risk or confidence
    - close the loop:
      - if live smoke exposes one in-scope issue, repair it and rerun the narrowest proving smoke
      - stop when the smallest sufficient smoke is clean; otherwise defer or escalate explicitly
@@ -166,7 +175,6 @@ For repair ownership:
 For narrower repair depth:
 - load `references/interaction-intensity.md`
 - load `references/language-and-portability.md`
-- load `references/output-contracts.md`
 - load `references/safety-and-authority.md`
 - load `references/token-optimization.md`
 - load `references/format-file-quality.md`
@@ -174,9 +182,10 @@ For narrower repair depth:
 only when the failure is clearly about that dimension
 
 For closeout:
+- load `references/output-contracts.md` as the default closeout contract owner
 - load `references/runtime-smoke-harness.md` when the question is how to run the cheapest useful live smoke or how to reduce runtime noise
-- load `references/minimal-smoke-prompts.md` for cheap narrow live checks
-- load `references/pressure-tests.md` before calling the repair mature
+- load `references/minimal-smoke-prompts.md` as the cheapest live proof owner
+- load `references/pressure-tests.md` and `references/regression-tests.md` as stronger proof owners before calling the repair mature
 
 If these groups still leave the next repair reference unclear, load `references/reference-routing.md` as the fallback router.
 
