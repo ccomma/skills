@@ -29,6 +29,56 @@ die() {
   exit 2
 }
 
+skill_root() {
+  cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd
+}
+
+skill_name() {
+  basename "$(skill_root)"
+}
+
+runtime_exists() {
+  local target_runtime="$1"
+  case "$target_runtime" in
+    codex)
+      command -v codex >/dev/null 2>&1
+      ;;
+    direct)
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
+runtime_supports_mode() {
+  local target_runtime="$1"
+  local target_mode="$2"
+  case "$target_runtime" in
+    direct)
+      [[ "$target_mode" == "direct-pack" ]]
+      ;;
+    codex)
+      [[ "$target_mode" == "lean-cli" || "$target_mode" == "full-cli" ]]
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
+runtime_supports_dry_run() {
+  local target_runtime="$1"
+  [[ "$target_runtime" == "codex" ]]
+}
+
+runtime_supports_isolated_home() {
+  local target_runtime="$1"
+  local target_mode="$2"
+  [[ "$target_runtime" == "codex" && "$target_mode" == "lean-cli" ]]
+}
+
 runtime=""
 mode="lean-cli"
 workdir=""
@@ -114,17 +164,6 @@ if (( context_file_count > 0 )); then
   done
 fi
 
-case "$runtime" in
-  codex)
-    command -v codex >/dev/null 2>&1 || die "codex is not installed"
-    ;;
-  direct)
-    ;;
-  *)
-    die "Unsupported runtime adapter: $runtime"
-    ;;
-esac
-
 case "$mode" in
   direct-pack|lean-cli|full-cli)
     ;;
@@ -132,6 +171,17 @@ case "$mode" in
     die "Unsupported mode: $mode"
     ;;
 esac
+
+case "$runtime" in
+  codex|direct)
+    ;;
+  *)
+    die "Unsupported runtime adapter: $runtime"
+    ;;
+esac
+
+runtime_exists "$runtime" || die "$runtime is not installed"
+runtime_supports_mode "$runtime" "$mode" || die "Runtime adapter '$runtime' does not support mode '$mode'"
 
 case "$pack_format" in
   markdown|json)
@@ -147,16 +197,15 @@ if [[ "$mode" == "direct-pack" ]]; then
 fi
 
 if [[ "$dry_run" == "true" ]]; then
-  [[ "$runtime" == "codex" ]] || die "--dry-run is supported only with --runtime codex"
+  runtime_supports_dry_run "$runtime" || die "--dry-run is supported only with --runtime codex"
   [[ "$mode" != "direct-pack" ]] || die "--dry-run does not support --mode direct-pack"
 fi
 
 emit_direct_pack() {
-  local skill_root skill_name
-  skill_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-  skill_name="$(basename "$skill_root")"
+  local current_skill_name
+  current_skill_name="$(skill_name)"
   if [[ "$pack_format" == "json" ]]; then
-    python3 - "$skill_name" "$workdir" "$prompt_file" "$pass_file" "${context_files[@]+"${context_files[@]}"}" > "$output_file" <<'PY'
+    python3 - "$current_skill_name" "$workdir" "$prompt_file" "$pass_file" "${context_files[@]+"${context_files[@]}"}" > "$output_file" <<'PY'
 import json
 import pathlib
 import sys
@@ -192,7 +241,7 @@ PY
   cat > "$output_file" <<EOF
 # Direct Smoke Pack
 
-- target skill: $skill_name
+- target skill: $current_skill_name
 - runtime class: direct-smoke
 - workdir: $workdir
 
@@ -246,10 +295,10 @@ compose_prompt() {
 }
 
 compose_codex_prompt() {
-  local skill_root="$1"
-  local skill_name="$2"
+  local current_skill_root="$1"
+  local current_skill_name="$2"
   cat <<EOF
-You are validating the target skill bundle \`$skill_name\` at \`$skill_root\`.
+You are validating the target skill bundle \`$current_skill_name\` at \`$current_skill_root\`.
 Read \`SKILL.md\` from this bundle first.
 Only if \`SKILL.md\` is insufficient for the current question, read \`references/output-contracts.md\`.
 Open other \`references/\` files only if the question is still unresolved after those two files.
@@ -260,16 +309,16 @@ EOF
 }
 
 emit_codex_dry_run() {
-  local skill_root="$1"
-  local skill_name="$2"
+  local current_skill_root="$1"
+  local current_skill_name="$2"
   local composed_prompt="$3"
   local uses_isolated_home="false"
 
-  if [[ "$mode" == "lean-cli" && "$use_isolated_home" == "true" ]]; then
+  if runtime_supports_isolated_home "$runtime" "$mode" && [[ "$use_isolated_home" == "true" ]]; then
     uses_isolated_home="true"
   fi
 
-  python3 - "$runtime" "$mode" "$skill_name" "$skill_root" "$workdir" "$uses_isolated_home" "$composed_prompt" "${cmd[@]}" > "$output_file" <<'PY'
+  python3 - "$runtime" "$mode" "$current_skill_name" "$current_skill_root" "$workdir" "$uses_isolated_home" "$composed_prompt" "${cmd[@]}" > "$output_file" <<'PY'
 import json
 import sys
 
@@ -298,13 +347,9 @@ sys.stdout.write("\n")
 PY
 }
 
-run_codex() {
-  local -a cmd
-  local skill_root skill_name smoke_home="" composed_prompt
-  skill_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-  skill_name="$(basename "$skill_root")"
-  composed_prompt="$(compose_codex_prompt "$skill_root" "$skill_name")"
-  cmd=(
+build_codex_command() {
+  local composed_prompt="$1"
+  adapter_cmd=(
     codex exec
     --ephemeral
     --ignore-user-config
@@ -315,7 +360,7 @@ run_codex() {
   )
 
   if [[ "$mode" == "lean-cli" ]]; then
-    cmd+=(
+    adapter_cmd+=(
       --disable plugins
       --disable apps
       --disable browser_use
@@ -324,14 +369,24 @@ run_codex() {
     )
   fi
 
-  cmd+=("$composed_prompt")
+  adapter_cmd+=("$composed_prompt")
+}
+
+run_codex() {
+  local -a cmd
+  local current_skill_root current_skill_name smoke_home="" composed_prompt
+  current_skill_root="$(skill_root)"
+  current_skill_name="$(skill_name)"
+  composed_prompt="$(compose_codex_prompt "$current_skill_root" "$current_skill_name")"
+  build_codex_command "$composed_prompt"
+  cmd=("${adapter_cmd[@]}")
 
   if [[ "$dry_run" == "true" ]]; then
-    emit_codex_dry_run "$skill_root" "$skill_name" "$composed_prompt"
+    emit_codex_dry_run "$current_skill_root" "$current_skill_name" "$composed_prompt"
     return 0
   fi
 
-  if [[ "$mode" == "lean-cli" && "$use_isolated_home" == "true" ]]; then
+  if runtime_supports_isolated_home "$runtime" "$mode" && [[ "$use_isolated_home" == "true" ]]; then
     smoke_home="$(mktemp -d "${TMPDIR:-/tmp}/codex-smoke-home.XXXXXX")"
     trap 'if [[ -n "${smoke_home:-}" ]]; then rm -rf "${smoke_home:-}"; fi' EXIT
     mkdir -p "$smoke_home/skills"
@@ -341,22 +396,23 @@ run_codex() {
     if [[ -f "${CODEX_HOME:-$HOME/.codex}/version.json" ]]; then
       cp "${CODEX_HOME:-$HOME/.codex}/version.json" "$smoke_home/version.json"
     fi
-    cp -R "$skill_root" "$smoke_home/skills/$skill_name"
+    cp -R "$current_skill_root" "$smoke_home/skills/$current_skill_name"
     HOME="$smoke_home" CODEX_HOME="$smoke_home" "${cmd[@]}"
-  else
-    "${cmd[@]}"
+    return 0
   fi
+
+  "${cmd[@]}"
 }
 
-case "$runtime" in
-  direct)
-    emit_direct_pack
-    ;;
-  codex)
-    if [[ "$mode" == "direct-pack" ]]; then
+run_runtime_adapter() {
+  case "$runtime" in
+    direct)
       emit_direct_pack
-    else
+      ;;
+    codex)
       run_codex
-    fi
-    ;;
-esac
+      ;;
+  esac
+}
+
+run_runtime_adapter

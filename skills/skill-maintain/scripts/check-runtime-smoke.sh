@@ -4,11 +4,6 @@ set -euo pipefail
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 runner="$script_dir/run-runtime-smoke.sh"
 
-codex_available="false"
-if command -v codex >/dev/null 2>&1; then
-  codex_available="true"
-fi
-
 tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/skill-maintain-runtime-smoke.XXXXXX")"
 trap 'rm -rf "$tmpdir"' EXIT
 
@@ -24,33 +19,71 @@ Changed snippet:
 - Keep generic governance text abstract.
 EOF
 
-bash -n "$runner"
+declare -a validated_adapters=()
+declare -a skipped_adapters=()
 
-"$runner" \
-  --runtime direct \
-  --mode direct-pack \
-  --workdir "$tmpdir/work" \
-  --prompt-file "$tmpdir/prompt.txt" \
-  --context-file "$tmpdir/context.txt" \
-  --pass-file "$tmpdir/pass.txt" \
-  --output-file "$tmpdir/pack.md"
+adapter_exists() {
+  local adapter_name="$1"
+  case "$adapter_name" in
+    codex)
+      command -v codex >/dev/null 2>&1
+      ;;
+    direct)
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
 
-rg -q '^# Direct Smoke Pack' "$tmpdir/pack.md"
-rg -q 'target skill: skill-maintain' "$tmpdir/pack.md"
-rg -q '^## Context' "$tmpdir/pack.md"
-rg -q 'Changed snippet:' "$tmpdir/pack.md"
+join_csv() {
+  if [[ $# -eq 0 ]]; then
+    printf 'none\n'
+    return 0
+  fi
 
-"$runner" \
-  --runtime direct \
-  --mode direct-pack \
-  --pack-format json \
-  --workdir "$tmpdir/work" \
-  --prompt-file "$tmpdir/prompt.txt" \
-  --context-file "$tmpdir/context.txt" \
-  --pass-file "$tmpdir/pass.txt" \
-  --output-file "$tmpdir/pack.json"
+  local first="true"
+  local item
+  for item in "$@"; do
+    if [[ "$first" == "true" ]]; then
+      printf '%s' "$item"
+      first="false"
+    else
+      printf ', %s' "$item"
+    fi
+  done
+  printf '\n'
+}
 
-python3 - "$tmpdir/pack.json" <<'PY'
+check_harness_baseline() {
+  bash -n "$runner"
+
+  "$runner" \
+    --runtime direct \
+    --mode direct-pack \
+    --workdir "$tmpdir/work" \
+    --prompt-file "$tmpdir/prompt.txt" \
+    --context-file "$tmpdir/context.txt" \
+    --pass-file "$tmpdir/pass.txt" \
+    --output-file "$tmpdir/pack.md"
+
+  rg -q '^# Direct Smoke Pack' "$tmpdir/pack.md"
+  rg -q 'target skill: skill-maintain' "$tmpdir/pack.md"
+  rg -q '^## Context' "$tmpdir/pack.md"
+  rg -q 'Changed snippet:' "$tmpdir/pack.md"
+
+  "$runner" \
+    --runtime direct \
+    --mode direct-pack \
+    --pack-format json \
+    --workdir "$tmpdir/work" \
+    --prompt-file "$tmpdir/prompt.txt" \
+    --context-file "$tmpdir/context.txt" \
+    --pass-file "$tmpdir/pass.txt" \
+    --output-file "$tmpdir/pack.json"
+
+  python3 - "$tmpdir/pack.json" <<'PY'
 import json
 import sys
 
@@ -66,8 +99,9 @@ assert payload["context"][0]["label"] == "context.txt"
 assert "Changed snippet:" in payload["context"][0]["text"]
 assert isinstance(payload["use_rule"], list) and payload["use_rule"]
 PY
+}
 
-if [[ "$codex_available" == "true" ]]; then
+check_codex_adapter() {
   "$runner" \
     --runtime codex \
     --mode lean-cli \
@@ -113,9 +147,30 @@ for payload in (first, second):
 assert first["uses_isolated_home"] is True
 assert second["uses_isolated_home"] is False
 PY
+}
+
+check_harness_baseline
+printf 'runtime smoke baseline passed for skill-maintain\n'
+
+if adapter_exists codex; then
+  check_codex_adapter
+  validated_adapters+=("codex")
   printf 'codex adapter self-check passed for skill-maintain\n'
 else
+  skipped_adapters+=("codex")
   printf 'codex adapter check skipped for skill-maintain: codex not installed\n'
 fi
 
-printf 'runtime smoke baseline passed for skill-maintain\n'
+validated_summary="none"
+skipped_summary="none"
+
+if (( ${#validated_adapters[@]} > 0 )); then
+  validated_summary="$(join_csv "${validated_adapters[@]}")"
+fi
+
+if (( ${#skipped_adapters[@]} > 0 )); then
+  skipped_summary="$(join_csv "${skipped_adapters[@]}")"
+fi
+
+printf 'validated adapters: %s\n' "$validated_summary"
+printf 'skipped adapters: %s\n' "$skipped_summary"
