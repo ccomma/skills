@@ -1,10 +1,10 @@
 # Project Sizing
 
-Use this before deciding how much document structure a project should receive.
+Use this when deciding how much document weight a project should receive, especially whether it should stay light or grow into a phase-package-centered planning stack. It only answers structure weight; it does not replace the parent skill's routing or workflow.
 
 ## Principle
 
-Document weight should follow project weight. Do not give every repo the same planning stack by reflex.
+Document weight should follow project weight. Do not give every repo the same planning stack by reflex, and do not assume every project needs a full phase package.
 
 ## Default Tiers
 
@@ -42,6 +42,7 @@ Default stack:
 - `CURRENT_HANDOFF.md`
 - light roadmap or phase note
 - selective PRD / technical / testing only when the work merits them
+- no full phase package by default unless the work is becoming repeated, stateful, or handoff-heavy
 
 ### 3. Serious Multi-Phase Product
 
@@ -54,7 +55,7 @@ Typical signs:
 
 Default stack:
 
-- full layered stack
+- full layered stack centered on the active or next phase package
 - `docs/README.md`
 - `docs/process/DEVELOPMENT_FLOW.md`
 - phase package
@@ -75,6 +76,7 @@ Default stack:
 - stronger docs governance
 - stronger template discipline
 - more explicit helper-layer rules
+- clearer source-of-truth boundaries around the phase package and current execution state
 
 ## Adjustment Rule
 

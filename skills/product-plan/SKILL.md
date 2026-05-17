@@ -53,7 +53,15 @@ This workflow may start from a `Product Brief`, an already accepted product dire
 
 ## Core Pattern
 
-This workflow is phase-package-centered even when the surrounding stack is broader. The planning modes below are branch cases inside that workflow, not separate product identities:
+This workflow is phase-package-centered even when the surrounding stack is broader:
+
+1. start from a planning-ready input
+2. inspect the existing planning layers and current execution state
+3. choose the mode: cold start, midstream replan, or repair-oriented review
+4. shape or repair the current or next phase package
+5. sync the surrounding source-of-truth layers without blurring their ownership
+
+The planning modes below are branch cases inside that workflow, not separate product identities:
 
 - `cold start`: set up the initial durable document stack before implementation begins
 - `midstream replan`: incorporate a new direction, extension, or pivot into the existing document stack without silently promoting it into current execution state
@@ -154,16 +162,23 @@ Confirm this is product-context work. If the user is asking for code execution, 
 
 Before applying the full stack, classify:
 
-1. project size and expected lifespan
+1. project size and expected lifespan, so document weight does not outrun project weight
 2. whether this is cold start, midstream replan, or review mode
-3. whether the existing document system is low quality, mixed quality, or already high quality
-4. whether the project needs an explicit language strategy for internal working docs versus public entry docs
+3. where current execution state already lives, and whether it is aligned with the active or next phase package
+4. whether the existing document system is low quality, mixed quality, or already high quality
+5. whether the project needs an explicit language strategy for internal working docs versus public entry docs
 
 Do not assume every project needs the heavy serious-project stack. Use [references/project-sizing.md](references/project-sizing.md) before deciding default document weight. Use [references/existing-quality-assessment.md](references/existing-quality-assessment.md) before deciding whether to rewrite broadly or repair locally.
 
 ### 2. Inspect Minimal Context
 
 Read the current handoff first. Do not load all historical docs by default. If there is no handoff, create one early so the project has a future entrypoint.
+
+Before expanding into a full inventory, identify the phase-package boundary:
+
+1. what is the upstream planning input: `Product Brief`, accepted direction, or existing project state
+2. what currently owns execution state: usually `CURRENT_HANDOFF.md` plus the current phase handoff
+3. whether the current or next phase package already exists, or whether the first repair must establish it
 
 Before creating or modifying any file, produce a visible inventory:
 
@@ -250,6 +265,14 @@ Ensure `CURRENT_HANDOFF.md`'s load order references the project's phase executio
 `CURRENT_HANDOFF.md` is an execution-state artifact, not a discovery scratchpad. Update it only after the accepted planning layers are internally consistent.
 
 In review mode, stop after diagnosing boundary and quality issues unless the user asked for direct repair. Use [references/review-mode.md](references/review-mode.md) to keep review output focused on responsibilities, ownership drift, and minimum corrective moves.
+
+## Validation Starter
+
+For live proof, start only after deterministic checks pass.
+
+Load [references/minimal-smoke-prompts.md](references/minimal-smoke-prompts.md) when you need the cheapest useful proof that first-response routing or first move still matches the phase-package-centered boundary.
+
+Start with one narrow negative-boundary prompt, preferably `existing-plan-under-challenge` or `prototype-or-small-continuing-project`. If the first narrow prompt already proves the owner and first move clearly, stop. Escalate only when the narrow prompt stays ambiguous or the changed behavior touched broader routing or cadence.
 
 ## Branch Cases
 

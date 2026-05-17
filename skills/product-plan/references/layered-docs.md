@@ -1,8 +1,10 @@
 # Layered Product Context Docs
 
+Load this when the main question is how to organize or load planning layers around a current or next phase package. It explains the working model behind `product-plan`; it does not replace the parent skill's routing, artifact contract, or validation boundary.
+
 ## Principle
 
-Use progressive disclosure:
+Use progressive disclosure around the phase package and current execution state:
 
 - Always load: runtime entrypoint file, then `docs/context/CURRENT_HANDOFF.md`.
 - Always create for serious projects: a formal phase execution workflow in `docs/process/DEVELOPMENT_FLOW.md`.
@@ -14,7 +16,11 @@ This reference is about product-context documents. It is not a code refactoring 
 
 Discovery artifacts are upstream inputs, not execution-state documents. A `Product Brief` may inform roadmap or phase-doc changes, but it does not directly replace `CURRENT_HANDOFF.md`, phase handoffs, PRDs, technical designs, or implementation plans.
 
+Treat the phase package as the center of current executable planning state. PRD, technical design, and test plan are its surrounding planning truth, not a separate competing execution-state stack.
+
 ## Standard Structure
+
+Use this structure to keep source-of-truth layers legible around the phase package, not to force every project into the heaviest possible stack.
 
 ```text
 README.md
@@ -47,15 +53,17 @@ docs/templates/
 6. Create `docs/context/CURRENT_HANDOFF.md` as the default future-session entrypoint.
 7. Create the first phase `HANDOFF.md`.
 8. Create or switch to the phase branch before implementation starts. Use the same phase identifier across branch and docs, for example `phase-01-core-search`.
-9. Create the first phase PRD, technical design, and test plan when the phase is ready for implementation.
+9. Create the first phase PRD, technical design, and test plan when the phase is ready for implementation. These are the planning truth layers that support the phase package.
 10. Create `IMPLEMENTATION_PLAN.md` only after the phase PRD, technical design, and test plan exist. This file owns execution slicing and task order; it should not restate architectural rationale that already belongs in the technical design.
-11. Create `ACCEPTANCE.md`.
+11. Create `ACCEPTANCE.md` so the phase package closes with evidence rather than recollection.
 12. Create `docs/templates/` once repeated project-visible artifact shapes should stop drifting by memory alone.
 13. Hand off to validation or execution skills.
 
 If the cold-start entrypoint file exists but only says "read CURRENT_HANDOFF.md" without referencing the development flow, repair it before proceeding. A minimal entrypoint file without process enforcement is the most common cause of documentation rot across phases.
 
 ## Midstream Replan
+
+Use this branch when a new upstream input is being considered against an existing phase package and current execution state.
 
 When a new discovery artifact appears after work has already started:
 
