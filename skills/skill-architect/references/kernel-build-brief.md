@@ -78,7 +78,13 @@ Give only the smallest proving set:
 
 Do not turn this into a full maturity suite unless the request is explicitly about robustness.
 
-A `Validation starter` with only empty headings is still too weak for downstream handoff. Keep it light, but not blank.
+Keep the shape the same, but make the smoke ladder recoverable inside it:
+
+- the default narrow live smoke
+- the stop rule when that first narrow smoke passes clearly
+- the escalation rule for when broader smoke is actually warranted
+
+A `Validation starter` with only empty headings is still too weak for downstream handoff. A starter that keeps the headings but still hides the smallest smoke ladder is also too weak. Keep it light, but not blank.
 
 ### 6. Initializer Handoff Must Be Operational
 
@@ -132,7 +138,9 @@ Validation starter:
 - Deterministic checks:
   - run the bundle check for the skill before installation or handoff
 - Smoke prompts:
-  - confirm the checkpoint loop and refusal boundary are visible on first read
+  - start with one narrow smoke prompt that checks the checkpoint loop and refusal boundary on first read
+  - if that first smoke passes clearly, stop there instead of widening the suite
+  - escalate only when trigger boundary, authority, cadence, broader routing, or multi-turn behavior changed
 Initializer handoff:
 - Initialize:
   - create `SKILL.md`
@@ -166,7 +174,9 @@ Validation starter:
 - Deterministic checks:
   - run the bundle check and confirm the one-reference shape still matches the brief
 - Smoke prompts:
-  - confirm the first-turn owner judgment is clear before opening the reference
+  - start with one narrow smoke prompt that checks the first-turn owner judgment before opening the reference
+  - if that first smoke passes clearly, stop there instead of widening the suite
+  - escalate only when trigger boundary, authority, cadence, broader routing, or multi-turn behavior changed
 Initializer handoff:
 - Initialize:
   - create `SKILL.md`
@@ -201,7 +211,9 @@ Validation starter:
 - Deterministic checks:
   - run the bundle check and confirm the one-script shape still matches the brief
 - Smoke prompts:
-  - confirm the validator trigger and refusal boundary stay visible on first read
+  - start with one narrow smoke prompt that checks the validator trigger and refusal boundary on first read
+  - if that first smoke passes clearly, stop there instead of widening the suite
+  - escalate only when trigger boundary, authority, cadence, broader routing, or multi-turn behavior changed
 Initializer handoff:
 - Initialize:
   - create `SKILL.md`
@@ -264,6 +276,43 @@ Initializer handoff:
 ```
 
 Why this is not ready: the protocol structure is present, but both `Validation starter` and `Initializer handoff` are still empty shells, so a downstream initializer still lacks the minimum operational handoff.
+
+### Protocol-Valid But Not Consumption-Ready: Weak Smoke Ladder
+
+```text
+Kernel sentence:
+This skill exists to route fuzzy requests to the right workflow without long intake.
+Trigger boundary:
+It should trigger when the request is still fuzzy but the next owner decision is the main need.
+First move:
+Its first move is to classify the request by owned workflow object.
+Strongest thing:
+It is strongest when it resolves the owner fast and avoids over-interviewing.
+Not-this-skill-if:
+If the task already has a clear owner and only needs execution, this is not the right skill.
+Minimal shape:
+SKILL.md + one reference
+Component decisions:
+- SKILL.md routing loop: owns the first-turn owner judgment. It protects kernel clarity.
+- One reference: holds edge-case routing examples so the hot path stays short. It protects kernel verification.
+Do-not-add:
+- Do not add scripts for subjective routing judgment.
+- Do not add extra references for neighboring workflows that the main reference already covers.
+Validation starter:
+- Deterministic checks:
+  - run the bundle check and confirm the one-reference shape still matches the brief
+- Smoke prompts:
+  - confirm the first-turn owner judgment is clear before opening the reference
+Initializer handoff:
+- Initialize:
+  - create `SKILL.md`
+  - create one reference file for edge-case routing examples
+- Do not invent:
+  - do not add scripts
+  - do not add extra references beyond the one edge-case routing reference
+```
+
+Why this is not ready: the brief is still protocol-valid, but the smoke guidance never makes the default narrow smoke, stop rule, or escalation rule recoverable.
 
 ### Invalid: Shape Conflict
 

@@ -42,7 +42,7 @@ Keep these layers distinct:
 - `protocol-valid`
   - the brief satisfies protocol `v1` field, order, and basic substructure requirements
 - `consumption-ready`
-  - the brief gives a downstream initializer enough non-empty `Validation starter` and `Initializer handoff` detail to continue without reopening the kernel
+  - the brief gives a downstream initializer enough non-empty `Validation starter` and `Initializer handoff` detail to continue without reopening the kernel, including a recoverable smallest smoke ladder
 - `repo-local executable`
   - the brief is not only ready in general, but also deterministic enough for the repo-local proof helper to execute
 
@@ -87,6 +87,12 @@ These fields may be mapped into concrete actions by different downstream flows, 
 
 This is where adapters translate the brief into native creator prompts, manual bootstrap steps, or repo-local creation steps.
 
+For `consumption-ready` handoff, `Validation starter` must keep its existing shape while still making three things recoverable:
+
+- the default narrow live smoke
+- the stop rule when that first narrow smoke passes clearly
+- the escalation rule for when a broader smoke is actually warranted
+
 ## Conflict Rules
 
 - `Minimal shape` overrides `Component decisions`.
@@ -123,6 +129,8 @@ Do not silently reinterpret the brief.
 
 Before a consumer attempts real initialization, it should check not only whether the brief is `protocol-valid`, but also whether it is `consumption-ready` enough for that downstream mode.
 
+A brief may remain `protocol-valid` yet still fail `consumption-ready` when `Validation starter` keeps the required subitems but does not make the smallest smoke ladder recoverable.
+
 ## Retrofit Rule
 
 The main protocol story is pre-create handoff.
@@ -146,4 +154,9 @@ Expected behavior: mark the brief invalid and route back for repair.
 ```text
 Prompt: Every field is present, but `Validation starter` and `Initializer handoff` still contain only empty headings. Is the brief ready?
 Expected behavior: keep protocol validity separate from readiness and say the brief is not yet consumption-ready.
+```
+
+```text
+Prompt: `Validation starter` has one deterministic check and one generic smoke prompt, but it never says the default narrow smoke, when to stop, or when to escalate. Is the brief ready?
+Expected behavior: keep the brief protocol-valid, mark it not consumption-ready, and require a stronger smallest-smoke ladder.
 ```

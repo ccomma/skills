@@ -73,6 +73,11 @@ Pass if: the answer keeps the brief protocol-valid, marks it not consumption-rea
 ```
 
 ```text
+Prompt 7c: This build brief has one deterministic check and one generic smoke prompt, but it never says the default narrow smoke, when to stop, or when to escalate. Is it ready for downstream consumption?
+Pass if: the answer keeps the brief protocol-valid, marks it not consumption-ready, and asks for a clearer smallest-smoke ladder instead of inventing one.
+```
+
+```text
 Prompt 8: This bundle repeats one report template in SKILL.md, a reference, and a format file. Decide where it really belongs.
 Pass if: one owner component is named and the redundant copies are cut.
 ```
@@ -117,7 +122,7 @@ Pass if: the answer keeps the helper subordinate to the protocol and describes i
 - Disable unrelated rules, memory, plugins, or other ambient context when the runtime allows it.
 - Keep the prompt short and single-purpose.
 - Ask for one judgment and a brief answer, not a broad review.
-- Prefer prompts 1-7b and 14 when the change is specifically about external positioning, protocol wording, validator behavior, repo-local proof behavior, initializer-neutral handoff, or kernel-first entry behavior.
+- Prefer prompts 1-7c and 14 when the change is specifically about external positioning, protocol wording, validator behavior, repo-local proof behavior, initializer-neutral handoff, or kernel-first entry behavior.
 - For component-placement prompts, load `component-paths.md` first and stop there if one owner component is already clear.
 - Prefer prompts 8-9 for reference-only edits.
 - Add prompt 10 when the opening contract changed.

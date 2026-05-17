@@ -20,7 +20,9 @@ Validation starter:
 - Deterministic checks:
   - run the bundle check for the skill before installation or handoff
 - Smoke prompts:
-  - confirm the checkpoint loop and refusal boundary are visible on first read
+  - start with one narrow smoke prompt that checks the checkpoint loop and refusal boundary on first read
+  - if that first smoke passes clearly, stop there instead of widening the suite
+  - escalate only when trigger boundary, authority, cadence, broader routing, or multi-turn behavior changed
 Initializer handoff:
 - Initialize:
   - create `SKILL.md`

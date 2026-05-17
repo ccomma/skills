@@ -409,6 +409,16 @@ Must not: quietly promote empty headings into readiness or collapse the case int
 Evidence to check: the answer distinguishes structural validity from downstream sufficiency.
 ```
 
+### 23c. Weak Smoke Ladder Must Fail Readiness
+
+```text
+Scenario: protocol-valid but weak smoke starter
+Prompt: `Validation starter` includes one deterministic check and one generic smoke prompt, but it never names the default narrow smoke, when to stop, or when to escalate. What should the validator and downstream initializer say?
+Expected behavior: keep the brief protocol-valid, mark it not consumption-ready, and require a stronger smallest-smoke ladder before initialization.
+Must not: accept the brief as ready just because the two `Validation starter` subheadings are present and non-empty.
+Evidence to check: readiness now depends on recoverable smoke-ladder semantics, not only on non-empty bullets.
+```
+
 ### 24. One Brief Must Survive Multiple Wrapper Classes
 
 ```text

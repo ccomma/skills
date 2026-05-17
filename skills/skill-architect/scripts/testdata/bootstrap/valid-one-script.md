@@ -20,7 +20,9 @@ Validation starter:
 - Deterministic checks:
   - run the bundle check and confirm the one-script shape still matches the brief
 - Smoke prompts:
-  - confirm the validator trigger and refusal boundary stay visible on first read
+  - start with one narrow smoke prompt that checks the validator trigger and refusal boundary on first read
+  - if that first smoke passes clearly, stop there instead of widening the suite
+  - escalate only when trigger boundary, authority, cadence, broader routing, or multi-turn behavior changed
 Initializer handoff:
 - Initialize:
   - create `SKILL.md`

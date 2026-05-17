@@ -20,9 +20,7 @@ Validation starter:
 - Deterministic checks:
   - run the bundle check and confirm the one-reference shape still matches the brief
 - Smoke prompts:
-  - start with one narrow smoke prompt that checks the first-turn owner judgment before opening the reference
-  - if that first smoke passes clearly, stop there instead of widening the suite
-  - escalate only when trigger boundary, authority, cadence, broader routing, or multi-turn behavior changed
+  - confirm the first-turn owner judgment is clear before opening the reference
 Initializer handoff:
 - Initialize:
   - create `SKILL.md`

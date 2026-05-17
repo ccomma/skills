@@ -10,6 +10,8 @@ Use it only when:
 - the current context is too thin for a trustworthy owner ruling
 - an explicit scope, cost, or depth choice would materially reduce ambiguity
 
+If this shell clarifies one primary owner and the remaining task becomes that single skill's kernel, build brief, or internal-structure redesign, stop here and hand off to `skill-architect` instead of continuing the referee workflow.
+
 ## Language Rule
 
 Render every menu, explanation, warning, heading, table header, report label, and choice summary in the user's latest language. Preserve only option letters, skill names, paths, commands, frontmatter keys, and issue type labels exactly. The English labels below define stable semantics, not required display language.

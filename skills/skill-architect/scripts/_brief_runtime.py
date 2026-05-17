@@ -35,6 +35,26 @@ WEAK_READY_ITEM_PATTERNS = [
     re.compile(r"^follow the brief$", re.I),
 ]
 
+SMALLEST_SMOKE_PATTERNS = [
+    re.compile(r"\b(start|begin|default)\b.*\b(one|1|single)\b.*\b(prompt|smoke)\b", re.I),
+    re.compile(r"\b(one or two|single|smallest|minimal|narrow)\b.*\b(smoke|prompt)\b", re.I),
+    re.compile(r"\bfirst\b.*\b(smoke|prompt)\b", re.I),
+]
+
+STOP_RULE_PATTERNS = [
+    re.compile(r"\bif\b.*\b(first|initial)\b.*\b(smoke|prompt)\b.*\bpass(?:es)?\b.*\bstop\b", re.I),
+    re.compile(r"\bstop there\b", re.I),
+    re.compile(r"\bdo not widen\b", re.I),
+    re.compile(r"\binstead of widening\b", re.I),
+]
+
+ESCALATION_RULE_PATTERNS = [
+    re.compile(r"\bescalat(?:e|ion)\b.*\bonly when\b", re.I),
+    re.compile(r"\bonly when\b.*\b(trigger boundary|authority|cadence|broader routing|multi-turn|broader risk|broader smoke)\b", re.I),
+    re.compile(r"\buse broader\b.*\bwhen\b", re.I),
+    re.compile(r"\bfull runtime smoke\b.*\bonly\b", re.I),
+]
+
 
 class ParsedBrief(TypedDict):
     fields: dict[str, list[str]]
@@ -145,6 +165,30 @@ def check_readiness_items(items: list[str], label: str) -> list[str]:
     return reasons
 
 
+def has_role(items: list[str], patterns: list[re.Pattern[str]]) -> bool:
+    return any(pattern.search(item) for item in items for pattern in patterns)
+
+
+def check_smoke_prompt_readiness(items: list[str], label: str) -> list[str]:
+    reasons = check_readiness_items(items, label)
+    if reasons:
+        return reasons
+
+    if len(items) < 2:
+        reasons.append(f"`{label}` needs at least two non-empty items so the smallest smoke ladder is recoverable")
+
+    if not has_role(items, SMALLEST_SMOKE_PATTERNS):
+        reasons.append(f"`{label}` must name the default narrow live smoke")
+
+    if not has_role(items, STOP_RULE_PATTERNS):
+        reasons.append(f"`{label}` must say when the first narrow smoke passing is enough to stop")
+
+    if not has_role(items, ESCALATION_RULE_PATTERNS):
+        reasons.append(f"`{label}` must say when broader live smoke is warranted")
+
+    return reasons
+
+
 def validate_brief(text: str) -> ValidationResult:
     parsed = parse_fields(text)
     fields = parsed["fields"]
@@ -218,7 +262,7 @@ def validate_brief(text: str) -> ValidationResult:
             )
         )
         consumption_reasons.extend(
-            check_readiness_items(
+            check_smoke_prompt_readiness(
                 collect_nested_items(validation_block, "Smoke prompts"),
                 "Validation starter -> Smoke prompts",
             )
