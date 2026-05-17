@@ -1,4 +1,4 @@
 interface:
   display_name: "Product Explore"
-  short_description: "Explore a fuzzy product idea and converge on a Product Brief."
-  default_prompt: "Use $product-explore to clarify a fuzzy product idea, explore alternatives, surface assumptions, and converge on a Product Brief before planning."
+  short_description: "Reframe a fuzzy or solution-shaped product direction into a problem-shaped Product Brief."
+  default_prompt: "Use $product-explore to recover the real product problem from a fuzzy or prematurely solution-shaped idea, surface the key trade-offs and assumptions, and converge on a Product Brief before planning."

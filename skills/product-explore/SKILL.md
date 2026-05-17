@@ -1,17 +1,19 @@
 ---
 name: product-explore
-description: "Use when a product idea is still fuzzy and needs exploration before planning. Clarify the problem, users, scope, assumptions, and success signals, then converge on a Product Brief."
+description: "Use when a product direction is still fuzzy or prematurely solution-shaped and needs reframing into a problem-shaped Product Brief before planning."
 ---
 
 # Product Explore
 
 ## Overview
 
-Turn vague product intent into a concrete Product Brief through a structured exploration conversation. This is the fuzzy front end before planning or implementation.
+Turn fuzzy or prematurely solution-shaped product intent into a problem-shaped `Product Brief` that downstream planning can actually use.
 
-Core pattern: **Diagnose -> Diverge -> Converge -> Handoff**.
+Default first move: restate the raw idea in the user's language, strip solution or technology framing when needed, and isolate the smallest unresolved ambiguity around problem, user, value, or boundary.
 
-This skill clarifies and expands thinking, then stops at a Product Brief. It does not create PRDs, phase plans, technical designs, implementation tasks, roadmaps, code, or design validation reports.
+This is the fuzzy front end before planning or implementation. Its internal workflow is **Diagnose -> Diverge -> Converge -> Handoff**, but that workflow serves the core job; it is not the identity of the skill.
+
+This skill recovers the real product problem, expands the option space only after that recovery starts, then stops at a `Product Brief`. It does not create PRDs, phase plans, technical designs, implementation tasks, roadmaps, code, or design validation reports.
 
 ## Artifact Contract
 
@@ -32,16 +34,17 @@ Mirror the user's working language for visible labels, questions, templates, and
 
 Use when the user:
 
-- has a product, feature, workflow, or service idea but the real problem, user, value, or scope is unclear
+- names a solution too early, such as "AI assistant", "recommendation system", "dashboard", or "automation", and needs help recovering the real product problem underneath it
+- has a product, feature, workflow, or service direction but the real problem, user, value, or scope is still unclear
 - asks to explore, discover, brainstorm, or evaluate what should be built before committing to a direction
-- presents a solution-shaped idea such as "recommendation system", "AI assistant", "dashboard", or "automation" and needs help reframing it into a product problem
 - wants options and trade-offs before writing PRD, roadmap, technical design, or implementation plan
 
 Do not use when:
 
+- the direction is already clear enough to become durable planning artifacts such as PRD, roadmap, technical design, or implementation plan
 - the user already has a committed PRD, detailed spec, or clear execution plan and wants to document or execute it
+- the user wants to challenge an existing design or plan against domain docs, code, ADRs, or a glossary
 - the user wants code review, refactoring, debugging, API design, architecture advice, or implementation
-- the user wants to validate an existing design against domain docs, code, ADRs, or a glossary
 - the request is generic ideation, writing, naming, or career/product advice without a concrete product or feature opportunity
 
 ## Neighboring Workflow Routing
@@ -58,7 +61,7 @@ Fuzzy product intent
 
 Route away by capability category, not by private local skill names:
 
-- Durable product docs, roadmap, PRD, technical design, phase handoff -> documentation and planning workflow
+- Direction is already stable enough for durable product docs, roadmap, PRD, technical design, or phase handoff -> documentation and planning workflow
 - Stress-test a known plan against domain language, code, ADRs, or existing docs -> design validation workflow
 - Current-turn implementation boundary or task scoping -> execution-contract workflow
 - Code, tests, refactors, debugging, or review -> engineering workflow
@@ -68,45 +71,49 @@ Route away by capability category, not by private local skill names:
 
 The skill must still:
 
-- discover the underlying product problem before accepting the proposed solution
+- recover the underlying product problem before accepting the proposed solution framing
+- restate the idea without solution or technology framing when that framing is hiding the real product need
 - ask concrete hypothesis-driven questions instead of blank-page questions
 - diverge before converging unless the user explicitly asks for a lean answer
 - separate facts, assumptions, unknowns, and validation questions
 - keep parked ideas instead of deleting them
 - stop at a Product Brief unless the user explicitly asks to continue
 
-## Protocol
+## Workflow
 
-### Phase 1: Diagnose
+Use these workflow steps after reclaiming the product problem. The steps teach how the skill works; they do not replace the core boundary above.
+
+### Step 1: Reframe And Diagnose
 
 1. Restate the user's original intent in their language. Quote or closely paraphrase only enough to anchor the session.
-2. Identify the smallest set of critical ambiguities across problem, users, scope, context, constraints, and success.
-3. Ask hypothesis-driven questions with 2-4 concrete options. Prefer "Which of these is closest?" over "What do you think?"
-4. Cap diagnosis at 4-6 rounds for ordinary ambiguity and 6-8 rounds for high-risk or deeply unclear product bets. Stop earlier when the user accepts a framing, asks to skip ahead, or further questioning has diminishing returns.
+2. If the user named a solution, tool, or technology too early, restate it in problem language before expanding options.
+3. Identify the smallest set of critical ambiguities across problem, users, scope, context, constraints, and success.
+4. Ask hypothesis-driven questions with 2-4 concrete options. Prefer "Which of these is closest?" over "What do you think?"
+5. Cap diagnosis at 4-6 rounds for ordinary ambiguity and 6-8 rounds for high-risk or deeply unclear product bets. Stop earlier when the user accepts a framing, asks to skip ahead, or further questioning has diminishing returns.
 
 If the user cannot answer, propose a default hypothesis and label it as an assumption to validate later.
 
-### Phase 2: Diverge
+### Step 2: Diverge
 
 1. Pick 2-3 lenses from `references/lenses.md`; do not apply all lenses mechanically.
 2. When the idea involves market risk, user research, monetization, or strategic commitment, load `references/discovery-methods.md` and pick only the relevant method adapters.
 3. Summarize the expanded possibility space: alternative framings, user segments, solution options, assumptions, failure modes, and parked ideas.
 
-### Phase 3: Converge
+### Step 3: Converge
 
 1. Present key trade-offs in the user's language. Use a compact table only when comparison helps.
 2. Ask the user to make major decisions. If the runtime provides a structured question tool, use it for mutually exclusive choices; otherwise use numbered options.
 3. If the user says "you decide", choose a recommendation, explain the trade-off, and mark unresolved assumptions.
 4. Do not invent evidence. When a metric, target, or market claim is not backed by data supplied in the session, label it as an assumption, placeholder target, or validation question.
 
-### Phase 4: Product Brief
+### Step 4: Product Brief
 
-Load `references/product-brief-format.md` before drafting the Product Brief. Produce the brief in the user's working language and keep it as a compact downstream handoff artifact, not a pseudo-PRD.
+Load `references/product-brief-format.md` before drafting the `Product Brief`. Produce the brief in the user's working language and keep it as a compact downstream handoff artifact, not a pseudo-PRD.
 
-### Phase 5: Handoff And Persistence
+### Step 5: Handoff And Persistence
 
 1. Summarize what was decided and what was deliberately deferred.
-2. Stop at the Product Brief unless the user explicitly asks to continue.
+2. Stop at the `Product Brief` unless the user explicitly asks to continue.
 3. Present the brief inline by default.
 4. Save the brief only when one of these is true:
    - the user asks to save it
@@ -126,7 +133,7 @@ Load `references/product-brief-format.md` before drafting the Product Brief. Pro
 ## Rules
 
 1. Hypotheses, not blank-page questions.
-2. Problem before solution; outcome before feature list.
+2. Recover the problem before accepting the solution; outcome before feature list.
 3. Diverge before converging unless the user asks for the lean path.
 4. Use evidence labels: fact, assumption, unknown, validation question.
 5. Preserve intent; refine and expand the user's vision without redirecting it into your preferred product.
@@ -138,9 +145,9 @@ Load `references/product-brief-format.md` before drafting the Product Brief. Pro
 
 ## References
 
-- Load `references/lenses.md` during Phase 2 when choosing divergence lenses.
+- Load `references/lenses.md` during Step 2 when choosing divergence lenses.
 - Load `references/discovery-methods.md` when the product risk calls for user research, JTBD, opportunity mapping, assumption testing, prioritization, or market framing.
-- Load `references/product-brief-format.md` during Phase 4 when drafting the final `Product Brief`.
+- Load `references/product-brief-format.md` during Step 4 when drafting the final `Product Brief`.
 - Load `references/example-flow.md` only when you need a concrete end-to-end sample.
 
 ## Pressure Tests

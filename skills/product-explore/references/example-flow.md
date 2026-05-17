@@ -1,16 +1,18 @@
 # Example Flow
 
+Load this when you need a concrete end-to-end sample after the main workflow and references still leave the desired interaction shape unclear.
+
 This example is illustrative. Keep the actual session in the user's working language and adapt labels accordingly.
 
 A user says: "我想给餐厅做一个智能客服系统。"
 
-## Phase 1: Diagnose
+## Step 1: Reframe And Diagnose
 
 Restate:
 
 ```text
 你现在的原始想法是：给餐厅做一个智能客服系统。
-我先不直接默认它就是聊天机器人，而是先确认它真正要解决的问题。
+我先不直接接受“智能客服系统”这个方案词，而是先把它翻回它真正要解决的问题。
 ```
 
 Ask hypothesis-driven questions:
@@ -31,7 +33,7 @@ C. 餐厅前台/服务员
 D. 连锁餐厅的运营管理者
 ```
 
-## Phase 2: Diverge
+## Step 2: Diverge
 
 Pick relevant lenses:
 
@@ -48,7 +50,7 @@ Expanded possibility space:
 方向 D: full autonomous ordering, highest value but unacceptable risk unless guardrails are strong.
 ```
 
-## Phase 3: Converge
+## Step 3: Converge
 
 Trade-off table:
 
@@ -62,7 +64,7 @@ Trade-off table:
 
 If the user accepts the recommendation, produce a Product Brief in Chinese.
 
-## Phase 4: Handoff
+## Step 4: Handoff
 
 Inline by default:
 

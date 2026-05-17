@@ -1,6 +1,8 @@
 # Discovery Method Adapters
 
-Load this only when the product risk needs deeper discovery than the default lenses. Pick the smallest adapter that fits. Do not turn every conversation into a full product management workshop.
+Load this when the default reframe and default lenses are not enough to close the main product risk.
+
+Pick the smallest adapter that fits. These adapters deepen risk discovery; they do not replace the main workflow's job of recovering the real product problem before planning. Do not turn every conversation into a full product management workshop.
 
 ## Jobs-To-Be-Done Adapter
 

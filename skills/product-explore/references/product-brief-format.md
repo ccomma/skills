@@ -1,12 +1,12 @@
 # Product Brief Format
 
-Use this when `product-explore` is ready to converge and produce its durable handoff artifact.
+Load this when `product-explore` has already recovered the real product problem and is ready to converge into its durable handoff artifact.
 
 ## When To Use
 
 Use this format only after the exploration has already clarified the core problem, target users, main trade-offs, and recommended direction.
 
-Do not use it as an intake questionnaire. It is a convergence artifact, not a discovery substitute.
+Do not use it as an intake questionnaire. It is a convergence artifact, not a discovery substitute or a shortcut around the earlier reframe.
 
 ## Required Structure
 

@@ -1,6 +1,8 @@
 # Divergence Lenses
 
-Use these lenses during Phase 2. Pick 2-3 based on the idea's risk profile. Do not apply every lens mechanically.
+Load this when Step 2 needs divergence lenses after Step 1 has already restated the idea in product-problem terms.
+
+Use these lenses to widen the option space after the default reframe, not to replace the default reframe. Pick 2-3 based on the idea's risk profile. Do not apply every lens mechanically.
 
 ## Lens A: First-Principles Decomposition
 

@@ -6,7 +6,7 @@ These skills are designed to be small, composable, and easy to install into diff
 
 ## Skills
 
-- [`product-explore`](./skills/product-explore/SKILL.md): Explores a fuzzy product or feature idea, clarifies the real problem and users, and converges on a Product Brief before planning.
+- [`product-explore`](./skills/product-explore/SKILL.md): Reframes a fuzzy or prematurely solution-shaped product direction into a problem-shaped `Product Brief` before planning.
 - [`product-plan`](./skills/product-plan/SKILL.md): Builds and maintains durable product context, planning docs, phase handoffs, and evidence for multi-phase product work.
 - [`product-validate`](./skills/product-validate/SKILL.md): Stress-tests an existing product plan against docs, terminology, code, and decision boundaries before execution or replanning continues.
 - [`skill-governance-escalation`](./skills/skill-governance-escalation/SKILL.md): Explicitly auto-audits a concrete issue first, classifies it as local-only, provisional candidate, or promote-now, and escalates only the findings that suggest reusable upstream causes.
@@ -20,8 +20,8 @@ These skills are designed to be small, composable, and easy to install into diff
 
 ```mermaid
 flowchart TD
-    A["Fuzzy Product Idea"] --> B["product-explore"]
-    B --> B1["Output: Product Brief"]
+    A["Fuzzy Or Solution-Shaped Product Idea"] --> B["product-explore"]
+    B --> B1["Output: Problem-Shaped Product Brief"]
 
     B1 --> C["product-plan"]
     C --> C1["DESIGN.md"]
@@ -54,7 +54,7 @@ flowchart TD
 These three product-oriented skills should connect through artifact contracts, not through vague intuition:
 
 - `product-explore`
-  - Use when the idea is still fuzzy.
+  - Use when the idea is still fuzzy or the user named a solution too early.
   - Output: `Product Brief`.
   - Does not directly mutate execution-state documents such as `CURRENT_HANDOFF.md`.
 - `product-plan`
@@ -68,7 +68,7 @@ These three product-oriented skills should connect through artifact contracts, n
 
 The most common path is:
 
-1. Explore the product idea until it becomes a usable `Product Brief`
+1. Recover the real product problem until it becomes a usable `Product Brief`
 2. Turn that brief into durable planning documents
 3. Use `product-validate` to challenge terminology, code, and decision boundaries
 4. Hand off to implementation only after the plan is coherent enough
@@ -193,7 +193,7 @@ The most common skill-management paths are:
 6. Hand that brief to a native creator, manual bootstrap flow, or repo-local initializer without reopening the kernel.
 7. If the created skill later drifts, use `skill-maintain` to repair that drift without silently redefining the brief.
 
-This phase does not try to make generic prompts such as "help me make a skill" route to `skill-architect` by default. If those prompts still hit a generic skill creator first, that is expected rather than a defect in this bundle.
+This bundle does not try to make generic prompts such as "help me make a skill" route to `skill-architect` by default. If those prompts still hit a generic skill creator first, that is expected rather than a defect in this bundle.
 
 Follow-up note: if repeated evidence later shows that one initializer class cannot safely consume the brief, treat that as an upstream integration candidate or governance candidate rather than silently turning this repo into a fork of that initializer.
 
