@@ -11,16 +11,16 @@ Use this when the higher-level diagnosis is clear but the next implementation wo
 - no multi-skill boundary dispute remains
 - the remaining work is single-skill audit or repair, whether or not a governance pass also happened earlier
 
-### Route To A Skill-Design Workflow When
+### Route To `skill-architect` When
 
 - the boundary is already clear
 - one skill needs a stronger architecture, split, merge, or new bundle shape
 - the issue is no longer "where should this live?" but "how should this skill be structured?"
 
-### Route To A Skill-Boundary Workflow When
+### Route To `skill-referee` When
 
-- multiple skills may overlap, conflict, or own the same request
-- the main ambiguity is routing or ownership between skills
+- multiple skills may overlap, conflict, or plausibly own the same request
+- the main ambiguity is ownership between skills and you need owner arbitration before changing any one skill
 - fixing one skill alone would not settle responsibility
 
 ### Route To A Project Or Document Workflow When

@@ -21,14 +21,14 @@ This workflow may inspect:
 - concrete project artifacts such as docs, templates, reports, or entrypoints
 - one reusable workflow or skill that appears to be causing repeated problems
 - a meta-skill when the same governance failure keeps recurring
-- a multi-skill boundary when the issue is actually a routing or ownership conflict
+- ambiguous ownership between skills when the issue really needs owner arbitration before local repair
 - a runtime, agent, or model constraint when the issue may not be fixable inside the current skill stack
 
 Do not use this when:
 
 - the fix location is already clear and only one existing skill needs repair -> use a skill-maintenance workflow
-- the main issue is overlap or conflict between multiple skills -> use a skill-boundary workflow
-- the main task is designing a new skill or reshaping one skill whose boundary is already understood -> use a skill-design workflow
+- the main issue is ambiguous ownership or handoff between multiple skills -> use `skill-referee`
+- the main task is designing a new skill or reshaping one skill whose boundary is already understood -> use `skill-architect`
 - the main task is directly repairing project documents after the owning workflow is already known -> use the owning project/document workflow
 
 ## Core Rules
@@ -188,9 +188,9 @@ In implementation or repair work, write or update the governance candidate ledge
 
 Once the fix locus is clear:
 
-- route to a skill-maintenance workflow for one existing skill
-- route to a skill-design workflow when one skill's structure must change
-- route to a skill-boundary workflow for multi-skill ownership conflict
+- route to `skill-maintain` for one existing skill
+- route to `skill-architect` when one skill's structure must change after ownership is clear
+- route to `skill-referee` for multi-skill ownership ambiguity or owner arbitration
 - route to the owning project/document workflow when the problem is local to one project
 - stop inside this workflow and record the constraint explicitly when the durable cause is outside the current skill stack
 

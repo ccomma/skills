@@ -233,14 +233,24 @@ check_primary_surface_contract() {
   [[ -f "$skill_file" ]] || return 0
 
   local skill_text prompt_text output_contract_file output_text combined_text
+  local interaction_file interaction_text minimal_smoke_file minimal_smoke_text harness_file harness_text
   skill_text="$(cat "$skill_file")"
   prompt_text=""
   output_contract_file="$references_dir/output-contracts.md"
   output_text=""
+  interaction_file="$references_dir/interaction.md"
+  interaction_text=""
+  minimal_smoke_file="$references_dir/minimal-smoke-prompts.md"
+  minimal_smoke_text=""
+  harness_file="$references_dir/runtime-smoke-harness.md"
+  harness_text=""
 
   if [[ -f "$agent_file" ]]; then
     prompt_text="$(extract_default_prompt "$agent_file")"
   fi
+  [[ -f "$interaction_file" ]] && interaction_text="$(cat "$interaction_file")"
+  [[ -f "$minimal_smoke_file" ]] && minimal_smoke_text="$(cat "$minimal_smoke_file")"
+  [[ -f "$harness_file" ]] && harness_text="$(cat "$harness_file")"
   combined_text="$(printf '%s\n%s\n' "$skill_text" "$prompt_text")"
 
   case "$skill_name" in
@@ -296,6 +306,36 @@ check_primary_surface_contract() {
         if ! printf '%s' "$prompt_text" | rg -Fq '$skill-governance-escalation'; then
           add_warning "semantic-drift" "agents/openai.yaml default_prompt may be missing the handoff route to \$skill-governance-escalation"
         fi
+      fi
+      if [[ -n "$interaction_text" ]]; then
+        if ! printf '%s' "$interaction_text" | rg -Fq 'stop here and hand off to `skill-architect`'; then
+          add_warning "semantic-drift" "references/interaction.md may be missing the hard handoff to \`skill-architect\` after owner clarity"
+        fi
+      else
+        add_warning "semantic-drift" "references/interaction.md is missing, so fallback-shell handoff drift cannot be checked"
+      fi
+      if [[ -n "$minimal_smoke_text" ]]; then
+        if ! printf '%s' "$minimal_smoke_text" | rg -Fq "Prompt 3:"; then
+          add_warning "semantic-drift" "references/minimal-smoke-prompts.md may be missing the narrow architect-handoff smoke prompt"
+        fi
+        if ! printf '%s' "$minimal_smoke_text" | rg -Fq 'hands off to `skill-architect`'; then
+          add_warning "semantic-drift" "references/minimal-smoke-prompts.md may be missing the architect-handoff pass condition"
+        fi
+      else
+        add_warning "semantic-drift" "references/minimal-smoke-prompts.md is missing, so narrow live-proof drift cannot be checked"
+      fi
+      if [[ -n "$harness_text" ]]; then
+        if ! printf '%s' "$harness_text" | rg -Fq 'Default to one prompt'; then
+          add_warning "semantic-drift" "references/runtime-smoke-harness.md may be missing the one-prompt default discipline"
+        fi
+        if ! printf '%s' "$harness_text" | rg -Fq 'stop if the tiny smoke passes clearly'; then
+          add_warning "semantic-drift" "references/runtime-smoke-harness.md may be missing the pass-then-stop discipline"
+        fi
+        if ! printf '%s' "$harness_text" | rg -Fq 'escalate only when the lower layer cannot prove the changed ruling behavior'; then
+          add_warning "semantic-drift" "references/runtime-smoke-harness.md may be missing the escalate-only-when-needed discipline"
+        fi
+      else
+        add_warning "semantic-drift" "references/runtime-smoke-harness.md is missing, so lean-smoke discipline drift cannot be checked"
       fi
       ;;
   esac

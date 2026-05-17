@@ -56,7 +56,7 @@ If the kernel stays fuzzy after the scan, repair `SKILL.md` first before polishi
 
 If the diagnosis shows that fixing the issue would redefine the role or kernel, stop and hand off to `skill-architect` instead of pretending this is still ordinary maintenance.
 
-If the diagnosis shows that the real problem is split/merge/reroute logic across multiple skills, hand off to `skill-referee`.
+If the diagnosis shows that the real problem is split/merge/reroute logic across multiple skills, keep that symptom language explicit and hand off to `skill-referee` for owner arbitration and the next handoff rule.
 
 If the local repair locus is clear but the evidence points to a reusable upstream cause, keep the local maintenance path explicit and then hand off to `skill-governance-escalation`.
 

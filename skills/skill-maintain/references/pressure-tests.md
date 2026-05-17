@@ -201,9 +201,9 @@ Evidence to check: the audit names the mode-sprawl and either narrows it or esca
 ```text
 Scenario: wrong scope
 Prompt: Help me decide whether these three skills should merge.
-Expected behavior: route to a skill-boundary or skill-design workflow instead of treating it as a single-skill repair.
+Expected behavior: route to `skill-referee` or `skill-architect` instead of treating it as a single-skill repair.
 Must not: continue as if the issue lived inside one skill.
-Evidence to check: multi-skill conflicts are routed away.
+Evidence to check: ambiguous ownership cases are routed to `skill-referee` instead of being flattened into one-skill repair.
 ```
 
 ```text
@@ -313,7 +313,7 @@ Evidence to check: the audit covers SKILL.md, references, scripts, format files,
 - Did the repair turn repeated local fixes into a clearer system instead of merely shortening the text?
 - Did the repair convert unsupported principles into enforced ones, or remove them?
 - Did the repair remove section-ownership collisions instead of merely moving them around?
-- Did the skill avoid taking over multi-skill conflict resolution?
+- Did the skill avoid taking over `skill-referee`-style owner arbitration?
 - Did output shape and labels become stable again when that was the problem?
 - Did the verdict make maintenance-vs-redesign judgment explicit?
 - Did the verdict make governance handoff explicit when needed?
