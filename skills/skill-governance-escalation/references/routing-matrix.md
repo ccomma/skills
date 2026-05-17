@@ -1,6 +1,6 @@
 # Routing Matrix
 
-Use this when the higher-level diagnosis is clear but the next implementation workflow is not.
+Load this when the higher-level diagnosis is clear but the next implementation workflow is not.
 
 ## Routing Rules
 

@@ -1,6 +1,6 @@
 # Governance Note Format
 
-Use this when a `provisional candidate` or `promote now` result should be captured as durable governance memory.
+Load this when a `provisional candidate` or `promote now` result should be captured as durable governance memory.
 
 ## When To Emit A Note
 

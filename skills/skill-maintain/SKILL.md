@@ -122,13 +122,13 @@ Use this for one existing skill at a time.
 
 Do not use this when the main task is designing a different skill, routing across multiple skills, or executing the underlying workflow itself rather than repairing this skill.
 
-If the real task is changing the target skill's role, redefining its kernel, or turning a repair into a redesign, route to a skill-architecture workflow.
+If the real task is changing the target skill's role, redefining its kernel, or turning a repair into a redesign, route to `skill-architect`.
 
-If the real task is deciding whether multiple skills should split, merge, or reroute, route to a skill-boundary workflow.
+If the real task is deciding whether multiple skills should split, merge, or reroute, route to `skill-referee`.
 
 If the repair reveals that the original skill never had a real build brief protocol or initializer handoff, classify that first as kernel/architecture drift and decide explicitly whether it still fits maintenance or needs architecture handoff.
 
-If the audit suggests a reusable upstream cause after the local repair locus is clear, hand off to a governance-escalation workflow instead of widening this skill into a multi-layer review.
+If the audit suggests a reusable upstream cause after the local repair locus is clear, hand off to `skill-governance-escalation` instead of widening this skill into a multi-layer review.
 
 </scope>
 

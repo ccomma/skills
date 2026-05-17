@@ -1,6 +1,6 @@
 # Governance Output Contract
 
-Use this when producing the final report from `skill-governance-escalation`.
+Load this when producing the final report from `skill-governance-escalation`.
 
 ## Required Sections
 

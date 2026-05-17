@@ -1,15 +1,22 @@
 ---
 name: skill-governance-escalation
-description: Use when a concrete issue should trigger an auto-audit first and then an upward-check for reusable causes if needed, so you can separate immediate local repair from any durable upstream fix and persist reusable governance candidates when warranted.
+description: "Use when a concrete issue needs an evidence-based escalation judgment: keep it local, remember it as a reusable candidate, or promote it to a durable upstream repair."
 ---
 
 # Skill Governance Escalation
 
-Audit governance-relevant AI changes and diagnose cross-layer causes without over-generalizing. Use this when a concrete issue may need both a local patch and a reusable upstream check, or when you need to prove that no such escalation is warranted.
+Judge whether a concrete issue should stay local or be promoted upward, then route any durable repair to the right layer without over-generalizing. Use this when the local symptom is real, but the open question is whether it should remain a local repair, become a remembered reusable candidate, or justify an upstream governance fix now.
+
+This skill exists to compress one concrete issue into one explicit escalation verdict.
+
+- Trigger boundary: use it when the local issue is concrete, but the durable repair layer is still uncertain.
+- First move: auto-audit the current evidence and produce findings before any escalation.
+- Strongest thing: it is strongest at preventing unnecessary escalation while still pushing necessary upstream repair.
+- Core verdicts: `local-only`, `provisional candidate`, `promote now`.
 
 ## Boundaries
 
-Use this when a concrete problem may have more than one plausible repair layer and you want to determine:
+Use this when a concrete problem may have more than one plausible repair layer and you need to determine:
 
 - what findings the current change actually produces
 - what should be patched locally right now
@@ -19,14 +26,13 @@ Use this when a concrete problem may have more than one plausible repair layer a
 This workflow may inspect:
 
 - concrete project artifacts such as docs, templates, reports, or entrypoints
-- one reusable workflow or skill that appears to be causing repeated problems
+- one reusable workflow or skill that appears to be causing repeated problems after the local issue is clear
 - a meta-skill when the same governance failure keeps recurring
-- ambiguous ownership between skills when the issue really needs owner arbitration before local repair
 - a runtime, agent, or model constraint when the issue may not be fixable inside the current skill stack
 
 Do not use this when:
 
-- the fix location is already clear and only one existing skill needs repair -> use a skill-maintenance workflow
+- the fix location is already clear and only one existing skill needs repair -> use `skill-maintain`
 - the main issue is ambiguous ownership or handoff between multiple skills -> use `skill-referee`
 - the main task is designing a new skill or reshaping one skill whose boundary is already understood -> use `skill-architect`
 - the main task is directly repairing project documents after the owning workflow is already known -> use the owning project/document workflow
@@ -35,6 +41,7 @@ Do not use this when:
 
 - Start from the concrete issue, not from a desired abstraction.
 - When this workflow is invoked, default to an auto-audit first. Do not wait for the user to pre-diagnose findings.
+- Make the escalation verdict explicit before discussing durable routing or output formatting.
 - This workflow is explicitly invoked. It does not imply silent background hooks or automatic execution after every change.
 - Abstract only as far as the evidence supports.
 - Prefer the lowest layer that can permanently fix the problem.
@@ -46,23 +53,12 @@ Do not use this when:
 - Keep findings separate from escalation judgments. A local-only finding is still a useful output.
 - Classify the post-audit governance status explicitly as `local-only`, `provisional candidate`, or `promote now`.
 - Persist only reusable governance candidates. Do not create durable note noise for local-only findings.
-- Default to a governance report, not to direct multi-layer rewrites.
+- Use the governance report as the output container after the escalation verdict is clear; the report is not the skill's core identity.
 - Hand off to downstream workflows once the fix locus is clear.
 
 ## Workflow
 
-### 1. Confirm The Trigger
-
-Use this workflow when a concrete issue should trigger an auto-audit and then, only if needed, an upstream-check. This is especially useful if the issue recurs, feels misowned, may reflect a reusable governance gap, or may be getting blamed on the wrong layer.
-
-Examples:
-
-- a project-document problem may actually come from an upstream planning workflow
-- a concrete skill symptom may actually come from a higher design or maintenance contract
-- repeated drift across multiple repos may reflect a missing governance rule
-- a user-visible behavior problem may actually come from runtime, agent, or model behavior rather than the current skill text
-
-### 2. Run The Auto-Audit
+### 1. Run The Auto-Audit
 
 Start with the concrete evidence:
 
@@ -84,9 +80,9 @@ Produce a compact findings list first. Each finding should be marked as one of:
 
 Do not escalate anything yet.
 
-### 3. Judge The Upstream Status
+### 2. Judge The Upstream Status
 
-Before escalating, decide the overall governance status for the issue:
+Before routing any durable fix, decide the overall governance status for the issue:
 
 - `local-only`
 - `provisional candidate`
@@ -114,9 +110,9 @@ Use `promote now` when:
 
 Load [references/persistence-policy.md](references/persistence-policy.md) before deciding whether a governance note should be emitted or written.
 
-### 4. Escalate If Needed
+### 3. Escalate If Needed
 
-Only escalate findings that look reusable, misowned, or suspiciously higher-layer. Leave pure local findings at the local layer.
+Only escalate findings that look reusable, misowned, or suspiciously higher-layer. Leave pure local findings at the local layer, and do not let routing discussion blur the verdict you just made.
 
 Load [references/layer-model.md](references/layer-model.md) before classifying the layer.
 
@@ -130,7 +126,7 @@ For each escalated finding, decide whether the durable fix primarily belongs to:
 
 Use [references/routing-matrix.md](references/routing-matrix.md) when the likely next workflow is not obvious.
 
-### 5. Abstract The Failure Mode
+### 4. Abstract The Failure Mode
 
 For each escalated finding, turn the concrete symptoms into the narrowest reusable failure mode that still explains the evidence.
 
@@ -151,7 +147,7 @@ Bad outputs at this step look like:
 - a rule tailored to one private setup
 - a sweeping meta-rule based on one accident
 
-### 6. Decide The Final Split Between Local Repair And Upstream Repair
+### 5. Decide The Final Split Between Local Repair And Upstream Repair
 
 Ask:
 
@@ -161,9 +157,9 @@ Ask:
 - would escalation bloat a more general workflow with a narrow symptom?
 - is the higher-layer cause still inside the skill stack, or has the analysis crossed into runtime/platform behavior?
 
-### 7. Produce The Governance Report
+### 6. Produce The Governance Report
 
-Load [references/output-contract.md](references/output-contract.md), [references/report-format.md](references/report-format.md), and [references/governance-note-format.md](references/governance-note-format.md).
+Once the escalation verdict and repair split are clear, load [references/output-contract.md](references/output-contract.md), [references/report-format.md](references/report-format.md), and [references/governance-note-format.md](references/governance-note-format.md) to package the result.
 
 The report must state:
 
@@ -184,7 +180,7 @@ In review-only work, emit a governance note block for `provisional candidate` an
 
 In implementation or repair work, write or update the governance candidate ledger only when the issue is `provisional candidate` or `promote now`.
 
-### 8. Hand Off
+### 7. Hand Off
 
 Once the fix locus is clear:
 

@@ -1,6 +1,6 @@
 # Abstraction Rules
 
-Use this when converting a concrete problem into a reusable governance failure mode.
+Load this when converting a concrete problem into a reusable governance failure mode.
 
 ## Principle
 

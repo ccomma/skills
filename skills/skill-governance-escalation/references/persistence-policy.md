@@ -1,6 +1,6 @@
 # Governance Persistence Policy
 
-Use this when deciding whether governance findings should stay inside the current report only or also become durable governance memory.
+Load this when deciding whether governance findings should stay inside the current report only or also become durable governance memory.
 
 ## Persistence Threshold
 

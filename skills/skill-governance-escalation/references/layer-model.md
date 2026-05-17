@@ -1,6 +1,6 @@
 # Governance Layer Model
 
-Use this after the auto-audit has produced findings and you need to decide where any escalated finding really belongs, including cases where the real upstream cause may sit outside the current skill stack.
+Load this when the auto-audit has produced findings and you need to decide where any escalated finding really belongs, including cases where the real upstream cause may sit outside the current skill stack.
 
 This reference classifies the durable fix layer. It does not replace the separate `upstream status` judgment:
 
@@ -55,7 +55,7 @@ Examples:
 
 Default action:
 
-- use a skill-boundary workflow
+- use `skill-referee`
 - do not treat this as one-skill maintenance
 
 ### 4. Meta-Skill Or Governance Layer

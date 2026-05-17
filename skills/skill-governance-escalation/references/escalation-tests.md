@@ -1,6 +1,6 @@
 # Escalation Tests
 
-Use this before deciding that a problem should move to a higher governance layer.
+Load this when deciding whether a problem should move to a higher governance layer.
 
 ## Decision Questions
 
@@ -68,7 +68,7 @@ Must not: defer promotion just because this is the first time it appeared in thi
 ```text
 Scenario: the real problem is overlap between skills
 Prompt: 这类请求到底应该由 A 还是 B 处理？
-Expected judgment: keep the status focused on the issue, then route to a skill-boundary workflow.
+Expected judgment: keep the status focused on the issue, then route to `skill-referee`.
 Must not: treat this as one-skill maintenance or a meta-skill rule by default.
 ```
 

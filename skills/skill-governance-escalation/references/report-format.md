@@ -1,6 +1,6 @@
 # Governance Report Format
 
-Use this when writing the final report for a governance-escalation pass.
+Load this when writing the final report for a governance-escalation pass.
 
 ## Report Shape
 

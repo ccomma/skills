@@ -1,6 +1,6 @@
 # Governance Audit Signals
 
-Use this when `skill-governance-escalation` needs a stable findings vocabulary for auto-audit work before any escalation judgment.
+Load this when `skill-governance-escalation` needs a stable findings vocabulary for auto-audit work before any escalation judgment.
 
 ## Purpose
 
