@@ -158,10 +158,10 @@ Load `references/product-brief-format.md` before drafting the `Product Brief`. P
 Before calling this skill mature, verify at least these cases:
 
 - underspecified idea -> diagnose and converge without blank-page interviewing
-- overspecified idea -> skip redundant intake and produce a lighter brief
-- planning-ready direction -> hand off quickly instead of reopening broad exploration
-- existing plan under challenge -> route to design validation instead of rebuilding the brief
-- generic naming or unconstrained ideation -> route away instead of pretending it is product exploration
+- overspecified idea -> skip redundant intake, label gaps as assumptions, and produce a lighter brief instead of forcing a full discovery pass
+- planning-ready direction -> first response hands off quickly instead of reopening broad exploration
+- existing plan under challenge -> first response routes to design validation instead of rebuilding the brief
+- generic naming or unconstrained ideation -> first response routes away instead of pretending it is product exploration
 - wrong engineering scope -> route to engineering instead of absorbing implementation work
-- impatient user -> use the lean path with explicit caveats
+- impatient user -> use the lean path with explicit caveats instead of insisting on more intake rounds
 - active handoff -> produce replanning input, not execution-state edits

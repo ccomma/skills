@@ -1,4 +1,4 @@
 interface:
   display_name: "Product Explore"
   short_description: "Reframe a fuzzy or solution-shaped product direction into a problem-shaped Product Brief."
-  default_prompt: "Use $product-explore to recover the real product problem from a fuzzy or prematurely solution-shaped idea, surface the key trade-offs and assumptions, and converge on a Product Brief before planning."
+  default_prompt: "Use $product-explore to recover the real product problem from a fuzzy or prematurely solution-shaped idea, surface the key trade-offs and assumptions, and converge on a Product Brief before planning. Do not use it for planning-ready requests, existing-plan validation against docs or code, or generic ideation and naming."

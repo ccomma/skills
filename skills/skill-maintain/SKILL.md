@@ -52,6 +52,12 @@ Repair drift in one existing skill without redefining its role or kernel.
    - explicit defer
    - make the chosen repair depth and any required handoff judgment explicit enough to land cleanly in the final `maintenance verdict`
    - if the patch would span too many modes, would introduce a new owner layer, or would redefine the skill's role or kernel rather than repair drift around it, stop and ask whether this is really redesign rather than maintenance
+   - treat architecture-surface changes as redesign pressure:
+     - creating the first `validation starter`
+     - creating the first live smoke owner
+     - first introducing or redefining the smallest-smoke ladder
+     - changing kernel lines or the wrong-scope boundary
+     - adding a companion validation-bearing reference or format file just to make the repair work
 
 4. Rewrite the hot path first:
    - restore the kernel before polishing structure:
@@ -75,6 +81,7 @@ Repair drift in one existing skill without redefining its role or kernel.
      - if the repair touches protocol wording, helper behavior, or runtime smoke, keep each layer on its existing job instead of letting one layer absorb another
      - do not "solve drift" by promoting a helper, check script, or fallback file into a new source of truth
      - do not create a new script, reference, or validation entrypoint when the existing owner can carry the repair cleanly
+     - if the cleanest fix still needs a first `validation starter`, a first live smoke owner, or a new smallest-smoke ladder, stop and hand off to `skill-architect` instead of backfilling architecture inside maintenance
 
 5. Validate the repaired skill:
    - kernel sentence is now explicit
@@ -124,6 +131,8 @@ Do not use this when the main task is designing a different skill, routing acros
 
 If the real task is changing the target skill's role, redefining its kernel, or turning a repair into a redesign, route to `skill-architect`.
 
+If the repair would create or redefine architecture surfaces such as `validation starter`, the default narrow live smoke, its stop or escalate rule, or a companion validation-bearing component, route to `skill-architect` even when the original request sounded like maintenance.
+
 If the real task is deciding whether multiple skills should split, merge, or reroute, route to `skill-referee`.
 
 If the repair reveals that the original skill never had a real build brief protocol or initializer handoff, classify that first as kernel/architecture drift and decide explicitly whether it still fits maintenance or needs architecture handoff.
@@ -142,6 +151,7 @@ If the audit suggests a reusable upstream cause after the local repair locus is 
 - Audit is a method for locating drift, not this skill's core identity.
 - If a repair crosses too many modes, treat that as redesign pressure and say so explicitly.
 - If a repair would create a new owner layer, new validation entrypoint, or new helper role just to make the current fix feel cleaner, treat that as redesign pressure and say so explicitly.
+- If a repair would create the first live smoke owner, the first smallest-smoke ladder, or the first `validation starter` for a skill, treat that as redesign pressure and hand off instead of absorbing it into maintenance.
 - Prefer fixing the teaching failure over preserving familiar prose.
 - Collapse sibling bullets when they are really restating one governing repair decision with minor condition changes.
 - Apply the same collapse rule to references and other bundle components, not only to `SKILL.md`.

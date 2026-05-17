@@ -16,7 +16,7 @@ Use this file when the repair is mainly about:
 - component ownership
 - small bundle drift across a few connected files
 
-If trigger boundary, authority, or multi-turn behavior changed, go back to `regression-tests.md` and `pressure-tests.md`.
+If trigger boundary, wrong-scope boundary, `validation starter`, the first live smoke owner, the smallest-smoke ladder, authority, or multi-turn behavior changed, first test whether this still belongs in maintenance or must hand off to `skill-architect`.
 
 If the real question is which runtime layer or runtime adapter to use, load `runtime-smoke-harness.md` first.
 
@@ -30,6 +30,11 @@ Pass if: the answer names the drift first, explains why the role/kernel stay sta
 ```text
 Prompt 2: This skill's kernel is wrong and fixing it would change what the skill is for. What now?
 Pass if: the answer refuses to keep the work inside maintenance and hands off to `skill-architect`.
+```
+
+```text
+Prompt 2b: This old skill has no `validation starter` or live smoke owner yet, and the cleanest fix would add both. What now?
+Pass if: the answer treats this as redesign pressure, refuses to create those architecture surfaces inside maintenance, and hands off to `skill-architect`.
 ```
 
 ```text
@@ -84,12 +89,14 @@ Pass if: the answer first checks whether the current validation chain already ha
 - Ask for one repair judgment and a brief answer, not a broad audit.
 - Prefer prompt 1 when the repair is specifically about diagnosing drift and stating why the answer still belongs in maintenance.
 - Prefer prompts 2-4 when routing or handoff is the real question.
+- Prefer prompt 2b when the proposed repair would create or redefine `validation starter`, a first live smoke owner, or the smallest-smoke ladder.
 - Prefer prompt 5 when the output contract itself is under question.
 - For owner-only repair prompts, load `component-paths.md` first and stop once each drift has an owner component.
 - Prefer prompts 6-7 for reference-only repairs.
 - Add prompt 8 when multiple bundle components drifted.
 - Add prompt 9 when verification scope is the real question.
 - Add prompt 10 when the repair is trying to solve drift by growing a new validation or helper layer.
+- If prompt 2b passes clearly, stop and hand off to `skill-architect`; do not widen into broader maintenance proof.
 - Do not load deeper component-specific references unless the repair itself is under question after the owner judgment.
 - If the first live smoke passes clearly, stop.
 - If the first live smoke exposes one in-scope issue, repair it and rerun only the narrowest prompt that covers that issue.

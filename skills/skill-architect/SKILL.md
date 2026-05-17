@@ -1,6 +1,6 @@
 ---
 name: skill-architect
-description: "Use when one skill's boundary is already clear and you need to lock its kernel, turn it into an initializer-neutral build brief protocol, and only then decide the lightest structure, validation starter, and downstream handoff."
+description: "Use when one skill's boundary is already clear and you need to lock its kernel, or when an existing skill change has crossed into kernel/build-brief/validation-starter architecture work."
 ---
 
 # Skill Architect
@@ -8,6 +8,8 @@ description: "Use when one skill's boundary is already clear and you need to loc
 Own one skill's kernel and build brief before any richer structure discussion.
 
 Use this when the boundary is already clear and the remaining question is: what does this skill exist to do, when should it trigger, what should it do first, what is it strongest at, what is the wrong-scope boundary, and what is the lightest build brief any downstream initializer should follow before deeper structure is even considered.
+
+Use it as an explicit architecture checkpoint for an existing skill when the planned change touches architecture surfaces such as kernel lines, `validation starter`, the default narrow live smoke, the stop or escalate rule of that smoke ladder, or whether a companion reference or format file must exist to carry those duties.
 
 Do not use this as the generic skill-creation workflow, starter-file workflow, or publishable-bundle workflow.
 
@@ -22,6 +24,7 @@ Do not use this to repair one existing skill whose role should stay stable.
      - `first move`
      - `strongest thing`
      - `not-this-skill-if...`
+   - if the request started as "repair an existing skill", but the intended change touches architecture surfaces such as kernel lines, `validation starter`, the default narrow live smoke, its stop or escalate rule, or the existence of a companion validation-bearing component, treat that as architecture work now rather than continuing as routine maintenance
    - if the request is too fuzzy to fill those five lines honestly, load `references/design-intake.md` only long enough to gather the missing inputs, then return to `references/kernel-extraction.md`
    - do not start from sections, references, scripts, or bundle shape while the kernel is still implicit
 
@@ -117,6 +120,8 @@ Do not use this to repair one existing skill whose role should stay stable.
 
 Use this when the main question is how one skill should be shaped or reshaped after its boundary is already clear and its kernel still needs to be locked.
 
+This includes retrofitting an existing skill when the next safe move is no longer "repair the drift" but "freeze the kernel/build-brief surfaces before touching validation or structure."
+
 Do not use this when the main task is executing the underlying workflow itself rather than designing the skill for it.
 
 Do not use this as the generic skill initialization or bundle scaffolding workflow.
@@ -135,6 +140,7 @@ If the real problem is repairing one existing skill without changing its core ro
 - Do not start from section names, references, scripts, or bundle shape before the kernel is explicit.
 - The minimum architecture output is not "a draft bundle". It is a teachable kernel: kernel sentence, trigger boundary, first move, strongest thing, and wrong-scope sentence.
 - The default explicit deliverable is not "starter files". It is a build brief protocol instance: kernel, minimal shape, component decisions, do-not-add rules, validation starter, and initializer handoff.
+- The first creation or redefinition of `validation starter`, the default narrow live smoke, its stop or escalate rule, or a companion validation-bearing component is architecture work, not routine maintenance drift repair.
 - Richer structure is secondary. Bundle shape, references, scripts, and publishable surfaces may deepen a design only after the kernel and build brief are already clear.
 - The build brief protocol is `v1` until a later protocol reference explicitly changes it.
 - Optimize for clear section jobs and a visible dominant path, not heading conventions.

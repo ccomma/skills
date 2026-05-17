@@ -107,3 +107,33 @@ Do not pretend this is `product-explore`:
 这还不是一个明确的产品机会重构场景，更像泛 ideation / naming。
 我不会把它硬接成 Product Brief 流程；应该先做更宽松的创意发散，或者先明确你想解决的具体产品问题。
 ```
+
+## Short Counterexample: Existing Plan Under Challenge
+
+If the user says:
+
+```text
+拿现有方案和 docs/code 对照拷打，看看哪里还站不住。
+```
+
+Do not rebuild the brief. Hand off to validation:
+
+```text
+这已经不是前置探索，而是拿既有方案去对照 docs/code 做压力测试。
+我不会重开 Product Brief，而是应该进入下游的设计/领域校验流程，先找最危险的矛盾和边界问题。
+```
+
+## Short Lean Path: Overspecified Or Impatient
+
+If the user says:
+
+```text
+别问太多，按这个方向快速给我一个 Product Brief，缺口你先标假设。
+```
+
+Use the lean path instead of reopening full divergence:
+
+```text
+我会走精简路径：先用一句话重述你当前的真实问题定义，再直接给出一个 lean Product Brief。
+无法确认的用户、边界和成功信号我会明确标成 assumption 或 validation question，而不是假装它们已经成立。
+```

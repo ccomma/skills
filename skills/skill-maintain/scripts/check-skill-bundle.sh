@@ -272,6 +272,9 @@ check_primary_surface_contract() {
         if ! printf '%s' "$prompt_text" | rg -Fq '$skill-governance-escalation'; then
           add_warning "semantic-drift" "agents/openai.yaml default_prompt may be missing the handoff route to \$skill-governance-escalation"
         fi
+        if ! printf '%s' "$prompt_text" | rg -qi 'validation starter|smallest-smoke ladder|live smoke owner'; then
+          add_warning "semantic-drift" "agents/openai.yaml default_prompt may be missing the architect handoff for architecture-surface changes such as validation starter or smallest-smoke ladder"
+        fi
       fi
 
       if [[ -f "$output_contract_file" ]]; then
@@ -284,6 +287,24 @@ check_primary_surface_contract() {
             add_warning "semantic-drift" "references/output-contracts.md declares the default maintenance verdict, but agents/openai.yaml default_prompt does not visibly mirror it"
           fi
         fi
+      fi
+      ;;
+    skill-architect)
+      if ! printf '%s' "$combined_text" | rg -qi 'existing skill|existing-skill|retrofit'; then
+        add_warning "semantic-drift" "Primary surface may be missing the explicit existing-skill redesign checkpoint"
+      fi
+      if ! printf '%s' "$combined_text" | rg -qi 'validation starter|smallest-smoke ladder|live smoke'; then
+        add_warning "semantic-drift" "Primary surface may be missing architecture-surface examples such as validation starter or smallest-smoke ladder"
+      fi
+      if [[ -n "$minimal_smoke_text" ]]; then
+        if ! printf '%s' "$minimal_smoke_text" | rg -Fq 'Prompt 3b:'; then
+          add_warning "semantic-drift" "references/minimal-smoke-prompts.md may be missing the existing-skill redesign checkpoint smoke prompt"
+        fi
+        if ! printf '%s' "$minimal_smoke_text" | rg -Fq 'architect retrofit checkpoint'; then
+          add_warning "semantic-drift" "references/minimal-smoke-prompts.md may be missing the pass condition for existing-skill redesign checkpoint routing"
+        fi
+      else
+        add_warning "semantic-drift" "references/minimal-smoke-prompts.md is missing, so narrow architect-checkpoint live proof cannot be checked"
       fi
       ;;
     skill-referee)

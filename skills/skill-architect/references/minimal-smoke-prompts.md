@@ -20,6 +20,7 @@ Use this file when the change is mainly about:
 - reference existence or split/merge
 - bundle reachability for one component
 - keeping the hot path sharp while moving detail out
+- deciding whether an existing-skill change has crossed from maintenance into architecture work
 
 If trigger boundary, authority model, or interaction cadence changed beyond the kernel-first layer, go back to `pressure-tests.md`.
 
@@ -40,6 +41,11 @@ Pass if: the answer locks the kernel quickly, then gives the minimal shape, comp
 ```text
 Prompt 3: Use $skill-architect. 帮我把这个已有 skill 做成熟。
 Pass if: the answer starts from one strong thing, trigger boundary, and first move, then distinguishes whether the next move is an architect retrofit brief or a maintenance repair instead of listing bundle upgrades first.
+```
+
+```text
+Prompt 3b: Use $skill-architect. 这是一个现有 skill 的修补，但我准备改 trigger boundary 和 validation starter。它还属于 maintenance 吗？
+Pass if: the answer treats this as an architect retrofit checkpoint, freezes the kernel/build-brief surfaces first, and does not hand the job back as an ordinary maintenance patch.
 ```
 
 ```text
@@ -123,6 +129,7 @@ Pass if: the answer keeps the helper subordinate to the protocol and describes i
 - Keep the prompt short and single-purpose.
 - Ask for one judgment and a brief answer, not a broad review.
 - Prefer prompts 1-7c and 14 when the change is specifically about external positioning, protocol wording, validator behavior, repo-local proof behavior, initializer-neutral handoff, or kernel-first entry behavior.
+- Prefer prompt 3b when the question is whether an existing-skill change has crossed into architecture surfaces such as `validation starter` or smoke-ladder ownership.
 - For component-placement prompts, load `component-paths.md` first and stop there if one owner component is already clear.
 - Prefer prompts 8-9 for reference-only edits.
 - Add prompt 10 when the opening contract changed.
