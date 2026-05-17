@@ -1,40 +1,59 @@
 ---
 name: product-plan
-description: "Use when starting or continuing serious product work that needs durable planning context, phase handoffs, PRDs, technical designs, test plans, and acceptance evidence."
+description: "Use when a product direction is clear enough to become a durable planning stack centered on a phase package, with aligned source-of-truth layers and execution-state handoff."
 ---
 
 # Product Plan
 
 ## Overview
 
-Build and maintain a product project's context architecture. Core pattern: short handoff first, long docs on demand, clear artifact ownership, and preserved phase evidence at closeout.
+Turn a planning-ready product direction into a durable planning stack centered on the current or next phase package.
+
+Default first move: inspect the existing planning layers and current execution state, then decide whether the work is a cold start, a midstream replan, or a repair pass.
+
+This skill owns the planning workflow that connects upstream direction to executable phase work. It keeps the current or next phase package aligned with `DESIGN.md`, roadmap, `CURRENT_HANDOFF.md`, and the phase-level source-of-truth artifacts so a future teammate or agent can continue without reconstructing the plan from scratch.
 
 Use this for serious, multi-phase work. For a prototype or one-off task, keep it light: a README and short handoff are enough.
 
-This skill prepares durable planning context for the common path: initial design -> current-phase planning -> validation or implementation handoff -> implementation -> phase closeout.
+This skill prepares durable planning artifacts. It does not replace product exploration, plan validation, implementation planning, code work, debugging, verification, or review.
 
-This skill prepares product context. It does not replace design validation, implementation planning, code work, debugging, verification, or review.
+The goal is not document completeness for its own sake. The goal is to keep planning-ready direction, phase execution state, and durable source-of-truth layers in the right places so the delivery path stays understandable across sessions, runtimes, and future maintainers.
 
-The goal is not document completeness for its own sake. The goal is to help a team form correct product boundaries, stable design sources of truth, and a maintainable delivery system. Structural completeness matters because it preserves those outcomes across sessions, runtimes, and future maintainers.
+## Artifact Contract
+
+The core owned object is the current or next phase package:
+
+- `HANDOFF.md`
+- `IMPLEMENTATION_PLAN.md`
+- `ACCEPTANCE.md`
+
+Alongside that core object, this skill maintains the source-of-truth relationship between:
+
+- `DESIGN.md` for durable product judgment
+- roadmap for sequencing and exits
+- `CURRENT_HANDOFF.md` for current execution state
+- phase PRD, technical design, and test plan for requirements, architecture contract, and testing strategy
+
+`Product Brief` is upstream planning input. It may shape roadmap or phase-doc changes, but it does not directly become current execution state.
 
 ## When To Use
 
 Use when the user asks to:
 
-- start a serious product or product-like engineering project
-- create or repair `DESIGN.md`, roadmap, phase PRDs, technical designs, test plans, handoffs, acceptance docs, or ADRs
-- define or repair ownership rules for shared project documents and directories
-- review or audit an existing project's document responsibilities, loading flow, ownership drift, or planning-layer quality before authorizing repair
+- turn a planning-ready product direction into durable planning artifacts for serious product or product-like engineering work
+- create or repair the planning layers around the current or next phase package, including `DESIGN.md`, roadmap, handoffs, PRDs, technical designs, test plans, implementation plans, and acceptance evidence
+- align source-of-truth ownership between durable planning artifacts and current execution state
+- diagnose document responsibilities, loading flow, or ownership drift before authorizing planning-layer repair
 
-Do not use for code execution, refactoring, debugging, verification, code review, feature brainstorming, direct plan grilling, or implementation planning. Hand off to the appropriate discovery, validation, or engineering workflow instead.
+Do not use when the direction is still fuzzy and needs a `Product Brief`, when an existing plan needs to be challenged against docs or code before execution, or when the work is code execution, refactoring, debugging, verification, code review, feature brainstorming, direct plan grilling, or implementation planning. Hand off to the appropriate exploration, validation, or engineering workflow instead.
 
 ## Upstream Inputs
 
-This workflow may start from a `Product Brief`, a direct product direction, or an existing project that needs replanning. Accept upstream input by capability, not by one specific skill name.
+This workflow may start from a `Product Brief`, an already accepted product direction, or an existing project that needs replanning. Accept upstream input by capability, not by one specific skill name.
 
 ## Core Pattern
 
-Planning modes:
+This workflow is phase-package-centered even when the surrounding stack is broader. The planning modes below are branch cases inside that workflow, not separate product identities:
 
 - `cold start`: set up the initial durable document stack before implementation begins
 - `midstream replan`: incorporate a new direction, extension, or pivot into the existing document stack without silently promoting it into current execution state
@@ -86,15 +105,15 @@ When multiple runtime entrypoint files exist, treat them as an entrypoint family
 
 ## Document Ownership
 
-Keep each layer narrow:
+Keep each layer narrow around the phase package rather than treating every planning document as an equal first-class identity:
 
 - entrypoint file: minimum cold-start loading order, mandatory phase workflow reference, and smallest must-know runtime rules
 - `DESIGN.md`: durable product judgment, not daily execution detail
 - `docs/README.md`: shared `docs/` namespace ownership, source-of-truth rules, and auxiliary-directory policy
 - `docs/process/DEVELOPMENT_FLOW.md`: phase execution workflow, context-loading protocol, and document progression rules
 - roadmap: phase sequence, goals, exits, and prerequisites
-- `CURRENT_HANDOFF.md`: minimum current context, branch, next work, and verification commands
-- phase package: `HANDOFF.md`, `IMPLEMENTATION_PLAN.md`, and `ACCEPTANCE.md` for one phase
+- `CURRENT_HANDOFF.md`: minimum current context, branch, next work, and verification commands for current execution state
+- phase package: `HANDOFF.md`, `IMPLEMENTATION_PLAN.md`, and `ACCEPTANCE.md` for one phase; this is the center of current executable planning state
 - PRD / technical design / test plan: requirements, architecture contract, and testing strategy
 - ADR: sparse, durable, cross-phase decisions, especially hard-to-reverse technical foundation or stack choices once they stabilize
 - `README.md`: public entrypoint, reading paths, and quickstart

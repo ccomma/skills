@@ -1,4 +1,4 @@
 interface:
   display_name: "Product Plan"
-  short_description: "Short handoff first, long product docs on demand."
-  default_prompt: "Use $product-plan to set up or continue a product project with durable design memory, roadmap, phase handoffs, PRDs, technical designs, test plans, acceptance evidence, and token-efficient context loading."
+  short_description: "Turn a planning-ready direction into a phase-package-centered planning stack."
+  default_prompt: "Use $product-plan when a product direction is already clear enough to become durable planning artifacts centered on the current or next phase package. Treat a Product Brief as upstream input, align `DESIGN.md`, roadmap, phase docs, and `CURRENT_HANDOFF.md`, and keep existing-plan challenge requests with documentation or code contradictions out of this workflow."

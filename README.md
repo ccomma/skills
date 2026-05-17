@@ -7,7 +7,7 @@ These skills are designed to be small, composable, and easy to install into diff
 ## Skills
 
 - [`product-explore`](./skills/product-explore/SKILL.md): Reframes a fuzzy or prematurely solution-shaped product direction into a problem-shaped `Product Brief` before planning.
-- [`product-plan`](./skills/product-plan/SKILL.md): Builds and maintains durable product context, planning docs, phase handoffs, and evidence for multi-phase product work.
+- [`product-plan`](./skills/product-plan/SKILL.md): Turns a planning-ready direction into a durable planning stack centered on the current or next phase package.
 - [`product-validate`](./skills/product-validate/SKILL.md): Stress-tests an existing product plan against docs, terminology, code, and decision boundaries before execution or replanning continues.
 - [`skill-governance-escalation`](./skills/skill-governance-escalation/SKILL.md): Explicitly auto-audits a concrete issue first, classifies it as local-only, provisional candidate, or promote-now, and escalates only the findings that suggest reusable upstream causes.
 - [`skill-referee`](./skills/skill-referee/SKILL.md): Settles ambiguous skill ownership with metadata-first rulings and clear handoff rules.
@@ -58,24 +58,24 @@ These three product-oriented skills should connect through artifact contracts, n
   - Output: `Product Brief`.
   - Does not directly mutate execution-state documents such as `CURRENT_HANDOFF.md`.
 - `product-plan`
-  - Use when the direction is clear enough to become durable planning context.
-  - Output: the planning stack for serious multi-phase work, centered on `DESIGN.md`, roadmap, current handoff, phase handoffs, PRDs, technical designs, test plans, `IMPLEMENTATION_PLAN.md`, and `ACCEPTANCE.md`.
+  - Use when the direction is clear enough to become durable planning artifacts.
+  - Output: a planning stack for serious multi-phase work, centered on the current or next phase package and aligned with `DESIGN.md`, roadmap, `CURRENT_HANDOFF.md`, phase handoffs, PRDs, technical designs, test plans, `IMPLEMENTATION_PLAN.md`, and `ACCEPTANCE.md`.
   - Treats `Product Brief` as upstream input, not as current execution state.
 - `product-validate`
   - Use after planning and before implementation, or before a major replan.
-  - Challenges the plan against existing docs, code, terminology, and decision boundaries.
+  - Challenges the existing plan or phase package against docs, code, terminology, and decision boundaries.
   - Can propose document repairs and ADR-worthy decisions, but does not directly take over current-phase execution state.
 
 The most common path is:
 
 1. Recover the real product problem until it becomes a usable `Product Brief`
-2. Turn that brief into durable planning documents
+2. Turn that brief into a planning stack centered on the current or next phase package
 3. Use `product-validate` to challenge terminology, code, and decision boundaries
 4. Hand off to implementation only after the plan is coherent enough
 
 ### Document Layers
 
-`product-plan` uses a layered document model. The key distinction is not "one folder per phase" versus "one folder per document type", but **which layer owns which kind of truth**.
+`product-plan` uses a layered document model as its working model, not as its product identity. The key distinction is not "one folder per phase" versus "one folder per document type", but **which layer owns which kind of truth** around the phase package and current execution state.
 
 - `DESIGN.md`
   - Holds durable product judgment and long-lived design direction.
