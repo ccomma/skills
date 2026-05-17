@@ -1,6 +1,8 @@
 # Project Sizing
 
-Use this when deciding how much document weight a project should receive, especially whether it should stay light or grow into a phase-package-centered planning stack. It only answers structure weight; it does not replace the parent skill's routing or workflow.
+Load this when deciding how much document weight a project should receive, especially whether it should stay light or grow into a phase-package-centered planning stack. It only answers structure weight; it does not replace the parent skill's routing or workflow.
+It answers when a project should stay light versus when it deserves a fuller phase-package-centered planning stack.
+It does not replace artifact ownership, execution-state handling, or the parent skill's routing.
 
 ## Principle
 

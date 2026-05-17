@@ -1,6 +1,8 @@
 # Handoff Format
 
-Use this when `product-plan` creates or repairs a phase `HANDOFF.md` or `docs/context/CURRENT_HANDOFF.md`.
+Load this when `product-plan` creates or repairs a phase `HANDOFF.md` or `docs/context/CURRENT_HANDOFF.md`.
+It answers what operational handoff artifacts must contain so another session can resume safely from the current execution state.
+It does not replace `DESIGN.md`, PRD, technical design, or the broader phase package.
 
 ## When To Use
 

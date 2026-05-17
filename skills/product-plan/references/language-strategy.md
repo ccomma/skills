@@ -1,6 +1,8 @@
 # Language Strategy
 
-Use this when a project's public entry docs, internal working docs, templates, or visible labels may not all need the same language treatment.
+Load this when a project's public entry docs, internal working docs, templates, or visible labels may not all need the same language treatment.
+It answers how document families should choose and preserve language strategy across public entry, internal working docs, and templates.
+It does not replace document ownership, project sizing, or the phase-package-centered planning workflow.
 
 ## Principle
 

@@ -1,6 +1,8 @@
 # Auxiliary Docs Policy
 
-Use this when a repository contains `docs/` directories or files that are outside the core planning stack but still provide useful supporting context.
+Load this when a repository contains `docs/` directories or files that are outside the core planning stack but still provide useful supporting context.
+It answers how helper layers should be classified relative to the core planning stack and default load chain.
+It does not replace the phase-package-centered workflow, source-of-truth ownership, or current execution state rules.
 
 ## Principle
 

@@ -1,6 +1,8 @@
 # Acceptance Format
 
-Use this when `product-plan` creates or repairs a phase `ACCEPTANCE.md`.
+Load this when `product-plan` creates or repairs a phase `ACCEPTANCE.md`.
+It answers what a phase acceptance record must contain and how evidence should be recorded at phase closeout.
+It does not replace the phase package, current execution state, or the parent skill's routing.
 
 ## When To Use
 

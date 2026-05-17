@@ -1,6 +1,8 @@
 # Design Growth Policy
 
-Use this when deciding whether something belongs in `DESIGN.md`.
+Load this when deciding whether something belongs in `DESIGN.md`.
+It answers when durable judgment should be admitted into `DESIGN.md` instead of staying in a phase-local or execution-state artifact.
+It does not replace the `DESIGN.md` format, roadmap ownership, or phase-package-centered planning flow.
 
 ## Principle
 

@@ -1,6 +1,8 @@
 # Entrypoint Family
 
-Use this when a project has multiple runtime-specific cold-start entrypoint files, such as `CLAUDE.md`, `AGENTS.md`, or other runtime-specific filenames.
+Load this when a project has multiple runtime-specific cold-start entrypoint files, such as `CLAUDE.md`, `AGENTS.md`, or other runtime-specific filenames.
+It answers how runtime-specific entrypoints should stay semantically aligned while each one still supports safe cold start.
+It does not replace `CURRENT_HANDOFF.md`, the formal phase execution workflow, or the parent skill's routing.
 
 ## Principle
 

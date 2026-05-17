@@ -1,6 +1,8 @@
 # Existing Quality Assessment
 
-Use this before deciding whether to preserve, lightly repair, or broadly rewrite an existing document system.
+Load this when deciding whether to preserve, lightly repair, or broadly rewrite an existing document system.
+It answers how to classify an existing planning stack as low, mixed, or high quality before choosing repair depth.
+It does not replace project sizing, source-of-truth ownership, or the parent skill's repair workflow.
 
 ## Purpose
 

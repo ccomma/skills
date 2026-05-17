@@ -1,6 +1,8 @@
 # Review Mode
 
-Use this when the user wants a diagnosis of document responsibilities, ownership drift, or structural quality before authorizing full repair.
+Load this when the user wants a diagnosis of document responsibilities, ownership drift, or structural quality before authorizing full repair.
+It answers what a planning-layer diagnosis should inspect and when the workflow should stop at recommendations instead of rewriting artifacts.
+It does not replace product validation, direct repair mode, or the parent skill's main planning path.
 
 ## Goal
 

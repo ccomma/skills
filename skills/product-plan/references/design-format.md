@@ -1,6 +1,8 @@
 # DESIGN Format
 
-Use this when creating or repairing `DESIGN.md`.
+Load this when creating or repairing `DESIGN.md`.
+It answers what durable product and architecture judgment belongs in `DESIGN.md` and what quality bar that artifact should meet.
+It does not replace roadmap, phase package, current execution state, or docs governance layers.
 
 ## Purpose
 

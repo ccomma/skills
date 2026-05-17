@@ -1,6 +1,8 @@
 # Template Lifecycle
 
-Use this when deciding whether to create, refresh, or defer project-visible templates in `docs/templates/`.
+Load this when deciding whether to create, refresh, or defer project-visible templates in `docs/templates/`.
+It answers when templates deserve to exist as anti-drift assets and how they should stay subordinate to the owning planning workflow.
+It does not replace companion format references, active phase artifacts, or the parent skill's routing.
 
 ## Principle
 

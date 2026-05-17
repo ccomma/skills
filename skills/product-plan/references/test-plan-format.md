@@ -1,6 +1,8 @@
 # Test Plan Format
 
-Use this when creating or repairing a phase test plan.
+Load this when creating or repairing a phase test plan.
+It answers how one phase should be validated, which risks matter most, and what execution flows must later run.
+It does not replace acceptance evidence, implementation sequencing, or the parent skill's routing.
 
 ## Purpose
 

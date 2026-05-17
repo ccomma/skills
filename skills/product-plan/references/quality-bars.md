@@ -1,6 +1,8 @@
 # Quality Bars
 
-Use this when the user wants cross-project consistency, higher professional quality, or when document roles are drifting even if the basic file set exists.
+Load this when the user wants cross-project consistency, higher professional quality, or when document roles are drifting even if the basic file set exists.
+It answers how to judge whether each planning artifact is merely present or actually carrying its source-of-truth job well.
+It does not replace format files, project sizing, or the parent skill's routing and ownership rules.
 
 ## Principle
 

@@ -1,6 +1,8 @@
 # Consistency Constraints
 
-Use this when the user wants different projects, different models, or different runtimes to produce documents that feel structurally aligned rather than ad hoc.
+Load this when the user wants different projects, different models, or different runtimes to produce documents that feel structurally aligned rather than ad hoc.
+It answers how comparable document families should stay consistent across projects without collapsing into identical prose.
+It does not replace artifact ownership, project sizing, or the phase-package-centered decision path in the parent skill.
 
 ## Principle
 

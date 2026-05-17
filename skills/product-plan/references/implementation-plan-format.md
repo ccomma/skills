@@ -1,6 +1,8 @@
 # Implementation Plan Format
 
-Use this when creating or repairing a phase `IMPLEMENTATION_PLAN.md`.
+Load this when creating or repairing a phase `IMPLEMENTATION_PLAN.md`.
+It answers how accepted requirements and technical design should be turned into an ordered execution path for one phase.
+It does not replace technical design, handoff, acceptance evidence, or the parent skill's routing.
 
 ## Purpose
 

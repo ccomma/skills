@@ -1,6 +1,8 @@
 # README Format
 
-Use this when creating or repairing a project's root `README.md`.
+Load this when creating or repairing a project's root `README.md`.
+It answers what the root `README.md` should contain so first readers can orient quickly and choose the next document safely.
+It does not replace `docs/README.md`, `CURRENT_HANDOFF.md`, or the parent skill's phase-package-centered workflow.
 
 ## Purpose
 

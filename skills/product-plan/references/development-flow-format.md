@@ -1,6 +1,8 @@
 # Development Flow Format
 
-Use this when creating or repairing `docs/process/DEVELOPMENT_FLOW.md`.
+Load this when creating or repairing `docs/process/DEVELOPMENT_FLOW.md`.
+It answers what the formal phase execution workflow must contain once planning needs to turn into repeatable implementation discipline.
+It does not replace phase handoff, acceptance evidence, or the parent skill's routing into the current or next phase package.
 
 ## Purpose
 

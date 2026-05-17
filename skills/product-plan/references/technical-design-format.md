@@ -1,6 +1,8 @@
 # Technical Design Format
 
-Use this when creating or repairing a phase technical design.
+Load this when creating or repairing a phase technical design.
+It answers how accepted product requirements should be translated into a phase-specific architecture and delivery contract.
+It does not replace product strategy, implementation sequencing, or the current execution state.
 
 ## Purpose
 

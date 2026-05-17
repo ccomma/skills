@@ -1,6 +1,8 @@
 # PRD Format
 
-Use this when creating or repairing a phase PRD.
+Load this when creating or repairing a phase PRD.
+It answers what a phase PRD must contain so requirements and acceptance intent are clear before technical design and implementation planning.
+It does not replace technical design, implementation plan, or current execution state.
 
 ## Purpose
 

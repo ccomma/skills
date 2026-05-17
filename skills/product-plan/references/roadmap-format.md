@@ -1,6 +1,8 @@
 # Roadmap Format
 
-Use this when creating or repairing the project's roadmap, such as `docs/roadmap/PROJECT_DEVELOPMENT_PLAN.md`.
+Load this when creating or repairing the project's roadmap, such as `docs/roadmap/PROJECT_DEVELOPMENT_PLAN.md`.
+It answers what phase strategy, sequencing, exits, and prerequisites the roadmap must express across the planning stack.
+It does not replace PRD, technical design, implementation plan, or the current execution state.
 
 ## Purpose
 

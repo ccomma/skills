@@ -1,6 +1,8 @@
 # Docs Namespace README
 
-Use this when creating or repairing `docs/README.md`.
+Load this when creating or repairing `docs/README.md`.
+It answers how the shared docs namespace should express source-of-truth ownership and helper-layer boundaries.
+It does not replace project overview, phase handoff, or the parent skill's phase-package-centered planning workflow.
 
 ## Purpose
 
