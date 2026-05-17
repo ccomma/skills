@@ -36,7 +36,7 @@ Use when the user:
 
 - names a solution too early, such as "AI assistant", "recommendation system", "dashboard", or "automation", and needs help recovering the real product problem underneath it
 - has a product, feature, workflow, or service direction but the real problem, user, value, or scope is still unclear
-- asks to explore, discover, brainstorm, or evaluate what should be built before committing to a direction
+- needs to clarify which problem, user, boundary, or success signal should anchor planning before expanding or selecting solutions
 - wants options and trade-offs before writing PRD, roadmap, technical design, or implementation plan
 
 Do not use when:
@@ -74,10 +74,12 @@ The skill must still:
 - recover the underlying product problem before accepting the proposed solution framing
 - restate the idea without solution or technology framing when that framing is hiding the real product need
 - ask concrete hypothesis-driven questions instead of blank-page questions
+- use the default Step 2 lens stack first, and escalate to conditional lenses or adapters only when a specific residual risk remains
 - diverge before converging unless the user explicitly asks for a lean answer
 - separate facts, assumptions, unknowns, and validation questions
 - keep parked ideas instead of deleting them
 - stop at a Product Brief unless the user explicitly asks to continue
+- route generic naming or unconstrained ideation away instead of absorbing it as product exploration
 
 ## Workflow
 
@@ -95,9 +97,10 @@ If the user cannot answer, propose a default hypothesis and label it as an assum
 
 ### Step 2: Diverge
 
-1. Pick 2-3 lenses from `references/lenses.md`; do not apply all lenses mechanically.
-2. When the idea involves market risk, user research, monetization, or strategic commitment, load `references/discovery-methods.md` and pick only the relevant method adapters.
-3. Summarize the expanded possibility space: alternative framings, user segments, solution options, assumptions, failure modes, and parked ideas.
+1. Start with the default lens stack from `references/lenses.md`: `First-Principles Decomposition`, `Technology-Neutral Reframing`, and `Failure Mode Exploration`. Use 1-3 of these before reaching for anything else.
+2. Load additional conditional lenses only when a specific unresolved risk remains, such as segmentation, adoption, quantitative worth, or constraint shaping.
+3. Load `references/discovery-methods.md` only after Step 1 and the default lens stack still leave the main product risk unresolved. Pick the smallest adapter that closes that risk.
+4. Summarize the expanded possibility space: alternative framings, user segments, solution options, assumptions, failure modes, and parked ideas.
 
 ### Step 3: Converge
 
@@ -146,7 +149,7 @@ Load `references/product-brief-format.md` before drafting the `Product Brief`. P
 ## References
 
 - Load `references/lenses.md` during Step 2 when choosing divergence lenses.
-- Load `references/discovery-methods.md` when the product risk calls for user research, JTBD, opportunity mapping, assumption testing, prioritization, or market framing.
+- Load `references/discovery-methods.md` only when Step 1 plus the default lenses still leave the main product risk unresolved.
 - Load `references/product-brief-format.md` during Step 4 when drafting the final `Product Brief`.
 - Load `references/example-flow.md` only when you need a concrete end-to-end sample.
 
@@ -156,6 +159,9 @@ Before calling this skill mature, verify at least these cases:
 
 - underspecified idea -> diagnose and converge without blank-page interviewing
 - overspecified idea -> skip redundant intake and produce a lighter brief
-- wrong scope -> route to engineering or design validation
+- planning-ready direction -> hand off quickly instead of reopening broad exploration
+- existing plan under challenge -> route to design validation instead of rebuilding the brief
+- generic naming or unconstrained ideation -> route away instead of pretending it is product exploration
+- wrong engineering scope -> route to engineering instead of absorbing implementation work
 - impatient user -> use the lean path with explicit caveats
 - active handoff -> produce replanning input, not execution-state edits

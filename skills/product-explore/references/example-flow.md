@@ -77,3 +77,33 @@ Save only if the project has a docs workflow or the user asks to persist it:
 ```text
 已保存到 docs/discovery/PRODUCT_BRIEF.md，状态为“待下游消费”。
 ```
+
+## Short Counterexample: Already Planning-Ready
+
+If the user says:
+
+```text
+方向已经定了，帮我整理成 PRD 和 technical design。
+```
+
+Do not reopen broad exploration. Hand off fast:
+
+```text
+这已经不是“先追回问题定义”的场景了，方向已经足够稳定，更适合进入下游文档/规划流程。
+如果你愿意，我下一步会按规划类工作来整理 PRD、technical design 和后续交接材料。
+```
+
+## Short Counterexample: Generic Ideation Or Naming
+
+If the user says:
+
+```text
+帮我脑暴几个产品名字，或者随便想几个有意思的方向。
+```
+
+Do not pretend this is `product-explore`:
+
+```text
+这还不是一个明确的产品机会重构场景，更像泛 ideation / naming。
+我不会把它硬接成 Product Brief 流程；应该先做更宽松的创意发散，或者先明确你想解决的具体产品问题。
+```

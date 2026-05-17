@@ -1,12 +1,18 @@
 # Discovery Method Adapters
 
-Load this when the default reframe and default lenses are not enough to close the main product risk.
+Load this when Step 1 has already reframed the idea in product-problem terms and the default Step 2 lenses still are not enough to close the main product risk.
 
-Pick the smallest adapter that fits. These adapters deepen risk discovery; they do not replace the main workflow's job of recovering the real product problem before planning. Do not turn every conversation into a full product management workshop.
+## When To Use
+
+Use this collection only when the remaining risk still needs structure after the default reframe and the default Step 2 lenses.
+
+Do not load this for ordinary fuzzy ideas, generic brainstorming, or as the default Step 2 path.
+
+Pick the smallest adapter that fits the remaining risk. These adapters deepen risk discovery; they do not replace the main workflow's job of recovering the real product problem before planning. Do not turn every conversation into a full product management workshop.
 
 ## Jobs-To-Be-Done Adapter
 
-Use when the user segment, motivation, or product category is fuzzy.
+Use when the remaining risk is unclear user motivation, mixed user segments, or a product category that still hides the real progress the user wants.
 
 Minimal output:
 
@@ -23,7 +29,7 @@ Pass condition: the product is framed as user progress, not as a feature list.
 
 ## Opportunity Solution Tree Adapter
 
-Use when the user has a business outcome but too many possible features.
+Use when the remaining risk is a crowded solution space: the user has a business outcome, but too many possible features or branches are still competing.
 
 Minimal structure:
 
@@ -41,7 +47,7 @@ Keep opportunities separate from solutions. If a branch contains only solution i
 
 ## Riskiest Assumptions Adapter
 
-Use before committing to a product bet that may fail because of desirability, usability, feasibility, viability, trust, compliance, or distribution.
+Use when the remaining risk is commitment uncertainty: the bet may fail because of desirability, usability, feasibility, viability, trust, compliance, or distribution.
 
 Ask:
 
@@ -61,7 +67,7 @@ Decision threshold:
 
 ## Segment Slice Adapter
 
-Use when the product is trying to serve everyone.
+Use when the remaining risk is beachhead ambiguity: the product is trying to serve everyone and still lacks a credible first segment.
 
 Slice by:
 
@@ -84,7 +90,7 @@ What would justify expanding later:
 
 ## MVP Shape Adapter
 
-Use when the conversation jumps from idea to large scope.
+Use when the remaining risk is scope inflation: the conversation jumps from idea to large scope before the smallest learning step is clear.
 
 Compare:
 
@@ -104,7 +110,7 @@ What this MVP intentionally does not prove:
 
 ## Competitive And Substitute Adapter
 
-Use when the user asks whether the idea is worth building or entering a crowded space.
+Use when the remaining risk is market worth: the user asks whether the idea is worth building, entering a crowded space, or displacing entrenched substitutes.
 
 Focus on alternatives, not just named competitors:
 

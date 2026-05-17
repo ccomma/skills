@@ -2,7 +2,18 @@
 
 Load this when Step 2 needs divergence lenses after Step 1 has already restated the idea in product-problem terms.
 
-Use these lenses to widen the option space after the default reframe, not to replace the default reframe. Pick 2-3 based on the idea's risk profile. Do not apply every lens mechanically.
+Use these lenses to widen the option space after the default reframe, not to replace the default reframe.
+
+Default path:
+
+1. Start with the default priority lenses below.
+2. Use 1-3 of them based on the main product risk.
+3. Reach for the conditional lenses only when a specific residual risk remains after the default stack.
+4. Do not apply every lens mechanically.
+
+## Default Priority Lenses
+
+These are the first lenses to consider because they protect the skill's core job of recovering the real product problem before broadening the solution space.
 
 ## Lens A: First-Principles Decomposition
 
@@ -37,36 +48,7 @@ Ask the agent to restate the idea with no technology nouns:
 
 Then compare the technology-specific and technology-neutral versions. The gap often reveals cheaper, safer, or more useful alternatives.
 
-## Lens C: Jobs-To-Be-Done
-
-Use when user motivation is unclear or multiple user segments might want different outcomes.
-
-Ask:
-
-- When users reach for this product, what situation are they in?
-- What progress are they trying to make?
-- What workaround do they use today?
-- What anxiety, habit, switching cost, or social pressure blocks adoption?
-
-Output a compact job statement:
-
-```text
-When [situation], [user] wants to [make progress], so they can [desired outcome] without [current friction].
-```
-
-## Lens D: Adjacent Users And Scenarios
-
-Use when the current user model feels too narrow.
-
-Ask:
-
-- Who benefits indirectly from this?
-- Who pays, operates, supports, audits, or is harmed by it?
-- What happens immediately before and after the core use case?
-- What would the minimal, premium, and internal-operator versions look like?
-- What changes if the same idea is deployed in a different industry or scale?
-
-## Lens E: Failure Mode Exploration
+## Lens C: Failure Mode Exploration
 
 Use when the idea has safety, trust, operational, compliance, reputational, or adoption risk.
 
@@ -85,6 +67,39 @@ Separate:
 - business failure
 - operational failure
 - technical failure
+
+## Conditional Lenses
+
+Use the lenses below only when the default stack has already recovered the main product problem, but one specific uncertainty still needs structure.
+
+## Lens D: Jobs-To-Be-Done
+
+Use when user motivation is unclear or multiple user segments might want different outcomes.
+
+Ask:
+
+- When users reach for this product, what situation are they in?
+- What progress are they trying to make?
+- What workaround do they use today?
+- What anxiety, habit, switching cost, or social pressure blocks adoption?
+
+Output a compact job statement:
+
+```text
+When [situation], [user] wants to [make progress], so they can [desired outcome] without [current friction].
+```
+
+## Lens E: Adjacent Users And Scenarios
+
+Use when the current user model feels too narrow.
+
+Ask:
+
+- Who benefits indirectly from this?
+- Who pays, operates, supports, audits, or is harmed by it?
+- What happens immediately before and after the core use case?
+- What would the minimal, premium, and internal-operator versions look like?
+- What changes if the same idea is deployed in a different industry or scale?
 
 ## Lens F: Constraint Removal And Reintroduction
 
