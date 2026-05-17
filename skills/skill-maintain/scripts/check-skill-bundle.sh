@@ -254,6 +254,30 @@ check_primary_surface_contract() {
   combined_text="$(printf '%s\n%s\n' "$skill_text" "$prompt_text")"
 
   case "$skill_name" in
+    product-explore)
+      if [[ -n "$minimal_smoke_text" ]]; then
+        if ! printf '%s' "$minimal_smoke_text" | rg -Fq 'Prompt 1:'; then
+          add_warning "semantic-drift" "references/minimal-smoke-prompts.md may be missing the planning-ready smoke prompt"
+        fi
+        if ! printf '%s' "$minimal_smoke_text" | rg -qi 'planning rather than product exploration|documentation or planning rather than product exploration'; then
+          add_warning "semantic-drift" "references/minimal-smoke-prompts.md may be missing the planning handoff pass condition"
+        fi
+        if ! printf '%s' "$minimal_smoke_text" | rg -qi 'design validation rather than product exploration'; then
+          add_warning "semantic-drift" "references/minimal-smoke-prompts.md may be missing the validation handoff pass condition"
+        fi
+        if ! printf '%s' "$minimal_smoke_text" | rg -qi 'routes away from product exploration'; then
+          add_warning "semantic-drift" "references/minimal-smoke-prompts.md may be missing the generic ideation route-away pass condition"
+        fi
+      else
+        add_warning "semantic-drift" "references/minimal-smoke-prompts.md is missing, so narrow product-explore live proof cannot be checked"
+      fi
+      if ! printf '%s' "$skill_text" | rg -Fq 'Load `references/minimal-smoke-prompts.md`'; then
+        add_warning "semantic-drift" "SKILL.md may be missing the load contract for references/minimal-smoke-prompts.md"
+      fi
+      if ! printf '%s' "$skill_text" | rg -qi 'If the first narrow smoke already proves the owner and first move clearly, stop'; then
+        add_warning "semantic-drift" "SKILL.md may be missing the pass-then-stop validation starter rule"
+      fi
+      ;;
     skill-maintain)
       if ! printf '%s' "$skill_text" | rg -qi 'maintenance verdict'; then
         add_warning "semantic-drift" "SKILL.md does not visibly mention the default maintenance verdict on the primary surface"

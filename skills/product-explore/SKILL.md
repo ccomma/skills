@@ -152,6 +152,7 @@ Load `references/product-brief-format.md` before drafting the `Product Brief`. P
 - Load `references/discovery-methods.md` only when Step 1 plus the default lenses still leave the main product risk unresolved.
 - Load `references/product-brief-format.md` during Step 4 when drafting the final `Product Brief`.
 - Load `references/example-flow.md` only when you need a concrete end-to-end sample.
+- Load `references/minimal-smoke-prompts.md` only when you need the smallest live proof that first-response routing or first-move behavior still holds.
 
 ## Pressure Tests
 
@@ -165,3 +166,9 @@ Before calling this skill mature, verify at least these cases:
 - wrong engineering scope -> route to engineering instead of absorbing implementation work
 - impatient user -> use the lean path with explicit caveats instead of insisting on more intake rounds
 - active handoff -> produce replanning input, not execution-state edits
+
+## Validation Starter
+
+For live proof, start with one narrow negative-boundary prompt from `references/minimal-smoke-prompts.md`, preferably `planning-ready` or `existing-plan-under-challenge`.
+
+If the first narrow smoke already proves the owner and first move clearly, stop. Escalate only when the narrow prompt stays ambiguous or the changed behavior touched broader routing or cadence.
