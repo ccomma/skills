@@ -1,6 +1,10 @@
 # Governance Report Format
 
-Load this when writing the final report for a governance-escalation pass.
+Load this when writing the verdict-bearing report for a governance-escalation pass.
+
+This file answers how to write the report once the escalation verdict is already established.
+
+It does not decide whether the issue stays local, becomes a reusable candidate, or should be promoted now.
 
 ## Report Shape
 
@@ -24,6 +28,7 @@ Load this when writing the final report for a governance-escalation pass.
 ## Writing Guidance
 
 - Keep the report compact and decision-oriented.
+- Treat the report as the carrier of the escalation verdict, not as the skill's main identity.
 - Put findings before escalation judgment so local-only issues do not disappear.
 - State the upstream status before naming durable repair ownership.
 - Name one primary layer even if secondary context exists.

@@ -1,6 +1,10 @@
 # Governance Output Contract
 
-Load this when producing the final report from `skill-governance-escalation`.
+Load this when packaging the escalation verdict from `skill-governance-escalation` into its report contract.
+
+This file defines the verdict-bearing report fields after the skill has already reached an escalation judgment.
+
+It does not define the skill's core identity. It only constrains how the verdict is carried once the judgment is clear.
 
 ## Required Sections
 
@@ -26,6 +30,7 @@ The report must include:
 A good report:
 
 - starts from concrete evidence
+- carries the escalation verdict instead of replacing it
 - makes the findings list explicit before escalation
 - makes the upstream status explicit before durable-fix routing
 - names one primary owning layer
@@ -38,6 +43,7 @@ A good report:
 A weak report:
 
 - merely restates the complaint
+- acts as if the report itself were the workflow's main product
 - treats every finding as an upstream problem by default
 - names several layers without choosing one
 - abstracts too broadly to be actionable
